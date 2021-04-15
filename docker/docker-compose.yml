@@ -18,6 +18,26 @@ services:
         - 18556:18556
       entrypoint: ["./start-btcd.sh"]
 
+    btcwallet:
+      image: btcwallet
+      container_name: btcwallet
+      build:
+        context: btcwallet/
+        dockerfile: wallet.Dockerfile
+      volumes:
+        - shared:/rpc
+        - wallet:/root/.btcwallet
+      environment:
+        - RPCUSER
+        - RPCPASS
+        - NETWORK
+        - DEBUG
+      ports:
+        - 18554:18554
+      entrypoint: ["./start-btcwallet.sh"]
+      links:
+        - "btcd:blockchain"
+
     lnd:
       image: lnd
       container_name: lnd
@@ -39,13 +59,18 @@ services:
 
 volumes:
   # shared volume is need to store the btcd rpc certificates and use it within
-  # btcctl and lnd containers.
+  # btcd and lnd containers.
   shared:
     driver: local
 
   # bitcoin volume is needed for maintaining blockchain persistence
   # during btcd container recreation.
   bitcoin:
+    driver: local
+
+  # wallet volume is needed for maintaining wallet persistence
+  # during btcwallet container recreation.
+  wallet:
     driver: local
 
   # lnd volume is used for persisting lnd application data and chain state

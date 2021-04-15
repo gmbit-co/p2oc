@@ -19,6 +19,23 @@ $ stunnel stunnel.conf
 # $ docker exec -it btcd /start-btcctl.sh getblockcount
 ```
 
+Run btcwallet (for auctioneer)
+
+```shell
+$ export NETWORK="simnet"
+$ export RPCUSER=satoshin
+$ export RPCPASS=deadbeef
+
+# First time you'll need to setup the wallet
+$ docker-compose run --name btcwallet-${NETWORK}-${INSTANCE} --entrypoint bash btcwallet
+$ btcwallet --$NETWORK --create --appdata=/root/.btcwallet/data
+>> ...
+$ docker rm btcwallet-simnet-1
+
+# Afterward wallet has been created, run with
+$ docker-compose run --name btcwallet-${NETWORK}-${INSTANCE} -p 18554:18554 btcwallet
+```
+
 Run Nth lnd container
 
 ```shell
@@ -34,6 +51,15 @@ $ docker exec -i -t ln-node-${NETWORK}-${INSTANCE} bash
 ```shell
 ln-node $ lncli --network=$NETWORK newaddress np2wkh
 ln-node $ lncli --network=$NETWORK walletbalance
+```
+
+Point btcwallet to lightning node wallet
+```shell
+$ export NETWORK="simnet"
+$ export RPCUSER=satoshin
+$ export RPCPASS=deadbeef
+$ export INSTANCE=1
+$ docker-compose run --name btcwallet-${NETWORK}-${INSTANCE} -p 18554:18554 -v lnd_${NETWORK}_${INSTANCE}:/root/.lnd btcwallet
 ```
 
 Setup channels
@@ -81,5 +107,5 @@ $ docker exec -i -t ln-node-light-${NETWORK} bash
 
 ```shell
 # curl --key ./certs/rpc.key --cacert ./certs/rpc.cert
-curl --user satoshin:deadbeef --data-binary '{"jsonrpc": "1.0", "id":"curltest", "method": "getblockchaininfo", "params": [] }' -H 'content-type: text/plain;' https://127.0.0.1:18556
+--user satoshin:deadbeef --data-binary '{"jsonrpc": "1.0", "id":"curltest", "method": "getblockchaininfo", "params": [] }' -H 'content-type: text/plain;' https://127.0.0.1:18554
 ```
