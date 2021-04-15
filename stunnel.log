@@ -1,0 +1,1426 @@
+2021.04.15 01:59:13 LOG5[ui]: stunnel 5.59 on x86_64-apple-darwin20.3.0 platform
+2021.04.15 01:59:13 LOG5[ui]: Compiled/running with OpenSSL 1.1.1k  25 Mar 2021
+2021.04.15 01:59:13 LOG5[ui]: Threading:PTHREAD Sockets:POLL,IPv6 TLS:ENGINE,OCSP,PSK,SNI
+2021.04.15 01:59:13 LOG5[ui]: Reading configuration from file /Users/julian/src/crypto-playground/lightning-network/stunnel.conf
+2021.04.15 01:59:13 LOG5[ui]: UTF-8 byte order mark not detected
+2021.04.15 01:59:13 LOG5[ui]: FIPS mode disabled
+2021.04.15 01:59:13 LOG5[ui]: Configuration successful
+2021.04.15 01:59:16 LOG5[0]: Service [btcd] accepted connection from 127.0.0.1:59771
+2021.04.15 01:59:16 LOG3[0]: SSL_accept: ssl/statem/statem_srvr.c:2285: error:1417A0C1:SSL routines:tls_post_process_client_hello:no shared cipher
+2021.04.15 01:59:16 LOG5[0]: Connection reset: 0 byte(s) sent to TLS, 0 byte(s) sent to socket
+2021.04.15 02:01:55 LOG5[main]: Terminated
+2021.04.15 02:01:55 LOG5[main]: Terminating 1 service thread(s)
+2021.04.15 02:01:55 LOG5[main]: Service threads terminated
+2021.04.15 02:02:35 LOG6[ui]: Initializing inetd mode configuration
+2021.04.15 02:02:35 LOG7[ui]: Clients allowed=125
+2021.04.15 02:02:35 LOG5[ui]: stunnel 5.59 on x86_64-apple-darwin20.3.0 platform
+2021.04.15 02:02:35 LOG5[ui]: Compiled/running with OpenSSL 1.1.1k  25 Mar 2021
+2021.04.15 02:02:35 LOG5[ui]: Threading:PTHREAD Sockets:POLL,IPv6 TLS:ENGINE,OCSP,PSK,SNI
+2021.04.15 02:02:35 LOG7[ui]: errno: (*__error())
+2021.04.15 02:02:35 LOG6[ui]: Initializing inetd mode configuration
+2021.04.15 02:02:35 LOG5[ui]: Reading configuration from file /Users/julian/src/crypto-playground/lightning-network/stunnel.conf
+2021.04.15 02:02:35 LOG5[ui]: UTF-8 byte order mark not detected
+2021.04.15 02:02:35 LOG5[ui]: FIPS mode disabled
+2021.04.15 02:02:35 LOG6[ui]: Compression enabled: 0 methods
+2021.04.15 02:02:35 LOG7[ui]: No PRNG seeding was required
+2021.04.15 02:02:35 LOG6[ui]: Initializing service [btcd]
+2021.04.15 02:02:35 LOG6[ui]: stunnel default security level set: 2
+2021.04.15 02:02:35 LOG7[ui]: Ciphers: HIGH:!aNULL:!SSLv2:!DH:!kDHEPSK
+2021.04.15 02:02:35 LOG7[ui]: TLSv1.3 ciphersuites: TLS_AES_256_GCM_SHA384:TLS_AES_128_GCM_SHA256:TLS_CHACHA20_POLY1305_SHA256
+2021.04.15 02:02:35 LOG7[ui]: TLS options: 0x00100004 (+0x00000000, -0x02000000)
+2021.04.15 02:02:35 LOG6[ui]: Loading certificate from file: /Users/julian/src/crypto-playground/lightning-network/certs/rpc.cert
+2021.04.15 02:02:35 LOG6[ui]: Certificate loaded from file: /Users/julian/src/crypto-playground/lightning-network/certs/rpc.cert
+2021.04.15 02:02:35 LOG6[ui]: Loading private key from file: /Users/julian/src/crypto-playground/lightning-network/certs/rpc.key
+2021.04.15 02:02:35 LOG6[ui]: Private key loaded from file: /Users/julian/src/crypto-playground/lightning-network/certs/rpc.key
+2021.04.15 02:02:35 LOG7[ui]: Private key check succeeded
+2021.04.15 02:02:35 LOG4[ui]: Service [btcd] needs authentication to prevent MITM attacks
+2021.04.15 02:02:35 LOG6[ui]: DH initialization skipped: client section
+2021.04.15 02:02:35 LOG7[ui]: ECDH initialization
+2021.04.15 02:02:35 LOG7[ui]: ECDH initialized with curves X25519:P-256:X448:P-521:P-384
+2021.04.15 02:02:35 LOG5[ui]: Configuration successful
+2021.04.15 02:02:35 LOG7[ui]: Deallocating deployed section defaults
+2021.04.15 02:02:35 LOG7[ui]: Binding service [btcd]
+2021.04.15 02:02:35 LOG7[ui]: Listening file descriptor created (FD=8)
+2021.04.15 02:02:35 LOG7[ui]: Setting accept socket options (FD=8)
+2021.04.15 02:02:35 LOG7[ui]: Option SO_REUSEADDR set on accept socket
+2021.04.15 02:02:35 LOG6[ui]: Service [btcd] (FD=8) bound to 127.0.0.1:28556
+2021.04.15 02:02:35 LOG7[main]: No pid file being created
+2021.04.15 02:02:35 LOG7[cron]: Cron thread initialized
+2021.04.15 02:02:35 LOG6[cron]: Executing cron jobs
+2021.04.15 02:02:35 LOG6[cron]: Cron jobs completed in 0 seconds
+2021.04.15 02:02:35 LOG7[cron]: Waiting 86400 seconds
+2021.04.15 02:02:37 LOG7[main]: Found 1 ready file descriptor(s)
+2021.04.15 02:02:37 LOG7[main]: FD=4 events=0x1 revents=0x0
+2021.04.15 02:02:37 LOG7[main]: FD=8 events=0x1 revents=0x1
+2021.04.15 02:02:37 LOG7[main]: Service [btcd] accepted (FD=3) from 127.0.0.1:59856
+2021.04.15 02:02:37 LOG7[0]: Service [btcd] started
+2021.04.15 02:02:37 LOG7[0]: Setting local socket options (FD=3)
+2021.04.15 02:02:37 LOG7[0]: Option TCP_NODELAY set on local socket
+2021.04.15 02:02:37 LOG5[0]: Service [btcd] accepted connection from 127.0.0.1:59856
+2021.04.15 02:02:37 LOG6[0]: s_connect: connecting 127.0.0.1:18556
+2021.04.15 02:02:37 LOG7[0]: s_connect: s_poll_wait 127.0.0.1:18556: waiting 10 seconds
+2021.04.15 02:02:37 LOG7[0]: FD=6 events=0x1 revents=0x0
+2021.04.15 02:02:37 LOG7[0]: FD=10 events=0x5 revents=0x0
+2021.04.15 02:02:37 LOG5[0]: s_connect: connected 127.0.0.1:18556
+2021.04.15 02:02:37 LOG5[0]: Service [btcd] connected remote server from 127.0.0.1:59857
+2021.04.15 02:02:37 LOG7[0]: Setting remote socket options (FD=10)
+2021.04.15 02:02:37 LOG7[0]: Option TCP_NODELAY set on remote socket
+2021.04.15 02:02:37 LOG7[0]: Remote descriptor (FD=10) initialized
+2021.04.15 02:02:37 LOG6[0]: SNI: sending servername: 127.0.0.1
+2021.04.15 02:02:37 LOG6[0]: Peer certificate not required
+2021.04.15 02:02:37 LOG7[0]: TLS state (connect): before SSL initialization
+2021.04.15 02:02:37 LOG7[0]: Initializing application specific data for session authenticated
+2021.04.15 02:02:37 LOG7[0]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:02:37 LOG7[0]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:02:37 LOG7[0]: TLS state (connect): SSLv3/TLS read server hello
+2021.04.15 02:02:37 LOG7[0]: TLS state (connect): TLSv1.3 read encrypted extensions
+2021.04.15 02:02:37 LOG6[0]: Certificate verification disabled
+2021.04.15 02:02:37 LOG6[0]: Certificate verification disabled
+2021.04.15 02:02:37 LOG7[0]: TLS state (connect): SSLv3/TLS read server certificate
+2021.04.15 02:02:37 LOG7[0]: TLS state (connect): TLSv1.3 read server certificate verify
+2021.04.15 02:02:37 LOG7[0]: TLS state (connect): SSLv3/TLS read finished
+2021.04.15 02:02:37 LOG7[0]: TLS state (connect): SSLv3/TLS write change cipher spec
+2021.04.15 02:02:37 LOG7[0]: TLS state (connect): SSLv3/TLS write finished
+2021.04.15 02:02:37 LOG7[0]:      1 client connect(s) requested
+2021.04.15 02:02:37 LOG7[0]:      1 client connect(s) succeeded
+2021.04.15 02:02:37 LOG7[0]:      0 client renegotiation(s) requested
+2021.04.15 02:02:37 LOG7[0]:      0 session reuse(s)
+2021.04.15 02:02:37 LOG6[0]: TLS connected: new session negotiated
+2021.04.15 02:02:37 LOG6[0]: TLSv1.3 ciphersuite: TLS_AES_256_GCM_SHA384 (256-bit encryption)
+2021.04.15 02:02:37 LOG6[0]: Peer temporary key: X25519, 253 bits
+2021.04.15 02:02:37 LOG7[0]: Compression: null, expansion: null
+2021.04.15 02:02:37 LOG7[0]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:02:37 LOG7[0]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:02:37 LOG7[0]: Initializing application specific data for session authenticated
+2021.04.15 02:02:37 LOG7[0]: Deallocating application specific data for session connect address
+2021.04.15 02:02:37 LOG7[0]: New session callback
+2021.04.15 02:02:37 LOG7[0]: Peer certificate was cached (887 bytes)
+2021.04.15 02:02:37 LOG6[0]: Session id: 9517E03A176ABFA1309B91BD4A20BA8ED995CDB39CD2282E7B3AF5A371190B98
+2021.04.15 02:02:37 LOG7[0]: TLS state (connect): SSLv3/TLS read server session ticket
+2021.04.15 02:02:37 LOG6[0]: TLS socket closed (write hangup)
+2021.04.15 02:02:37 LOG7[0]: TLS alert (read): warning: close notify
+2021.04.15 02:02:37 LOG6[0]: TLS closed (SSL_read)
+2021.04.15 02:02:37 LOG7[0]: Sent socket write shutdown
+2021.04.15 02:02:37 LOG5[0]: Connection closed: 210 byte(s) sent to TLS, 103 byte(s) sent to socket
+2021.04.15 02:02:37 LOG7[0]: Remote descriptor (FD=10) closed
+2021.04.15 02:02:37 LOG7[0]: Local descriptor (FD=3) closed
+2021.04.15 02:02:37 LOG7[0]: Service [btcd] finished (0 left)
+2021.04.15 02:03:22 LOG7[main]: Found 1 ready file descriptor(s)
+2021.04.15 02:03:22 LOG7[main]: FD=4 events=0x1 revents=0x0
+2021.04.15 02:03:22 LOG7[main]: FD=8 events=0x1 revents=0x1
+2021.04.15 02:03:22 LOG7[main]: Service [btcd] accepted (FD=3) from 127.0.0.1:59871
+2021.04.15 02:03:22 LOG7[1]: Service [btcd] started
+2021.04.15 02:03:22 LOG7[1]: Setting local socket options (FD=3)
+2021.04.15 02:03:22 LOG7[1]: Option TCP_NODELAY set on local socket
+2021.04.15 02:03:22 LOG5[1]: Service [btcd] accepted connection from 127.0.0.1:59871
+2021.04.15 02:03:22 LOG6[1]: s_connect: connecting 127.0.0.1:18556
+2021.04.15 02:03:22 LOG7[1]: s_connect: s_poll_wait 127.0.0.1:18556: waiting 10 seconds
+2021.04.15 02:03:22 LOG7[1]: FD=6 events=0x1 revents=0x0
+2021.04.15 02:03:22 LOG7[1]: FD=10 events=0x5 revents=0x0
+2021.04.15 02:03:22 LOG5[1]: s_connect: connected 127.0.0.1:18556
+2021.04.15 02:03:22 LOG5[1]: Service [btcd] connected remote server from 127.0.0.1:59872
+2021.04.15 02:03:22 LOG7[1]: Setting remote socket options (FD=10)
+2021.04.15 02:03:22 LOG7[1]: Option TCP_NODELAY set on remote socket
+2021.04.15 02:03:22 LOG7[1]: Remote descriptor (FD=10) initialized
+2021.04.15 02:03:22 LOG6[1]: SNI: sending servername: 127.0.0.1
+2021.04.15 02:03:22 LOG6[1]: Peer certificate not required
+2021.04.15 02:03:22 LOG7[1]: TLS state (connect): before SSL initialization
+2021.04.15 02:03:22 LOG7[1]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:03:22 LOG7[1]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:03:22 LOG7[1]: TLS state (connect): SSLv3/TLS read server hello
+2021.04.15 02:03:22 LOG7[1]: TLS state (connect): TLSv1.3 read encrypted extensions
+2021.04.15 02:03:22 LOG7[1]: TLS state (connect): SSLv3/TLS read finished
+2021.04.15 02:03:22 LOG7[1]: TLS state (connect): SSLv3/TLS write change cipher spec
+2021.04.15 02:03:22 LOG7[1]: TLS state (connect): SSLv3/TLS write finished
+2021.04.15 02:03:22 LOG7[1]: Remove session callback
+2021.04.15 02:03:22 LOG7[1]:      2 client connect(s) requested
+2021.04.15 02:03:22 LOG7[1]:      2 client connect(s) succeeded
+2021.04.15 02:03:22 LOG7[1]:      0 client renegotiation(s) requested
+2021.04.15 02:03:22 LOG7[1]:      1 session reuse(s)
+2021.04.15 02:03:22 LOG6[1]: TLS connected: previous session reused
+2021.04.15 02:03:22 LOG6[1]: TLSv1.3 ciphersuite: TLS_AES_256_GCM_SHA384 (256-bit encryption)
+2021.04.15 02:03:22 LOG6[1]: Peer temporary key: X25519, 253 bits
+2021.04.15 02:03:22 LOG7[1]: Compression: null, expansion: null
+2021.04.15 02:03:22 LOG6[1]: Session id: 9517E03A176ABFA1309B91BD4A20BA8ED995CDB39CD2282E7B3AF5A371190B98
+2021.04.15 02:03:22 LOG7[1]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:03:22 LOG7[1]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:03:22 LOG7[1]: Initializing application specific data for session authenticated
+2021.04.15 02:03:22 LOG7[1]: New session callback
+2021.04.15 02:03:22 LOG7[1]: Deallocating application specific data for session connect address
+2021.04.15 02:03:22 LOG6[1]: Session id: 7EAAA5056F5C55F77EA61ED06CADBF2ABE4B3CB957858B7019AF130E852BF7BE
+2021.04.15 02:03:22 LOG7[1]: TLS state (connect): SSLv3/TLS read server session ticket
+2021.04.15 02:03:22 LOG7[1]: TLS alert (read): warning: close notify
+2021.04.15 02:03:22 LOG6[1]: TLS closed (SSL_read)
+2021.04.15 02:03:22 LOG6[1]: TLS socket closed (write hangup)
+2021.04.15 02:03:22 LOG7[1]: Sent socket write shutdown
+2021.04.15 02:03:22 LOG5[1]: Connection closed: 210 byte(s) sent to TLS, 103 byte(s) sent to socket
+2021.04.15 02:03:22 LOG7[1]: Remote descriptor (FD=10) closed
+2021.04.15 02:03:22 LOG7[1]: Local descriptor (FD=3) closed
+2021.04.15 02:03:22 LOG7[1]: Service [btcd] finished (0 left)
+2021.04.15 02:04:54 LOG7[main]: Found 1 ready file descriptor(s)
+2021.04.15 02:04:54 LOG7[main]: FD=4 events=0x1 revents=0x0
+2021.04.15 02:04:54 LOG7[main]: FD=8 events=0x1 revents=0x1
+2021.04.15 02:04:54 LOG7[main]: Service [btcd] accepted (FD=3) from 127.0.0.1:59910
+2021.04.15 02:04:54 LOG7[2]: Service [btcd] started
+2021.04.15 02:04:54 LOG7[2]: Setting local socket options (FD=3)
+2021.04.15 02:04:54 LOG7[2]: Option TCP_NODELAY set on local socket
+2021.04.15 02:04:54 LOG5[2]: Service [btcd] accepted connection from 127.0.0.1:59910
+2021.04.15 02:04:54 LOG6[2]: s_connect: connecting 127.0.0.1:18556
+2021.04.15 02:04:54 LOG7[2]: s_connect: s_poll_wait 127.0.0.1:18556: waiting 10 seconds
+2021.04.15 02:04:54 LOG7[2]: FD=6 events=0x1 revents=0x0
+2021.04.15 02:04:54 LOG7[2]: FD=10 events=0x5 revents=0x0
+2021.04.15 02:04:54 LOG5[2]: s_connect: connected 127.0.0.1:18556
+2021.04.15 02:04:54 LOG5[2]: Service [btcd] connected remote server from 127.0.0.1:59911
+2021.04.15 02:04:54 LOG7[2]: Setting remote socket options (FD=10)
+2021.04.15 02:04:54 LOG7[2]: Option TCP_NODELAY set on remote socket
+2021.04.15 02:04:54 LOG7[2]: Remote descriptor (FD=10) initialized
+2021.04.15 02:04:54 LOG6[2]: SNI: sending servername: 127.0.0.1
+2021.04.15 02:04:54 LOG6[2]: Peer certificate not required
+2021.04.15 02:04:54 LOG7[2]: TLS state (connect): before SSL initialization
+2021.04.15 02:04:54 LOG7[2]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:04:54 LOG7[2]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:04:54 LOG7[2]: TLS state (connect): SSLv3/TLS read server hello
+2021.04.15 02:04:54 LOG7[2]: TLS state (connect): TLSv1.3 read encrypted extensions
+2021.04.15 02:04:54 LOG7[2]: TLS state (connect): SSLv3/TLS read finished
+2021.04.15 02:04:54 LOG7[2]: TLS state (connect): SSLv3/TLS write change cipher spec
+2021.04.15 02:04:54 LOG7[2]: TLS state (connect): SSLv3/TLS write finished
+2021.04.15 02:04:54 LOG7[2]: Remove session callback
+2021.04.15 02:04:54 LOG7[2]:      3 client connect(s) requested
+2021.04.15 02:04:54 LOG7[2]:      3 client connect(s) succeeded
+2021.04.15 02:04:54 LOG7[2]:      0 client renegotiation(s) requested
+2021.04.15 02:04:54 LOG7[2]:      2 session reuse(s)
+2021.04.15 02:04:54 LOG6[2]: TLS connected: previous session reused
+2021.04.15 02:04:54 LOG6[2]: TLSv1.3 ciphersuite: TLS_AES_256_GCM_SHA384 (256-bit encryption)
+2021.04.15 02:04:54 LOG6[2]: Peer temporary key: X25519, 253 bits
+2021.04.15 02:04:54 LOG7[2]: Compression: null, expansion: null
+2021.04.15 02:04:54 LOG6[2]: Session id: 7EAAA5056F5C55F77EA61ED06CADBF2ABE4B3CB957858B7019AF130E852BF7BE
+2021.04.15 02:04:54 LOG7[2]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:04:54 LOG7[2]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:04:54 LOG7[2]: Initializing application specific data for session authenticated
+2021.04.15 02:04:54 LOG7[2]: New session callback
+2021.04.15 02:04:54 LOG7[2]: Deallocating application specific data for session connect address
+2021.04.15 02:04:54 LOG6[2]: Session id: 07EBEF4CEE0F3E552013A19629EEC3813252434F011B13C8E3DCEB693B029503
+2021.04.15 02:04:54 LOG7[2]: TLS state (connect): SSLv3/TLS read server session ticket
+2021.04.15 02:04:54 LOG6[2]: TLS socket closed (write hangup)
+2021.04.15 02:04:54 LOG7[2]: TLS alert (read): warning: close notify
+2021.04.15 02:04:54 LOG6[2]: TLS closed (SSL_read)
+2021.04.15 02:04:54 LOG7[2]: Sent socket write shutdown
+2021.04.15 02:04:54 LOG5[2]: Connection closed: 210 byte(s) sent to TLS, 103 byte(s) sent to socket
+2021.04.15 02:04:54 LOG7[2]: Remote descriptor (FD=10) closed
+2021.04.15 02:04:54 LOG7[2]: Local descriptor (FD=3) closed
+2021.04.15 02:04:54 LOG7[2]: Service [btcd] finished (0 left)
+2021.04.15 02:06:04 LOG7[main]: Found 1 ready file descriptor(s)
+2021.04.15 02:06:04 LOG7[main]: FD=4 events=0x1 revents=0x1
+2021.04.15 02:06:04 LOG7[main]: FD=8 events=0x1 revents=0x0
+2021.04.15 02:06:04 LOG7[main]: Dispatching a signal from the signal pipe
+2021.04.15 02:06:04 LOG7[main]: Processing SIGNAL_TERMINATE
+2021.04.15 02:06:04 LOG5[main]: Terminated
+2021.04.15 02:06:04 LOG7[main]: Leak detection table utilization: 98/997, 9.83%
+2021.04.15 02:06:04 LOG7[main]: No pid file to remove
+2021.04.15 02:06:04 LOG7[main]: Terminating the cron thread
+2021.04.15 02:06:04 LOG5[main]: Terminating 1 service thread(s)
+2021.04.15 02:06:04 LOG5[main]: Service threads terminated
+2021.04.15 02:06:04 LOG7[main]: Unbinding service [btcd]
+2021.04.15 02:06:04 LOG7[main]: Service [btcd] closed (FD=8)
+2021.04.15 02:06:04 LOG7[main]: Service [btcd] closed
+2021.04.15 02:06:16 LOG6[ui]: Initializing inetd mode configuration
+2021.04.15 02:06:16 LOG7[ui]: Clients allowed=125
+2021.04.15 02:06:16 LOG5[ui]: stunnel 5.59 on x86_64-apple-darwin20.3.0 platform
+2021.04.15 02:06:16 LOG5[ui]: Compiled/running with OpenSSL 1.1.1k  25 Mar 2021
+2021.04.15 02:06:16 LOG5[ui]: Threading:PTHREAD Sockets:POLL,IPv6 TLS:ENGINE,OCSP,PSK,SNI
+2021.04.15 02:06:16 LOG7[ui]: errno: (*__error())
+2021.04.15 02:06:16 LOG6[ui]: Initializing inetd mode configuration
+2021.04.15 02:06:16 LOG5[ui]: Reading configuration from file /Users/julian/src/crypto-playground/lightning-network/stunnel.conf
+2021.04.15 02:06:16 LOG5[ui]: UTF-8 byte order mark not detected
+2021.04.15 02:06:16 LOG5[ui]: FIPS mode disabled
+2021.04.15 02:06:16 LOG6[ui]: Compression enabled: 0 methods
+2021.04.15 02:06:16 LOG7[ui]: No PRNG seeding was required
+2021.04.15 02:06:16 LOG6[ui]: Initializing service [btcd]
+2021.04.15 02:06:16 LOG6[ui]: stunnel default security level set: 2
+2021.04.15 02:06:16 LOG7[ui]: Ciphers: HIGH:!aNULL:!SSLv2:!DH:!kDHEPSK
+2021.04.15 02:06:16 LOG7[ui]: TLSv1.3 ciphersuites: TLS_AES_256_GCM_SHA384:TLS_AES_128_GCM_SHA256:TLS_CHACHA20_POLY1305_SHA256
+2021.04.15 02:06:16 LOG7[ui]: TLS options: 0x02100004 (+0x00000000, -0x00000000)
+2021.04.15 02:06:16 LOG6[ui]: Loading certificate from file: /Users/julian/src/crypto-playground/lightning-network/certs/rpc.cert
+2021.04.15 02:06:16 LOG6[ui]: Certificate loaded from file: /Users/julian/src/crypto-playground/lightning-network/certs/rpc.cert
+2021.04.15 02:06:16 LOG6[ui]: Loading private key from file: /Users/julian/src/crypto-playground/lightning-network/certs/rpc.key
+2021.04.15 02:06:16 LOG6[ui]: Private key loaded from file: /Users/julian/src/crypto-playground/lightning-network/certs/rpc.key
+2021.04.15 02:06:16 LOG7[ui]: Private key check succeeded
+2021.04.15 02:06:16 LOG4[ui]: Service [btcd] needs authentication to prevent MITM attacks
+2021.04.15 02:06:16 LOG6[ui]: DH initialization skipped: client section
+2021.04.15 02:06:16 LOG7[ui]: ECDH initialization
+2021.04.15 02:06:16 LOG7[ui]: ECDH initialized with curves X25519:P-256:X448:P-521:P-384
+2021.04.15 02:06:16 LOG5[ui]: Configuration successful
+2021.04.15 02:06:16 LOG7[ui]: Deallocating deployed section defaults
+2021.04.15 02:06:16 LOG7[ui]: Binding service [btcd]
+2021.04.15 02:06:16 LOG7[ui]: Listening file descriptor created (FD=8)
+2021.04.15 02:06:16 LOG7[ui]: Setting accept socket options (FD=8)
+2021.04.15 02:06:16 LOG7[ui]: Option SO_REUSEADDR set on accept socket
+2021.04.15 02:06:16 LOG6[ui]: Service [btcd] (FD=8) bound to 127.0.0.1:28556
+2021.04.15 02:06:16 LOG7[main]: No pid file being created
+2021.04.15 02:06:16 LOG7[cron]: Cron thread initialized
+2021.04.15 02:06:16 LOG6[cron]: Executing cron jobs
+2021.04.15 02:06:16 LOG6[cron]: Cron jobs completed in 0 seconds
+2021.04.15 02:06:16 LOG7[cron]: Waiting 86400 seconds
+2021.04.15 02:06:18 LOG7[main]: Found 1 ready file descriptor(s)
+2021.04.15 02:06:18 LOG7[main]: FD=4 events=0x1 revents=0x0
+2021.04.15 02:06:18 LOG7[main]: FD=8 events=0x1 revents=0x1
+2021.04.15 02:06:18 LOG7[main]: Service [btcd] accepted (FD=3) from 127.0.0.1:59931
+2021.04.15 02:06:18 LOG7[0]: Service [btcd] started
+2021.04.15 02:06:18 LOG7[0]: Setting local socket options (FD=3)
+2021.04.15 02:06:18 LOG7[0]: Option TCP_NODELAY set on local socket
+2021.04.15 02:06:18 LOG5[0]: Service [btcd] accepted connection from 127.0.0.1:59931
+2021.04.15 02:06:18 LOG6[0]: s_connect: connecting 127.0.0.1:18556
+2021.04.15 02:06:18 LOG7[0]: s_connect: s_poll_wait 127.0.0.1:18556: waiting 10 seconds
+2021.04.15 02:06:18 LOG7[0]: FD=6 events=0x1 revents=0x0
+2021.04.15 02:06:18 LOG7[0]: FD=10 events=0x5 revents=0x0
+2021.04.15 02:06:18 LOG5[0]: s_connect: connected 127.0.0.1:18556
+2021.04.15 02:06:18 LOG5[0]: Service [btcd] connected remote server from 127.0.0.1:59932
+2021.04.15 02:06:18 LOG7[0]: Setting remote socket options (FD=10)
+2021.04.15 02:06:18 LOG7[0]: Option TCP_NODELAY set on remote socket
+2021.04.15 02:06:18 LOG7[0]: Remote descriptor (FD=10) initialized
+2021.04.15 02:06:18 LOG6[0]: SNI: sending servername: 127.0.0.1
+2021.04.15 02:06:18 LOG6[0]: Peer certificate not required
+2021.04.15 02:06:18 LOG7[0]: TLS state (connect): before SSL initialization
+2021.04.15 02:06:18 LOG7[0]: Initializing application specific data for session authenticated
+2021.04.15 02:06:18 LOG7[0]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:06:18 LOG7[0]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:06:18 LOG7[0]: TLS state (connect): SSLv3/TLS read server hello
+2021.04.15 02:06:18 LOG7[0]: TLS state (connect): TLSv1.3 read encrypted extensions
+2021.04.15 02:06:18 LOG6[0]: Certificate verification disabled
+2021.04.15 02:06:18 LOG6[0]: Certificate verification disabled
+2021.04.15 02:06:18 LOG7[0]: TLS state (connect): SSLv3/TLS read server certificate
+2021.04.15 02:06:18 LOG7[0]: TLS state (connect): TLSv1.3 read server certificate verify
+2021.04.15 02:06:18 LOG7[0]: TLS state (connect): SSLv3/TLS read finished
+2021.04.15 02:06:18 LOG7[0]: TLS state (connect): SSLv3/TLS write change cipher spec
+2021.04.15 02:06:18 LOG7[0]: TLS state (connect): SSLv3/TLS write finished
+2021.04.15 02:06:18 LOG7[0]:      1 client connect(s) requested
+2021.04.15 02:06:18 LOG7[0]:      1 client connect(s) succeeded
+2021.04.15 02:06:18 LOG7[0]:      0 client renegotiation(s) requested
+2021.04.15 02:06:18 LOG7[0]:      0 session reuse(s)
+2021.04.15 02:06:18 LOG6[0]: TLS connected: new session negotiated
+2021.04.15 02:06:18 LOG6[0]: TLSv1.3 ciphersuite: TLS_AES_256_GCM_SHA384 (256-bit encryption)
+2021.04.15 02:06:18 LOG6[0]: Peer temporary key: X25519, 253 bits
+2021.04.15 02:06:18 LOG7[0]: Compression: null, expansion: null
+2021.04.15 02:06:18 LOG7[0]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:06:18 LOG7[0]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:06:18 LOG7[0]: Initializing application specific data for session authenticated
+2021.04.15 02:06:18 LOG7[0]: Deallocating application specific data for session connect address
+2021.04.15 02:06:18 LOG7[0]: New session callback
+2021.04.15 02:06:18 LOG7[0]: Peer certificate was cached (887 bytes)
+2021.04.15 02:06:18 LOG6[0]: Session id: 05CF2B5D8F1C046A8987DBCBC6DB9ABD8866245B0C51E6843DFC8153927066E0
+2021.04.15 02:06:18 LOG7[0]: TLS state (connect): SSLv3/TLS read server session ticket
+2021.04.15 02:06:18 LOG7[0]: TLS alert (read): warning: close notify
+2021.04.15 02:06:18 LOG6[0]: TLS closed (SSL_read)
+2021.04.15 02:06:18 LOG6[0]: TLS socket closed (write hangup)
+2021.04.15 02:06:18 LOG7[0]: Sent socket write shutdown
+2021.04.15 02:06:18 LOG5[0]: Connection closed: 210 byte(s) sent to TLS, 103 byte(s) sent to socket
+2021.04.15 02:06:18 LOG7[0]: Remote descriptor (FD=10) closed
+2021.04.15 02:06:18 LOG7[0]: Local descriptor (FD=3) closed
+2021.04.15 02:06:18 LOG7[0]: Service [btcd] finished (0 left)
+2021.04.15 02:08:05 LOG7[main]: Found 1 ready file descriptor(s)
+2021.04.15 02:08:05 LOG7[main]: FD=4 events=0x1 revents=0x0
+2021.04.15 02:08:05 LOG7[main]: FD=8 events=0x1 revents=0x1
+2021.04.15 02:08:05 LOG7[main]: Service [btcd] accepted (FD=3) from 127.0.0.1:59968
+2021.04.15 02:08:05 LOG7[1]: Service [btcd] started
+2021.04.15 02:08:05 LOG7[1]: Setting local socket options (FD=3)
+2021.04.15 02:08:05 LOG7[1]: Option TCP_NODELAY set on local socket
+2021.04.15 02:08:05 LOG5[1]: Service [btcd] accepted connection from 127.0.0.1:59968
+2021.04.15 02:08:05 LOG6[1]: s_connect: connecting 127.0.0.1:18556
+2021.04.15 02:08:05 LOG7[1]: s_connect: s_poll_wait 127.0.0.1:18556: waiting 10 seconds
+2021.04.15 02:08:05 LOG7[1]: FD=6 events=0x1 revents=0x0
+2021.04.15 02:08:05 LOG7[1]: FD=10 events=0x5 revents=0x0
+2021.04.15 02:08:05 LOG5[1]: s_connect: connected 127.0.0.1:18556
+2021.04.15 02:08:05 LOG5[1]: Service [btcd] connected remote server from 127.0.0.1:59969
+2021.04.15 02:08:05 LOG7[1]: Setting remote socket options (FD=10)
+2021.04.15 02:08:05 LOG7[1]: Option TCP_NODELAY set on remote socket
+2021.04.15 02:08:05 LOG7[1]: Remote descriptor (FD=10) initialized
+2021.04.15 02:08:05 LOG6[1]: SNI: sending servername: 127.0.0.1
+2021.04.15 02:08:05 LOG6[1]: Peer certificate not required
+2021.04.15 02:08:05 LOG7[1]: TLS state (connect): before SSL initialization
+2021.04.15 02:08:05 LOG7[1]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:08:05 LOG7[1]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:08:05 LOG7[1]: TLS state (connect): SSLv3/TLS read server hello
+2021.04.15 02:08:05 LOG7[1]: TLS state (connect): TLSv1.3 read encrypted extensions
+2021.04.15 02:08:05 LOG7[1]: TLS state (connect): SSLv3/TLS read finished
+2021.04.15 02:08:05 LOG7[1]: TLS state (connect): SSLv3/TLS write change cipher spec
+2021.04.15 02:08:05 LOG7[1]: TLS state (connect): SSLv3/TLS write finished
+2021.04.15 02:08:05 LOG7[1]: Remove session callback
+2021.04.15 02:08:05 LOG7[1]:      2 client connect(s) requested
+2021.04.15 02:08:05 LOG7[1]:      2 client connect(s) succeeded
+2021.04.15 02:08:05 LOG7[1]:      0 client renegotiation(s) requested
+2021.04.15 02:08:05 LOG7[1]:      1 session reuse(s)
+2021.04.15 02:08:05 LOG6[1]: TLS connected: previous session reused
+2021.04.15 02:08:05 LOG6[1]: TLSv1.3 ciphersuite: TLS_AES_256_GCM_SHA384 (256-bit encryption)
+2021.04.15 02:08:05 LOG6[1]: Peer temporary key: X25519, 253 bits
+2021.04.15 02:08:05 LOG7[1]: Compression: null, expansion: null
+2021.04.15 02:08:05 LOG6[1]: Session id: 05CF2B5D8F1C046A8987DBCBC6DB9ABD8866245B0C51E6843DFC8153927066E0
+2021.04.15 02:08:05 LOG7[1]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:08:05 LOG7[1]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:08:05 LOG7[1]: Initializing application specific data for session authenticated
+2021.04.15 02:08:05 LOG7[1]: New session callback
+2021.04.15 02:08:05 LOG7[1]: Deallocating application specific data for session connect address
+2021.04.15 02:08:05 LOG6[1]: Session id: 7956E88398C312B6FAB30D749CB67A439EFF51ED2233E38779B33AE4D20F9A24
+2021.04.15 02:08:05 LOG7[1]: TLS state (connect): SSLv3/TLS read server session ticket
+2021.04.15 02:08:05 LOG6[1]: TLS socket closed (write hangup)
+2021.04.15 02:08:05 LOG7[1]: TLS alert (read): warning: close notify
+2021.04.15 02:08:05 LOG6[1]: TLS closed (SSL_read)
+2021.04.15 02:08:05 LOG7[1]: Sent socket write shutdown
+2021.04.15 02:08:05 LOG5[1]: Connection closed: 210 byte(s) sent to TLS, 103 byte(s) sent to socket
+2021.04.15 02:08:05 LOG7[1]: Remote descriptor (FD=10) closed
+2021.04.15 02:08:05 LOG7[1]: Local descriptor (FD=3) closed
+2021.04.15 02:08:05 LOG7[1]: Service [btcd] finished (0 left)
+2021.04.15 02:08:15 LOG7[main]: Found 1 ready file descriptor(s)
+2021.04.15 02:08:15 LOG7[main]: FD=4 events=0x1 revents=0x1
+2021.04.15 02:08:15 LOG7[main]: FD=8 events=0x1 revents=0x0
+2021.04.15 02:08:15 LOG7[main]: Dispatching a signal from the signal pipe
+2021.04.15 02:08:15 LOG7[main]: Processing SIGNAL_TERMINATE
+2021.04.15 02:08:15 LOG5[main]: Terminated
+2021.04.15 02:08:15 LOG7[main]: Leak detection table utilization: 98/997, 9.83%
+2021.04.15 02:08:15 LOG7[main]: No pid file to remove
+2021.04.15 02:08:15 LOG7[main]: Terminating the cron thread
+2021.04.15 02:08:15 LOG5[main]: Terminating 1 service thread(s)
+2021.04.15 02:08:15 LOG5[main]: Service threads terminated
+2021.04.15 02:08:15 LOG7[main]: Unbinding service [btcd]
+2021.04.15 02:08:15 LOG7[main]: Service [btcd] closed (FD=8)
+2021.04.15 02:08:15 LOG7[main]: Service [btcd] closed
+2021.04.15 02:08:18 LOG6[ui]: Initializing inetd mode configuration
+2021.04.15 02:08:18 LOG7[ui]: Clients allowed=125
+2021.04.15 02:08:18 LOG5[ui]: stunnel 5.59 on x86_64-apple-darwin20.3.0 platform
+2021.04.15 02:08:18 LOG5[ui]: Compiled/running with OpenSSL 1.1.1k  25 Mar 2021
+2021.04.15 02:08:18 LOG5[ui]: Threading:PTHREAD Sockets:POLL,IPv6 TLS:ENGINE,OCSP,PSK,SNI
+2021.04.15 02:08:18 LOG7[ui]: errno: (*__error())
+2021.04.15 02:08:18 LOG6[ui]: Initializing inetd mode configuration
+2021.04.15 02:08:18 LOG5[ui]: Reading configuration from file /Users/julian/src/crypto-playground/lightning-network/stunnel.conf
+2021.04.15 02:08:18 LOG5[ui]: UTF-8 byte order mark not detected
+2021.04.15 02:08:18 LOG5[ui]: FIPS mode disabled
+2021.04.15 02:08:18 LOG6[ui]: Compression enabled: 0 methods
+2021.04.15 02:08:18 LOG7[ui]: No PRNG seeding was required
+2021.04.15 02:08:18 LOG6[ui]: Initializing service [btcd]
+2021.04.15 02:08:18 LOG6[ui]: stunnel default security level set: 2
+2021.04.15 02:08:18 LOG7[ui]: Ciphers: HIGH:!aNULL:!SSLv2:!DH:!kDHEPSK
+2021.04.15 02:08:18 LOG7[ui]: TLSv1.3 ciphersuites: TLS_AES_256_GCM_SHA384:TLS_AES_128_GCM_SHA256:TLS_CHACHA20_POLY1305_SHA256
+2021.04.15 02:08:18 LOG7[ui]: TLS options: 0x02100004 (+0x00000000, -0x00000000)
+2021.04.15 02:08:18 LOG6[ui]: Loading certificate from file: /Users/julian/src/crypto-playground/lightning-network/certs/rpc.cert
+2021.04.15 02:08:18 LOG6[ui]: Certificate loaded from file: /Users/julian/src/crypto-playground/lightning-network/certs/rpc.cert
+2021.04.15 02:08:18 LOG6[ui]: Loading private key from file: /Users/julian/src/crypto-playground/lightning-network/certs/rpc.key
+2021.04.15 02:08:18 LOG6[ui]: Private key loaded from file: /Users/julian/src/crypto-playground/lightning-network/certs/rpc.key
+2021.04.15 02:08:18 LOG7[ui]: Private key check succeeded
+2021.04.15 02:08:18 LOG4[ui]: Service [btcd] needs authentication to prevent MITM attacks
+2021.04.15 02:08:18 LOG6[ui]: DH initialization skipped: client section
+2021.04.15 02:08:18 LOG7[ui]: ECDH initialization
+2021.04.15 02:08:18 LOG7[ui]: ECDH initialized with curves X25519:P-256:X448:P-521:P-384
+2021.04.15 02:08:18 LOG5[ui]: Configuration successful
+2021.04.15 02:08:18 LOG7[ui]: Deallocating deployed section defaults
+2021.04.15 02:08:18 LOG7[ui]: Binding service [btcd]
+2021.04.15 02:08:18 LOG7[ui]: Listening file descriptor created (FD=8)
+2021.04.15 02:08:18 LOG7[ui]: Setting accept socket options (FD=8)
+2021.04.15 02:08:18 LOG7[ui]: Option SO_REUSEADDR set on accept socket
+2021.04.15 02:08:18 LOG6[ui]: Service [btcd] (FD=8) bound to 127.0.0.1:28556
+2021.04.15 02:08:18 LOG7[main]: No pid file being created
+2021.04.15 02:08:18 LOG7[cron]: Cron thread initialized
+2021.04.15 02:08:18 LOG6[cron]: Executing cron jobs
+2021.04.15 02:08:18 LOG6[cron]: Cron jobs completed in 0 seconds
+2021.04.15 02:08:18 LOG7[cron]: Waiting 86400 seconds
+2021.04.15 02:08:21 LOG7[main]: Found 1 ready file descriptor(s)
+2021.04.15 02:08:21 LOG7[main]: FD=4 events=0x1 revents=0x0
+2021.04.15 02:08:21 LOG7[main]: FD=8 events=0x1 revents=0x1
+2021.04.15 02:08:21 LOG7[main]: Service [btcd] accepted (FD=3) from 127.0.0.1:59971
+2021.04.15 02:08:21 LOG7[0]: Service [btcd] started
+2021.04.15 02:08:21 LOG7[0]: Setting local socket options (FD=3)
+2021.04.15 02:08:21 LOG7[0]: Option TCP_NODELAY set on local socket
+2021.04.15 02:08:21 LOG5[0]: Service [btcd] accepted connection from 127.0.0.1:59971
+2021.04.15 02:08:21 LOG6[0]: s_connect: connecting 127.0.0.1:18556
+2021.04.15 02:08:21 LOG7[0]: s_connect: s_poll_wait 127.0.0.1:18556: waiting 10 seconds
+2021.04.15 02:08:21 LOG7[0]: FD=6 events=0x1 revents=0x0
+2021.04.15 02:08:21 LOG7[0]: FD=10 events=0x5 revents=0x0
+2021.04.15 02:08:21 LOG5[0]: s_connect: connected 127.0.0.1:18556
+2021.04.15 02:08:21 LOG5[0]: Service [btcd] connected remote server from 127.0.0.1:59972
+2021.04.15 02:08:21 LOG7[0]: Setting remote socket options (FD=10)
+2021.04.15 02:08:21 LOG7[0]: Option TCP_NODELAY set on remote socket
+2021.04.15 02:08:21 LOG7[0]: Remote descriptor (FD=10) initialized
+2021.04.15 02:08:21 LOG6[0]: SNI: sending servername: 127.0.0.1
+2021.04.15 02:08:21 LOG6[0]: Peer certificate not required
+2021.04.15 02:08:21 LOG7[0]: TLS state (connect): before SSL initialization
+2021.04.15 02:08:21 LOG7[0]: Initializing application specific data for session authenticated
+2021.04.15 02:08:21 LOG7[0]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:08:21 LOG7[0]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:08:21 LOG7[0]: TLS state (connect): SSLv3/TLS read server hello
+2021.04.15 02:08:21 LOG7[0]: TLS state (connect): TLSv1.3 read encrypted extensions
+2021.04.15 02:08:21 LOG6[0]: Certificate verification disabled
+2021.04.15 02:08:21 LOG6[0]: Certificate verification disabled
+2021.04.15 02:08:21 LOG7[0]: TLS state (connect): SSLv3/TLS read server certificate
+2021.04.15 02:08:21 LOG7[0]: TLS state (connect): TLSv1.3 read server certificate verify
+2021.04.15 02:08:21 LOG7[0]: TLS state (connect): SSLv3/TLS read finished
+2021.04.15 02:08:21 LOG7[0]: TLS state (connect): SSLv3/TLS write change cipher spec
+2021.04.15 02:08:21 LOG7[0]: TLS state (connect): SSLv3/TLS write finished
+2021.04.15 02:08:21 LOG7[0]:      1 client connect(s) requested
+2021.04.15 02:08:21 LOG7[0]:      1 client connect(s) succeeded
+2021.04.15 02:08:21 LOG7[0]:      0 client renegotiation(s) requested
+2021.04.15 02:08:21 LOG7[0]:      0 session reuse(s)
+2021.04.15 02:08:21 LOG6[0]: TLS connected: new session negotiated
+2021.04.15 02:08:21 LOG6[0]: TLSv1.3 ciphersuite: TLS_AES_256_GCM_SHA384 (256-bit encryption)
+2021.04.15 02:08:21 LOG6[0]: Peer temporary key: X25519, 253 bits
+2021.04.15 02:08:21 LOG7[0]: Compression: null, expansion: null
+2021.04.15 02:08:21 LOG7[0]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:08:21 LOG7[0]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:08:21 LOG7[0]: Initializing application specific data for session authenticated
+2021.04.15 02:08:21 LOG7[0]: Deallocating application specific data for session connect address
+2021.04.15 02:08:21 LOG7[0]: New session callback
+2021.04.15 02:08:21 LOG7[0]: Peer certificate was cached (887 bytes)
+2021.04.15 02:08:21 LOG6[0]: Session id: F717BFA73CCF56170D428115FA9D04958DDE6D829B70B067F70E2105F8D00164
+2021.04.15 02:08:21 LOG7[0]: TLS state (connect): SSLv3/TLS read server session ticket
+2021.04.15 02:08:21 LOG6[0]: TLS socket closed (write hangup)
+2021.04.15 02:08:21 LOG7[0]: TLS alert (read): warning: close notify
+2021.04.15 02:08:21 LOG6[0]: TLS closed (SSL_read)
+2021.04.15 02:08:21 LOG7[0]: Sent socket write shutdown
+2021.04.15 02:08:21 LOG5[0]: Connection closed: 210 byte(s) sent to TLS, 103 byte(s) sent to socket
+2021.04.15 02:08:21 LOG7[0]: Remote descriptor (FD=10) closed
+2021.04.15 02:08:21 LOG7[0]: Local descriptor (FD=3) closed
+2021.04.15 02:08:21 LOG7[0]: Service [btcd] finished (0 left)
+2021.04.15 02:09:01 LOG7[main]: Found 1 ready file descriptor(s)
+2021.04.15 02:09:01 LOG7[main]: FD=4 events=0x1 revents=0x1
+2021.04.15 02:09:01 LOG7[main]: FD=8 events=0x1 revents=0x0
+2021.04.15 02:09:01 LOG7[main]: Dispatching a signal from the signal pipe
+2021.04.15 02:09:01 LOG7[main]: Processing SIGNAL_TERMINATE
+2021.04.15 02:09:01 LOG5[main]: Terminated
+2021.04.15 02:09:01 LOG7[main]: Leak detection table utilization: 98/997, 9.83%
+2021.04.15 02:09:01 LOG7[main]: No pid file to remove
+2021.04.15 02:09:01 LOG7[main]: Terminating the cron thread
+2021.04.15 02:09:01 LOG5[main]: Terminating 1 service thread(s)
+2021.04.15 02:09:01 LOG5[main]: Service threads terminated
+2021.04.15 02:09:01 LOG7[main]: Unbinding service [btcd]
+2021.04.15 02:09:01 LOG7[main]: Service [btcd] closed (FD=8)
+2021.04.15 02:09:01 LOG7[main]: Service [btcd] closed
+2021.04.15 02:09:05 LOG6[ui]: Initializing inetd mode configuration
+2021.04.15 02:09:05 LOG7[ui]: Clients allowed=125
+2021.04.15 02:09:05 LOG5[ui]: stunnel 5.59 on x86_64-apple-darwin20.3.0 platform
+2021.04.15 02:09:05 LOG5[ui]: Compiled/running with OpenSSL 1.1.1k  25 Mar 2021
+2021.04.15 02:09:05 LOG5[ui]: Threading:PTHREAD Sockets:POLL,IPv6 TLS:ENGINE,OCSP,PSK,SNI
+2021.04.15 02:09:05 LOG7[ui]: errno: (*__error())
+2021.04.15 02:09:05 LOG6[ui]: Initializing inetd mode configuration
+2021.04.15 02:09:05 LOG5[ui]: Reading configuration from file /Users/julian/src/crypto-playground/lightning-network/stunnel.conf
+2021.04.15 02:09:05 LOG5[ui]: UTF-8 byte order mark not detected
+2021.04.15 02:09:05 LOG5[ui]: FIPS mode disabled
+2021.04.15 02:09:05 LOG6[ui]: Compression enabled: 0 methods
+2021.04.15 02:09:05 LOG7[ui]: No PRNG seeding was required
+2021.04.15 02:09:05 LOG6[ui]: Initializing service [btcd]
+2021.04.15 02:09:05 LOG6[ui]: stunnel default security level set: 2
+2021.04.15 02:09:05 LOG7[ui]: Ciphers: HIGH:!aNULL:!SSLv2:!DH:!kDHEPSK
+2021.04.15 02:09:05 LOG7[ui]: TLSv1.3 ciphersuites: TLS_AES_256_GCM_SHA384:TLS_AES_128_GCM_SHA256:TLS_CHACHA20_POLY1305_SHA256
+2021.04.15 02:09:05 LOG7[ui]: TLS options: 0x02100004 (+0x00000000, -0x00000000)
+2021.04.15 02:09:05 LOG6[ui]: Loading certificate from file: /Users/julian/src/crypto-playground/lightning-network/certs/rpc.cert
+2021.04.15 02:09:05 LOG6[ui]: Certificate loaded from file: /Users/julian/src/crypto-playground/lightning-network/certs/rpc.cert
+2021.04.15 02:09:05 LOG6[ui]: Loading private key from file: /Users/julian/src/crypto-playground/lightning-network/certs/rpc.key
+2021.04.15 02:09:05 LOG6[ui]: Private key loaded from file: /Users/julian/src/crypto-playground/lightning-network/certs/rpc.key
+2021.04.15 02:09:05 LOG7[ui]: Private key check succeeded
+2021.04.15 02:09:05 LOG4[ui]: Service [btcd] needs authentication to prevent MITM attacks
+2021.04.15 02:09:05 LOG6[ui]: DH initialization skipped: client section
+2021.04.15 02:09:05 LOG7[ui]: ECDH initialization
+2021.04.15 02:09:05 LOG7[ui]: ECDH initialized with curves X25519:P-256:X448:P-521:P-384
+2021.04.15 02:09:05 LOG5[ui]: Configuration successful
+2021.04.15 02:09:05 LOG7[ui]: Deallocating deployed section defaults
+2021.04.15 02:09:05 LOG7[ui]: Binding service [btcd]
+2021.04.15 02:09:05 LOG7[ui]: Listening file descriptor created (FD=8)
+2021.04.15 02:09:05 LOG7[ui]: Setting accept socket options (FD=8)
+2021.04.15 02:09:05 LOG7[ui]: Option SO_REUSEADDR set on accept socket
+2021.04.15 02:09:05 LOG6[ui]: Service [btcd] (FD=8) bound to 127.0.0.1:28556
+2021.04.15 02:09:05 LOG7[main]: No pid file being created
+2021.04.15 02:09:05 LOG7[cron]: Cron thread initialized
+2021.04.15 02:09:05 LOG6[cron]: Executing cron jobs
+2021.04.15 02:09:05 LOG6[cron]: Cron jobs completed in 0 seconds
+2021.04.15 02:09:05 LOG7[cron]: Waiting 86400 seconds
+2021.04.15 02:09:07 LOG7[main]: Found 1 ready file descriptor(s)
+2021.04.15 02:09:07 LOG7[main]: FD=4 events=0x1 revents=0x0
+2021.04.15 02:09:07 LOG7[main]: FD=8 events=0x1 revents=0x1
+2021.04.15 02:09:07 LOG7[main]: Service [btcd] accepted (FD=3) from 127.0.0.1:59984
+2021.04.15 02:09:07 LOG7[0]: Service [btcd] started
+2021.04.15 02:09:07 LOG7[0]: Setting local socket options (FD=3)
+2021.04.15 02:09:07 LOG7[0]: Option TCP_NODELAY set on local socket
+2021.04.15 02:09:07 LOG5[0]: Service [btcd] accepted connection from 127.0.0.1:59984
+2021.04.15 02:09:07 LOG6[0]: s_connect: connecting 127.0.0.1:18556
+2021.04.15 02:09:07 LOG7[0]: s_connect: s_poll_wait 127.0.0.1:18556: waiting 10 seconds
+2021.04.15 02:09:07 LOG7[0]: FD=6 events=0x1 revents=0x0
+2021.04.15 02:09:07 LOG7[0]: FD=10 events=0x5 revents=0x0
+2021.04.15 02:09:07 LOG5[0]: s_connect: connected 127.0.0.1:18556
+2021.04.15 02:09:07 LOG5[0]: Service [btcd] connected remote server from 127.0.0.1:59985
+2021.04.15 02:09:07 LOG7[0]: Setting remote socket options (FD=10)
+2021.04.15 02:09:07 LOG7[0]: Option TCP_NODELAY set on remote socket
+2021.04.15 02:09:07 LOG7[0]: Remote descriptor (FD=10) initialized
+2021.04.15 02:09:07 LOG6[0]: SNI: sending servername: 127.0.0.1
+2021.04.15 02:09:07 LOG6[0]: Peer certificate not required
+2021.04.15 02:09:07 LOG7[0]: TLS state (connect): before SSL initialization
+2021.04.15 02:09:07 LOG7[0]: Initializing application specific data for session authenticated
+2021.04.15 02:09:07 LOG7[0]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:09:07 LOG7[0]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:09:07 LOG7[0]: TLS state (connect): SSLv3/TLS read server hello
+2021.04.15 02:09:07 LOG6[0]: Certificate verification disabled
+2021.04.15 02:09:07 LOG6[0]: Certificate verification disabled
+2021.04.15 02:09:07 LOG7[0]: TLS state (connect): SSLv3/TLS read server certificate
+2021.04.15 02:09:07 LOG7[0]: TLS state (connect): SSLv3/TLS read server key exchange
+2021.04.15 02:09:07 LOG6[0]: Client certificate not requested
+2021.04.15 02:09:07 LOG7[0]: TLS state (connect): SSLv3/TLS read server done
+2021.04.15 02:09:07 LOG7[0]: TLS state (connect): SSLv3/TLS write client key exchange
+2021.04.15 02:09:07 LOG7[0]: TLS state (connect): SSLv3/TLS write change cipher spec
+2021.04.15 02:09:07 LOG7[0]: TLS state (connect): SSLv3/TLS write finished
+2021.04.15 02:09:07 LOG7[0]: TLS state (connect): SSLv3/TLS write finished
+2021.04.15 02:09:07 LOG7[0]: TLS state (connect): SSLv3/TLS read server session ticket
+2021.04.15 02:09:07 LOG7[0]: TLS state (connect): SSLv3/TLS read change cipher spec
+2021.04.15 02:09:07 LOG7[0]: TLS state (connect): SSLv3/TLS read finished
+2021.04.15 02:09:07 LOG7[0]: New session callback
+2021.04.15 02:09:07 LOG7[0]: Peer certificate was cached (887 bytes)
+2021.04.15 02:09:07 LOG6[0]: Session id: 80FB2C85E8047E8B07D56DF23B387FE3D0F6EC30B54B56D61C4CA0A412F201A5
+2021.04.15 02:09:07 LOG7[0]:      1 client connect(s) requested
+2021.04.15 02:09:07 LOG7[0]:      1 client connect(s) succeeded
+2021.04.15 02:09:07 LOG7[0]:      0 client renegotiation(s) requested
+2021.04.15 02:09:07 LOG7[0]:      0 session reuse(s)
+2021.04.15 02:09:07 LOG6[0]: TLS connected: new session negotiated
+2021.04.15 02:09:07 LOG6[0]: TLSv1.2 ciphersuite: ECDHE-ECDSA-AES256-GCM-SHA384 (256-bit encryption)
+2021.04.15 02:09:07 LOG6[0]: Peer temporary key: X25519, 253 bits
+2021.04.15 02:09:07 LOG7[0]: Compression: null, expansion: null
+2021.04.15 02:09:07 LOG6[0]: TLS socket closed (write hangup)
+2021.04.15 02:09:07 LOG7[0]: TLS alert (read): warning: close notify
+2021.04.15 02:09:07 LOG6[0]: TLS closed (SSL_read)
+2021.04.15 02:09:07 LOG7[0]: Sent socket write shutdown
+2021.04.15 02:09:07 LOG5[0]: Connection closed: 210 byte(s) sent to TLS, 103 byte(s) sent to socket
+2021.04.15 02:09:07 LOG7[0]: Remote descriptor (FD=10) closed
+2021.04.15 02:09:07 LOG7[0]: Local descriptor (FD=3) closed
+2021.04.15 02:09:07 LOG7[0]: Service [btcd] finished (0 left)
+2021.04.15 02:10:39 LOG7[main]: Found 1 ready file descriptor(s)
+2021.04.15 02:10:39 LOG7[main]: FD=4 events=0x1 revents=0x0
+2021.04.15 02:10:39 LOG7[main]: FD=8 events=0x1 revents=0x1
+2021.04.15 02:10:39 LOG7[main]: Service [btcd] accepted (FD=3) from 127.0.0.1:59998
+2021.04.15 02:10:39 LOG7[1]: Service [btcd] started
+2021.04.15 02:10:39 LOG7[1]: Setting local socket options (FD=3)
+2021.04.15 02:10:39 LOG7[1]: Option TCP_NODELAY set on local socket
+2021.04.15 02:10:39 LOG5[1]: Service [btcd] accepted connection from 127.0.0.1:59998
+2021.04.15 02:10:39 LOG6[1]: s_connect: connecting 127.0.0.1:18556
+2021.04.15 02:10:39 LOG7[1]: s_connect: s_poll_wait 127.0.0.1:18556: waiting 10 seconds
+2021.04.15 02:10:39 LOG7[1]: FD=6 events=0x1 revents=0x0
+2021.04.15 02:10:39 LOG7[1]: FD=10 events=0x5 revents=0x0
+2021.04.15 02:10:39 LOG5[1]: s_connect: connected 127.0.0.1:18556
+2021.04.15 02:10:39 LOG5[1]: Service [btcd] connected remote server from 127.0.0.1:59999
+2021.04.15 02:10:39 LOG7[1]: Setting remote socket options (FD=10)
+2021.04.15 02:10:39 LOG7[1]: Option TCP_NODELAY set on remote socket
+2021.04.15 02:10:39 LOG7[1]: Remote descriptor (FD=10) initialized
+2021.04.15 02:10:39 LOG6[1]: SNI: sending servername: 127.0.0.1
+2021.04.15 02:10:39 LOG6[1]: Peer certificate not required
+2021.04.15 02:10:39 LOG7[1]: TLS state (connect): before SSL initialization
+2021.04.15 02:10:39 LOG7[1]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:10:39 LOG7[1]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:10:39 LOG7[1]: TLS state (connect): SSLv3/TLS read server hello
+2021.04.15 02:10:39 LOG7[1]: TLS state (connect): SSLv3/TLS read change cipher spec
+2021.04.15 02:10:39 LOG7[1]: TLS state (connect): SSLv3/TLS read finished
+2021.04.15 02:10:39 LOG7[1]: TLS state (connect): SSLv3/TLS write change cipher spec
+2021.04.15 02:10:39 LOG7[1]: TLS state (connect): SSLv3/TLS write finished
+2021.04.15 02:10:39 LOG7[1]:      2 client connect(s) requested
+2021.04.15 02:10:39 LOG7[1]:      2 client connect(s) succeeded
+2021.04.15 02:10:39 LOG7[1]:      0 client renegotiation(s) requested
+2021.04.15 02:10:39 LOG7[1]:      1 session reuse(s)
+2021.04.15 02:10:39 LOG6[1]: TLS connected: previous session reused
+2021.04.15 02:10:39 LOG6[1]: TLSv1.2 ciphersuite: ECDHE-ECDSA-AES256-GCM-SHA384 (256-bit encryption)
+2021.04.15 02:10:39 LOG3[1]: SSL_get_peer_tmp_key: Peer suddenly disconnected
+2021.04.15 02:10:39 LOG7[1]: Compression: null, expansion: null
+2021.04.15 02:10:39 LOG6[1]: Session id: 80FB2C85E8047E8B07D56DF23B387FE3D0F6EC30B54B56D61C4CA0A412F201A5
+2021.04.15 02:10:39 LOG6[1]: TLS socket closed (write hangup)
+2021.04.15 02:10:39 LOG7[1]: TLS alert (read): warning: close notify
+2021.04.15 02:10:39 LOG6[1]: TLS closed (SSL_read)
+2021.04.15 02:10:39 LOG7[1]: Sent socket write shutdown
+2021.04.15 02:10:39 LOG5[1]: Connection closed: 255 byte(s) sent to TLS, 629 byte(s) sent to socket
+2021.04.15 02:10:39 LOG7[1]: Remote descriptor (FD=10) closed
+2021.04.15 02:10:39 LOG7[1]: Local descriptor (FD=3) closed
+2021.04.15 02:10:39 LOG7[1]: Service [btcd] finished (0 left)
+2021.04.15 02:10:49 LOG7[main]: Found 1 ready file descriptor(s)
+2021.04.15 02:10:49 LOG7[main]: FD=4 events=0x1 revents=0x1
+2021.04.15 02:10:49 LOG7[main]: FD=8 events=0x1 revents=0x0
+2021.04.15 02:10:49 LOG7[main]: Dispatching a signal from the signal pipe
+2021.04.15 02:10:49 LOG7[main]: Processing SIGNAL_TERMINATE
+2021.04.15 02:10:49 LOG5[main]: Terminated
+2021.04.15 02:10:49 LOG7[main]: Leak detection table utilization: 99/997, 9.93%
+2021.04.15 02:10:49 LOG7[main]: No pid file to remove
+2021.04.15 02:10:49 LOG7[main]: Terminating the cron thread
+2021.04.15 02:10:49 LOG5[main]: Terminating 1 service thread(s)
+2021.04.15 02:10:49 LOG5[main]: Service threads terminated
+2021.04.15 02:10:49 LOG7[main]: Unbinding service [btcd]
+2021.04.15 02:10:49 LOG7[main]: Service [btcd] closed (FD=8)
+2021.04.15 02:10:49 LOG7[main]: Service [btcd] closed
+2021.04.15 02:10:59 LOG6[ui]: Initializing inetd mode configuration
+2021.04.15 02:10:59 LOG7[ui]: Clients allowed=125
+2021.04.15 02:10:59 LOG5[ui]: stunnel 5.59 on x86_64-apple-darwin20.3.0 platform
+2021.04.15 02:10:59 LOG5[ui]: Compiled/running with OpenSSL 1.1.1k  25 Mar 2021
+2021.04.15 02:10:59 LOG5[ui]: Threading:PTHREAD Sockets:POLL,IPv6 TLS:ENGINE,OCSP,PSK,SNI
+2021.04.15 02:10:59 LOG7[ui]: errno: (*__error())
+2021.04.15 02:10:59 LOG6[ui]: Initializing inetd mode configuration
+2021.04.15 02:10:59 LOG5[ui]: Reading configuration from file /Users/julian/src/crypto-playground/lightning-network/stunnel.conf
+2021.04.15 02:10:59 LOG5[ui]: UTF-8 byte order mark not detected
+2021.04.15 02:10:59 LOG5[ui]: FIPS mode disabled
+2021.04.15 02:10:59 LOG6[ui]: Compression enabled: 0 methods
+2021.04.15 02:10:59 LOG7[ui]: No PRNG seeding was required
+2021.04.15 02:10:59 LOG6[ui]: Initializing service [btcd]
+2021.04.15 02:10:59 LOG6[ui]: stunnel default security level set: 2
+2021.04.15 02:10:59 LOG7[ui]: Ciphers: HIGH:!aNULL:!SSLv2:!DH:!kDHEPSK
+2021.04.15 02:10:59 LOG7[ui]: TLSv1.3 ciphersuites: TLS_AES_256_GCM_SHA384:TLS_AES_128_GCM_SHA256:TLS_CHACHA20_POLY1305_SHA256
+2021.04.15 02:10:59 LOG7[ui]: TLS options: 0x02100004 (+0x00000000, -0x00000000)
+2021.04.15 02:10:59 LOG6[ui]: Loading certificate from file: /Users/julian/src/crypto-playground/lightning-network/certs/rpc.cert
+2021.04.15 02:10:59 LOG6[ui]: Certificate loaded from file: /Users/julian/src/crypto-playground/lightning-network/certs/rpc.cert
+2021.04.15 02:10:59 LOG6[ui]: Loading private key from file: /Users/julian/src/crypto-playground/lightning-network/certs/rpc.key
+2021.04.15 02:10:59 LOG6[ui]: Private key loaded from file: /Users/julian/src/crypto-playground/lightning-network/certs/rpc.key
+2021.04.15 02:10:59 LOG7[ui]: Private key check succeeded
+2021.04.15 02:10:59 LOG4[ui]: Service [btcd] needs authentication to prevent MITM attacks
+2021.04.15 02:10:59 LOG6[ui]: DH initialization skipped: client section
+2021.04.15 02:10:59 LOG7[ui]: ECDH initialization
+2021.04.15 02:10:59 LOG7[ui]: ECDH initialized with curves X25519:P-256:X448:P-521:P-384
+2021.04.15 02:10:59 LOG5[ui]: Configuration successful
+2021.04.15 02:10:59 LOG7[ui]: Deallocating deployed section defaults
+2021.04.15 02:10:59 LOG7[ui]: Binding service [btcd]
+2021.04.15 02:10:59 LOG7[ui]: Listening file descriptor created (FD=8)
+2021.04.15 02:10:59 LOG7[ui]: Setting accept socket options (FD=8)
+2021.04.15 02:10:59 LOG7[ui]: Option SO_REUSEADDR set on accept socket
+2021.04.15 02:10:59 LOG6[ui]: Service [btcd] (FD=8) bound to 127.0.0.1:28556
+2021.04.15 02:10:59 LOG7[main]: No pid file being created
+2021.04.15 02:10:59 LOG7[cron]: Cron thread initialized
+2021.04.15 02:10:59 LOG6[cron]: Executing cron jobs
+2021.04.15 02:10:59 LOG6[cron]: Cron jobs completed in 0 seconds
+2021.04.15 02:10:59 LOG7[cron]: Waiting 86400 seconds
+2021.04.15 02:11:01 LOG7[main]: Found 1 ready file descriptor(s)
+2021.04.15 02:11:01 LOG7[main]: FD=4 events=0x1 revents=0x0
+2021.04.15 02:11:01 LOG7[main]: FD=8 events=0x1 revents=0x1
+2021.04.15 02:11:01 LOG7[main]: Service [btcd] accepted (FD=3) from 127.0.0.1:60003
+2021.04.15 02:11:01 LOG7[0]: Service [btcd] started
+2021.04.15 02:11:01 LOG7[0]: Setting local socket options (FD=3)
+2021.04.15 02:11:01 LOG7[0]: Option TCP_NODELAY set on local socket
+2021.04.15 02:11:01 LOG5[0]: Service [btcd] accepted connection from 127.0.0.1:60003
+2021.04.15 02:11:01 LOG6[0]: s_connect: connecting 127.0.0.1:18556
+2021.04.15 02:11:01 LOG7[0]: s_connect: s_poll_wait 127.0.0.1:18556: waiting 10 seconds
+2021.04.15 02:11:01 LOG7[0]: FD=6 events=0x1 revents=0x0
+2021.04.15 02:11:01 LOG7[0]: FD=10 events=0x5 revents=0x0
+2021.04.15 02:11:01 LOG5[0]: s_connect: connected 127.0.0.1:18556
+2021.04.15 02:11:01 LOG5[0]: Service [btcd] connected remote server from 127.0.0.1:60004
+2021.04.15 02:11:01 LOG7[0]: Setting remote socket options (FD=10)
+2021.04.15 02:11:01 LOG7[0]: Option TCP_NODELAY set on remote socket
+2021.04.15 02:11:01 LOG7[0]: Remote descriptor (FD=10) initialized
+2021.04.15 02:11:01 LOG6[0]: SNI: sending servername: 127.0.0.1
+2021.04.15 02:11:01 LOG6[0]: Peer certificate not required
+2021.04.15 02:11:01 LOG7[0]: TLS state (connect): before SSL initialization
+2021.04.15 02:11:01 LOG7[0]: Initializing application specific data for session authenticated
+2021.04.15 02:11:01 LOG7[0]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:11:01 LOG7[0]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:11:01 LOG7[0]: TLS state (connect): SSLv3/TLS read server hello
+2021.04.15 02:11:01 LOG7[0]: TLS state (connect): TLSv1.3 read encrypted extensions
+2021.04.15 02:11:01 LOG6[0]: Certificate verification disabled
+2021.04.15 02:11:01 LOG6[0]: Certificate verification disabled
+2021.04.15 02:11:01 LOG7[0]: TLS state (connect): SSLv3/TLS read server certificate
+2021.04.15 02:11:01 LOG7[0]: TLS state (connect): TLSv1.3 read server certificate verify
+2021.04.15 02:11:01 LOG7[0]: TLS state (connect): SSLv3/TLS read finished
+2021.04.15 02:11:01 LOG7[0]: TLS state (connect): SSLv3/TLS write change cipher spec
+2021.04.15 02:11:01 LOG7[0]: TLS state (connect): SSLv3/TLS write finished
+2021.04.15 02:11:01 LOG7[0]:      1 client connect(s) requested
+2021.04.15 02:11:01 LOG7[0]:      1 client connect(s) succeeded
+2021.04.15 02:11:01 LOG7[0]:      0 client renegotiation(s) requested
+2021.04.15 02:11:01 LOG7[0]:      0 session reuse(s)
+2021.04.15 02:11:01 LOG6[0]: TLS connected: new session negotiated
+2021.04.15 02:11:01 LOG6[0]: TLSv1.3 ciphersuite: TLS_AES_256_GCM_SHA384 (256-bit encryption)
+2021.04.15 02:11:01 LOG6[0]: Peer temporary key: X25519, 253 bits
+2021.04.15 02:11:01 LOG7[0]: Compression: null, expansion: null
+2021.04.15 02:11:01 LOG7[0]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:11:01 LOG7[0]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:11:01 LOG7[0]: Initializing application specific data for session authenticated
+2021.04.15 02:11:01 LOG7[0]: Deallocating application specific data for session connect address
+2021.04.15 02:11:01 LOG7[0]: New session callback
+2021.04.15 02:11:01 LOG7[0]: Peer certificate was cached (887 bytes)
+2021.04.15 02:11:01 LOG6[0]: Session id: 29D5CAAD6671449D8F13EA7E1AC33FAD4AB8C7EF8C1F09DC1EA586DF2C1B9C3C
+2021.04.15 02:11:01 LOG7[0]: TLS state (connect): SSLv3/TLS read server session ticket
+2021.04.15 02:11:01 LOG6[0]: TLS socket closed (write hangup)
+2021.04.15 02:11:01 LOG7[0]: TLS alert (read): warning: close notify
+2021.04.15 02:11:01 LOG6[0]: TLS closed (SSL_read)
+2021.04.15 02:11:01 LOG7[0]: Sent socket write shutdown
+2021.04.15 02:11:01 LOG5[0]: Connection closed: 255 byte(s) sent to TLS, 629 byte(s) sent to socket
+2021.04.15 02:11:01 LOG7[0]: Remote descriptor (FD=10) closed
+2021.04.15 02:11:01 LOG7[0]: Local descriptor (FD=3) closed
+2021.04.15 02:11:01 LOG7[0]: Service [btcd] finished (0 left)
+2021.04.15 02:11:14 LOG7[main]: Found 1 ready file descriptor(s)
+2021.04.15 02:11:14 LOG7[main]: FD=4 events=0x1 revents=0x0
+2021.04.15 02:11:14 LOG7[main]: FD=8 events=0x1 revents=0x1
+2021.04.15 02:11:14 LOG7[main]: Service [btcd] accepted (FD=3) from 127.0.0.1:60016
+2021.04.15 02:11:14 LOG7[1]: Service [btcd] started
+2021.04.15 02:11:14 LOG7[1]: Setting local socket options (FD=3)
+2021.04.15 02:11:14 LOG7[1]: Option TCP_NODELAY set on local socket
+2021.04.15 02:11:14 LOG5[1]: Service [btcd] accepted connection from 127.0.0.1:60016
+2021.04.15 02:11:14 LOG6[1]: s_connect: connecting 127.0.0.1:18556
+2021.04.15 02:11:14 LOG7[1]: s_connect: s_poll_wait 127.0.0.1:18556: waiting 10 seconds
+2021.04.15 02:11:14 LOG7[1]: FD=6 events=0x1 revents=0x0
+2021.04.15 02:11:14 LOG7[1]: FD=10 events=0x5 revents=0x0
+2021.04.15 02:11:14 LOG5[1]: s_connect: connected 127.0.0.1:18556
+2021.04.15 02:11:14 LOG5[1]: Service [btcd] connected remote server from 127.0.0.1:60017
+2021.04.15 02:11:14 LOG7[1]: Setting remote socket options (FD=10)
+2021.04.15 02:11:14 LOG7[1]: Option TCP_NODELAY set on remote socket
+2021.04.15 02:11:14 LOG7[1]: Remote descriptor (FD=10) initialized
+2021.04.15 02:11:14 LOG6[1]: SNI: sending servername: 127.0.0.1
+2021.04.15 02:11:14 LOG6[1]: Peer certificate not required
+2021.04.15 02:11:14 LOG7[1]: TLS state (connect): before SSL initialization
+2021.04.15 02:11:14 LOG7[1]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:11:14 LOG7[1]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:11:14 LOG7[1]: TLS state (connect): SSLv3/TLS read server hello
+2021.04.15 02:11:14 LOG7[1]: TLS state (connect): TLSv1.3 read encrypted extensions
+2021.04.15 02:11:14 LOG7[1]: TLS state (connect): SSLv3/TLS read finished
+2021.04.15 02:11:14 LOG7[1]: TLS state (connect): SSLv3/TLS write change cipher spec
+2021.04.15 02:11:14 LOG7[1]: TLS state (connect): SSLv3/TLS write finished
+2021.04.15 02:11:14 LOG7[1]: Remove session callback
+2021.04.15 02:11:14 LOG7[1]:      2 client connect(s) requested
+2021.04.15 02:11:14 LOG7[1]:      2 client connect(s) succeeded
+2021.04.15 02:11:14 LOG7[1]:      0 client renegotiation(s) requested
+2021.04.15 02:11:14 LOG7[1]:      1 session reuse(s)
+2021.04.15 02:11:14 LOG6[1]: TLS connected: previous session reused
+2021.04.15 02:11:14 LOG6[1]: TLSv1.3 ciphersuite: TLS_AES_256_GCM_SHA384 (256-bit encryption)
+2021.04.15 02:11:14 LOG6[1]: Peer temporary key: X25519, 253 bits
+2021.04.15 02:11:14 LOG7[1]: Compression: null, expansion: null
+2021.04.15 02:11:14 LOG6[1]: Session id: 29D5CAAD6671449D8F13EA7E1AC33FAD4AB8C7EF8C1F09DC1EA586DF2C1B9C3C
+2021.04.15 02:11:14 LOG7[1]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:11:14 LOG7[1]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:11:14 LOG7[1]: Initializing application specific data for session authenticated
+2021.04.15 02:11:14 LOG7[1]: New session callback
+2021.04.15 02:11:14 LOG7[1]: Deallocating application specific data for session connect address
+2021.04.15 02:11:14 LOG6[1]: Session id: D351FF98B4D75A900DB4916A92C3F485FB51B2B1328CBC1C6D2B71390130E44D
+2021.04.15 02:11:14 LOG7[1]: TLS state (connect): SSLv3/TLS read server session ticket
+2021.04.15 02:11:14 LOG6[1]: TLS socket closed (write hangup)
+2021.04.15 02:11:14 LOG7[1]: TLS alert (read): warning: close notify
+2021.04.15 02:11:14 LOG6[1]: TLS closed (SSL_read)
+2021.04.15 02:11:14 LOG7[1]: Sent socket write shutdown
+2021.04.15 02:11:14 LOG5[1]: Connection closed: 260 byte(s) sent to TLS, 177 byte(s) sent to socket
+2021.04.15 02:11:14 LOG7[1]: Remote descriptor (FD=10) closed
+2021.04.15 02:11:14 LOG7[1]: Local descriptor (FD=3) closed
+2021.04.15 02:11:14 LOG7[1]: Service [btcd] finished (0 left)
+2021.04.15 02:48:23 LOG7[main]: Found 1 ready file descriptor(s)
+2021.04.15 02:48:23 LOG7[main]: FD=4 events=0x1 revents=0x0
+2021.04.15 02:48:23 LOG7[main]: FD=8 events=0x1 revents=0x1
+2021.04.15 02:48:23 LOG7[main]: Service [btcd] accepted (FD=3) from 127.0.0.1:60966
+2021.04.15 02:48:23 LOG7[2]: Service [btcd] started
+2021.04.15 02:48:23 LOG7[2]: Setting local socket options (FD=3)
+2021.04.15 02:48:23 LOG7[2]: Option TCP_NODELAY set on local socket
+2021.04.15 02:48:23 LOG5[2]: Service [btcd] accepted connection from 127.0.0.1:60966
+2021.04.15 02:48:23 LOG6[2]: s_connect: connecting 127.0.0.1:18556
+2021.04.15 02:48:23 LOG7[2]: s_connect: s_poll_wait 127.0.0.1:18556: waiting 10 seconds
+2021.04.15 02:48:23 LOG7[2]: FD=6 events=0x1 revents=0x0
+2021.04.15 02:48:23 LOG7[2]: FD=10 events=0x5 revents=0x0
+2021.04.15 02:48:23 LOG5[2]: s_connect: connected 127.0.0.1:18556
+2021.04.15 02:48:23 LOG5[2]: Service [btcd] connected remote server from 127.0.0.1:60967
+2021.04.15 02:48:23 LOG7[2]: Setting remote socket options (FD=10)
+2021.04.15 02:48:23 LOG7[2]: Option TCP_NODELAY set on remote socket
+2021.04.15 02:48:23 LOG7[2]: Remote descriptor (FD=10) initialized
+2021.04.15 02:48:23 LOG6[2]: SNI: sending servername: 127.0.0.1
+2021.04.15 02:48:23 LOG6[2]: Peer certificate not required
+2021.04.15 02:48:23 LOG7[2]: TLS state (connect): before SSL initialization
+2021.04.15 02:48:23 LOG7[2]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:48:23 LOG7[2]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:48:23 LOG7[2]: Initializing application specific data for session authenticated
+2021.04.15 02:48:23 LOG7[2]: TLS state (connect): SSLv3/TLS read server hello
+2021.04.15 02:48:23 LOG7[2]: TLS state (connect): TLSv1.3 read encrypted extensions
+2021.04.15 02:48:23 LOG6[2]: Certificate verification disabled
+2021.04.15 02:48:23 LOG6[2]: Certificate verification disabled
+2021.04.15 02:48:23 LOG7[2]: TLS state (connect): SSLv3/TLS read server certificate
+2021.04.15 02:48:23 LOG7[2]: TLS state (connect): TLSv1.3 read server certificate verify
+2021.04.15 02:48:23 LOG7[2]: TLS state (connect): SSLv3/TLS read finished
+2021.04.15 02:48:23 LOG7[2]: TLS state (connect): SSLv3/TLS write change cipher spec
+2021.04.15 02:48:23 LOG7[2]: TLS state (connect): SSLv3/TLS write finished
+2021.04.15 02:48:23 LOG7[2]:      3 client connect(s) requested
+2021.04.15 02:48:23 LOG7[2]:      3 client connect(s) succeeded
+2021.04.15 02:48:23 LOG7[2]:      0 client renegotiation(s) requested
+2021.04.15 02:48:23 LOG7[2]:      1 session reuse(s)
+2021.04.15 02:48:23 LOG6[2]: TLS connected: new session negotiated
+2021.04.15 02:48:23 LOG6[2]: TLSv1.3 ciphersuite: TLS_AES_256_GCM_SHA384 (256-bit encryption)
+2021.04.15 02:48:23 LOG6[2]: Peer temporary key: X25519, 253 bits
+2021.04.15 02:48:23 LOG7[2]: Compression: null, expansion: null
+2021.04.15 02:48:23 LOG7[2]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:48:23 LOG7[2]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:48:23 LOG7[2]: Initializing application specific data for session authenticated
+2021.04.15 02:48:23 LOG7[2]: Deallocating application specific data for session connect address
+2021.04.15 02:48:23 LOG7[2]: New session callback
+2021.04.15 02:48:23 LOG7[2]: Deallocating application specific data for session connect address
+2021.04.15 02:48:23 LOG6[2]: Session id: 243E14ACE68E13EFAF241E074EBE0DECE9116058F6FF32FC824EC84C5943F6DB
+2021.04.15 02:48:23 LOG7[2]: TLS state (connect): SSLv3/TLS read server session ticket
+2021.04.15 02:48:23 LOG6[2]: TLS socket closed (write hangup)
+2021.04.15 02:48:23 LOG7[2]: TLS alert (read): warning: close notify
+2021.04.15 02:48:23 LOG6[2]: TLS closed (SSL_read)
+2021.04.15 02:48:23 LOG7[2]: Sent socket write shutdown
+2021.04.15 02:48:23 LOG5[2]: Connection closed: 260 byte(s) sent to TLS, 239 byte(s) sent to socket
+2021.04.15 02:48:23 LOG7[2]: Remote descriptor (FD=10) closed
+2021.04.15 02:48:23 LOG7[2]: Local descriptor (FD=3) closed
+2021.04.15 02:48:23 LOG7[2]: Service [btcd] finished (0 left)
+2021.04.15 02:49:18 LOG7[main]: Found 1 ready file descriptor(s)
+2021.04.15 02:49:18 LOG7[main]: FD=4 events=0x1 revents=0x0
+2021.04.15 02:49:18 LOG7[main]: FD=8 events=0x1 revents=0x1
+2021.04.15 02:49:18 LOG7[main]: Service [btcd] accepted (FD=3) from 127.0.0.1:60984
+2021.04.15 02:49:18 LOG7[3]: Service [btcd] started
+2021.04.15 02:49:18 LOG7[3]: Setting local socket options (FD=3)
+2021.04.15 02:49:18 LOG7[3]: Option TCP_NODELAY set on local socket
+2021.04.15 02:49:18 LOG5[3]: Service [btcd] accepted connection from 127.0.0.1:60984
+2021.04.15 02:49:18 LOG6[3]: s_connect: connecting 127.0.0.1:18556
+2021.04.15 02:49:18 LOG7[3]: s_connect: s_poll_wait 127.0.0.1:18556: waiting 10 seconds
+2021.04.15 02:49:18 LOG7[3]: FD=6 events=0x1 revents=0x0
+2021.04.15 02:49:18 LOG7[3]: FD=10 events=0x5 revents=0x0
+2021.04.15 02:49:18 LOG5[3]: s_connect: connected 127.0.0.1:18556
+2021.04.15 02:49:18 LOG5[3]: Service [btcd] connected remote server from 127.0.0.1:60985
+2021.04.15 02:49:18 LOG7[3]: Setting remote socket options (FD=10)
+2021.04.15 02:49:18 LOG7[3]: Option TCP_NODELAY set on remote socket
+2021.04.15 02:49:18 LOG7[3]: Remote descriptor (FD=10) initialized
+2021.04.15 02:49:18 LOG6[3]: SNI: sending servername: 127.0.0.1
+2021.04.15 02:49:18 LOG6[3]: Peer certificate not required
+2021.04.15 02:49:18 LOG7[3]: TLS state (connect): before SSL initialization
+2021.04.15 02:49:18 LOG7[3]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:49:18 LOG7[3]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:49:18 LOG7[3]: Initializing application specific data for session authenticated
+2021.04.15 02:49:18 LOG7[3]: TLS state (connect): SSLv3/TLS read server hello
+2021.04.15 02:49:18 LOG7[3]: TLS state (connect): TLSv1.3 read encrypted extensions
+2021.04.15 02:49:18 LOG6[3]: Certificate verification disabled
+2021.04.15 02:49:18 LOG6[3]: Certificate verification disabled
+2021.04.15 02:49:18 LOG7[3]: TLS state (connect): SSLv3/TLS read server certificate
+2021.04.15 02:49:18 LOG7[3]: TLS state (connect): TLSv1.3 read server certificate verify
+2021.04.15 02:49:18 LOG7[3]: TLS state (connect): SSLv3/TLS read finished
+2021.04.15 02:49:18 LOG7[3]: TLS state (connect): SSLv3/TLS write change cipher spec
+2021.04.15 02:49:18 LOG7[3]: TLS state (connect): SSLv3/TLS write finished
+2021.04.15 02:49:18 LOG7[3]:      4 client connect(s) requested
+2021.04.15 02:49:18 LOG7[3]:      4 client connect(s) succeeded
+2021.04.15 02:49:18 LOG7[3]:      0 client renegotiation(s) requested
+2021.04.15 02:49:18 LOG7[3]:      1 session reuse(s)
+2021.04.15 02:49:18 LOG6[3]: TLS connected: new session negotiated
+2021.04.15 02:49:18 LOG6[3]: TLSv1.3 ciphersuite: TLS_AES_256_GCM_SHA384 (256-bit encryption)
+2021.04.15 02:49:18 LOG6[3]: Peer temporary key: X25519, 253 bits
+2021.04.15 02:49:18 LOG7[3]: Compression: null, expansion: null
+2021.04.15 02:49:18 LOG7[3]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:49:18 LOG7[3]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:49:18 LOG7[3]: Initializing application specific data for session authenticated
+2021.04.15 02:49:18 LOG7[3]: Deallocating application specific data for session connect address
+2021.04.15 02:49:18 LOG7[3]: New session callback
+2021.04.15 02:49:18 LOG7[3]: Deallocating application specific data for session connect address
+2021.04.15 02:49:18 LOG6[3]: Session id: F5B9C0AF90C33AAD3630F781E98695C6947294DC156272BEE2A5100DA0FA8EDF
+2021.04.15 02:49:18 LOG7[3]: TLS state (connect): SSLv3/TLS read server session ticket
+2021.04.15 02:49:18 LOG6[3]: TLS socket closed (write hangup)
+2021.04.15 02:49:18 LOG7[3]: TLS alert (read): warning: close notify
+2021.04.15 02:49:18 LOG6[3]: TLS closed (SSL_read)
+2021.04.15 02:49:18 LOG7[3]: Sent socket write shutdown
+2021.04.15 02:49:18 LOG5[3]: Connection closed: 260 byte(s) sent to TLS, 170 byte(s) sent to socket
+2021.04.15 02:49:18 LOG7[3]: Remote descriptor (FD=10) closed
+2021.04.15 02:49:18 LOG7[3]: Local descriptor (FD=3) closed
+2021.04.15 02:49:18 LOG7[3]: Service [btcd] finished (0 left)
+2021.04.15 02:49:39 LOG7[main]: Found 1 ready file descriptor(s)
+2021.04.15 02:49:39 LOG7[main]: FD=4 events=0x1 revents=0x0
+2021.04.15 02:49:39 LOG7[main]: FD=8 events=0x1 revents=0x1
+2021.04.15 02:49:39 LOG7[main]: Service [btcd] accepted (FD=3) from 127.0.0.1:60991
+2021.04.15 02:49:39 LOG7[4]: Service [btcd] started
+2021.04.15 02:49:39 LOG7[4]: Setting local socket options (FD=3)
+2021.04.15 02:49:39 LOG7[4]: Option TCP_NODELAY set on local socket
+2021.04.15 02:49:39 LOG5[4]: Service [btcd] accepted connection from 127.0.0.1:60991
+2021.04.15 02:49:39 LOG6[4]: s_connect: connecting 127.0.0.1:18556
+2021.04.15 02:49:39 LOG7[4]: s_connect: s_poll_wait 127.0.0.1:18556: waiting 10 seconds
+2021.04.15 02:49:39 LOG7[4]: FD=6 events=0x1 revents=0x0
+2021.04.15 02:49:39 LOG7[4]: FD=10 events=0x5 revents=0x0
+2021.04.15 02:49:39 LOG5[4]: s_connect: connected 127.0.0.1:18556
+2021.04.15 02:49:39 LOG5[4]: Service [btcd] connected remote server from 127.0.0.1:60992
+2021.04.15 02:49:39 LOG7[4]: Setting remote socket options (FD=10)
+2021.04.15 02:49:39 LOG7[4]: Option TCP_NODELAY set on remote socket
+2021.04.15 02:49:39 LOG7[4]: Remote descriptor (FD=10) initialized
+2021.04.15 02:49:39 LOG6[4]: SNI: sending servername: 127.0.0.1
+2021.04.15 02:49:39 LOG6[4]: Peer certificate not required
+2021.04.15 02:49:39 LOG7[4]: TLS state (connect): before SSL initialization
+2021.04.15 02:49:39 LOG7[4]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:49:39 LOG7[4]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:49:39 LOG7[4]: TLS state (connect): SSLv3/TLS read server hello
+2021.04.15 02:49:39 LOG7[4]: TLS state (connect): TLSv1.3 read encrypted extensions
+2021.04.15 02:49:39 LOG7[4]: TLS state (connect): SSLv3/TLS read finished
+2021.04.15 02:49:39 LOG7[4]: TLS state (connect): SSLv3/TLS write change cipher spec
+2021.04.15 02:49:39 LOG7[4]: TLS state (connect): SSLv3/TLS write finished
+2021.04.15 02:49:39 LOG7[4]: Remove session callback
+2021.04.15 02:49:39 LOG7[4]:      5 client connect(s) requested
+2021.04.15 02:49:39 LOG7[4]:      5 client connect(s) succeeded
+2021.04.15 02:49:39 LOG7[4]:      0 client renegotiation(s) requested
+2021.04.15 02:49:39 LOG7[4]:      2 session reuse(s)
+2021.04.15 02:49:39 LOG6[4]: TLS connected: previous session reused
+2021.04.15 02:49:39 LOG6[4]: TLSv1.3 ciphersuite: TLS_AES_256_GCM_SHA384 (256-bit encryption)
+2021.04.15 02:49:39 LOG6[4]: Peer temporary key: X25519, 253 bits
+2021.04.15 02:49:39 LOG7[4]: Compression: null, expansion: null
+2021.04.15 02:49:39 LOG6[4]: Session id: F5B9C0AF90C33AAD3630F781E98695C6947294DC156272BEE2A5100DA0FA8EDF
+2021.04.15 02:49:39 LOG7[4]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:49:39 LOG7[4]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:49:39 LOG7[4]: Initializing application specific data for session authenticated
+2021.04.15 02:49:39 LOG7[4]: New session callback
+2021.04.15 02:49:39 LOG7[4]: Deallocating application specific data for session connect address
+2021.04.15 02:49:39 LOG6[4]: Session id: 7EC4F09B8F559260E61B6DBF256962E094298B27AAE907FB847A726D537E2F02
+2021.04.15 02:49:39 LOG7[4]: TLS state (connect): SSLv3/TLS read server session ticket
+2021.04.15 02:49:39 LOG7[4]: TLS alert (read): warning: close notify
+2021.04.15 02:49:39 LOG6[4]: TLS closed (SSL_read)
+2021.04.15 02:49:39 LOG7[4]: Sent socket write shutdown
+2021.04.15 02:49:39 LOG6[4]: Read socket closed (readsocket)
+2021.04.15 02:49:39 LOG7[4]: Sending close_notify alert
+2021.04.15 02:49:39 LOG7[4]: TLS alert (write): warning: close notify
+2021.04.15 02:49:39 LOG6[4]: SSL_shutdown successfully sent close_notify alert
+2021.04.15 02:49:39 LOG5[4]: Connection closed: 260 byte(s) sent to TLS, 170 byte(s) sent to socket
+2021.04.15 02:49:39 LOG7[4]: Remote descriptor (FD=10) closed
+2021.04.15 02:49:39 LOG7[4]: Local descriptor (FD=3) closed
+2021.04.15 02:49:39 LOG7[4]: Service [btcd] finished (0 left)
+2021.04.15 02:49:45 LOG7[main]: Found 1 ready file descriptor(s)
+2021.04.15 02:49:45 LOG7[main]: FD=4 events=0x1 revents=0x0
+2021.04.15 02:49:45 LOG7[main]: FD=8 events=0x1 revents=0x1
+2021.04.15 02:49:45 LOG7[main]: Service [btcd] accepted (FD=3) from 127.0.0.1:60996
+2021.04.15 02:49:45 LOG7[5]: Service [btcd] started
+2021.04.15 02:49:45 LOG7[5]: Setting local socket options (FD=3)
+2021.04.15 02:49:45 LOG7[5]: Option TCP_NODELAY set on local socket
+2021.04.15 02:49:45 LOG5[5]: Service [btcd] accepted connection from 127.0.0.1:60996
+2021.04.15 02:49:45 LOG6[5]: s_connect: connecting 127.0.0.1:18556
+2021.04.15 02:49:45 LOG7[5]: s_connect: s_poll_wait 127.0.0.1:18556: waiting 10 seconds
+2021.04.15 02:49:45 LOG7[5]: FD=6 events=0x1 revents=0x0
+2021.04.15 02:49:45 LOG7[5]: FD=10 events=0x5 revents=0x0
+2021.04.15 02:49:45 LOG5[5]: s_connect: connected 127.0.0.1:18556
+2021.04.15 02:49:45 LOG5[5]: Service [btcd] connected remote server from 127.0.0.1:60997
+2021.04.15 02:49:45 LOG7[5]: Setting remote socket options (FD=10)
+2021.04.15 02:49:45 LOG7[5]: Option TCP_NODELAY set on remote socket
+2021.04.15 02:49:45 LOG7[5]: Remote descriptor (FD=10) initialized
+2021.04.15 02:49:45 LOG6[5]: SNI: sending servername: 127.0.0.1
+2021.04.15 02:49:45 LOG6[5]: Peer certificate not required
+2021.04.15 02:49:45 LOG7[5]: TLS state (connect): before SSL initialization
+2021.04.15 02:49:45 LOG7[5]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:49:45 LOG7[5]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:49:45 LOG7[5]: TLS state (connect): SSLv3/TLS read server hello
+2021.04.15 02:49:45 LOG7[5]: TLS state (connect): TLSv1.3 read encrypted extensions
+2021.04.15 02:49:45 LOG7[5]: TLS state (connect): SSLv3/TLS read finished
+2021.04.15 02:49:45 LOG7[5]: TLS state (connect): SSLv3/TLS write change cipher spec
+2021.04.15 02:49:45 LOG7[5]: TLS state (connect): SSLv3/TLS write finished
+2021.04.15 02:49:45 LOG7[5]: Remove session callback
+2021.04.15 02:49:45 LOG7[5]:      6 client connect(s) requested
+2021.04.15 02:49:45 LOG7[5]:      6 client connect(s) succeeded
+2021.04.15 02:49:45 LOG7[5]:      0 client renegotiation(s) requested
+2021.04.15 02:49:45 LOG7[5]:      3 session reuse(s)
+2021.04.15 02:49:45 LOG6[5]: TLS connected: previous session reused
+2021.04.15 02:49:45 LOG6[5]: TLSv1.3 ciphersuite: TLS_AES_256_GCM_SHA384 (256-bit encryption)
+2021.04.15 02:49:45 LOG6[5]: Peer temporary key: X25519, 253 bits
+2021.04.15 02:49:45 LOG7[5]: Compression: null, expansion: null
+2021.04.15 02:49:45 LOG6[5]: Session id: 7EC4F09B8F559260E61B6DBF256962E094298B27AAE907FB847A726D537E2F02
+2021.04.15 02:49:45 LOG7[5]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:49:45 LOG7[5]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:49:45 LOG7[5]: Initializing application specific data for session authenticated
+2021.04.15 02:49:45 LOG7[5]: New session callback
+2021.04.15 02:49:45 LOG7[5]: Deallocating application specific data for session connect address
+2021.04.15 02:49:45 LOG6[5]: Session id: 6921B7612E652544C441FDA2F07CA051CAD4D1B81B460EFB14CE4ED09860C9F6
+2021.04.15 02:49:45 LOG7[5]: TLS state (connect): SSLv3/TLS read server session ticket
+2021.04.15 02:49:45 LOG6[5]: TLS socket closed (write hangup)
+2021.04.15 02:49:45 LOG7[5]: TLS alert (read): warning: close notify
+2021.04.15 02:49:45 LOG6[5]: TLS closed (SSL_read)
+2021.04.15 02:49:45 LOG7[5]: Sent socket write shutdown
+2021.04.15 02:49:45 LOG5[5]: Connection closed: 260 byte(s) sent to TLS, 170 byte(s) sent to socket
+2021.04.15 02:49:45 LOG7[5]: Remote descriptor (FD=10) closed
+2021.04.15 02:49:45 LOG7[5]: Local descriptor (FD=3) closed
+2021.04.15 02:49:45 LOG7[5]: Service [btcd] finished (0 left)
+2021.04.15 02:49:51 LOG7[main]: Found 1 ready file descriptor(s)
+2021.04.15 02:49:51 LOG7[main]: FD=4 events=0x1 revents=0x0
+2021.04.15 02:49:51 LOG7[main]: FD=8 events=0x1 revents=0x1
+2021.04.15 02:49:51 LOG7[main]: Service [btcd] accepted (FD=3) from 127.0.0.1:61002
+2021.04.15 02:49:51 LOG7[6]: Service [btcd] started
+2021.04.15 02:49:51 LOG7[6]: Setting local socket options (FD=3)
+2021.04.15 02:49:51 LOG7[6]: Option TCP_NODELAY set on local socket
+2021.04.15 02:49:51 LOG5[6]: Service [btcd] accepted connection from 127.0.0.1:61002
+2021.04.15 02:49:51 LOG6[6]: s_connect: connecting 127.0.0.1:18556
+2021.04.15 02:49:51 LOG7[6]: s_connect: s_poll_wait 127.0.0.1:18556: waiting 10 seconds
+2021.04.15 02:49:51 LOG7[6]: FD=6 events=0x1 revents=0x0
+2021.04.15 02:49:51 LOG7[6]: FD=10 events=0x5 revents=0x0
+2021.04.15 02:49:51 LOG5[6]: s_connect: connected 127.0.0.1:18556
+2021.04.15 02:49:51 LOG5[6]: Service [btcd] connected remote server from 127.0.0.1:61003
+2021.04.15 02:49:51 LOG7[6]: Setting remote socket options (FD=10)
+2021.04.15 02:49:51 LOG7[6]: Option TCP_NODELAY set on remote socket
+2021.04.15 02:49:51 LOG7[6]: Remote descriptor (FD=10) initialized
+2021.04.15 02:49:51 LOG6[6]: SNI: sending servername: 127.0.0.1
+2021.04.15 02:49:51 LOG6[6]: Peer certificate not required
+2021.04.15 02:49:51 LOG7[6]: TLS state (connect): before SSL initialization
+2021.04.15 02:49:51 LOG7[6]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:49:51 LOG7[6]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:49:51 LOG7[6]: TLS state (connect): SSLv3/TLS read server hello
+2021.04.15 02:49:51 LOG7[6]: TLS state (connect): TLSv1.3 read encrypted extensions
+2021.04.15 02:49:51 LOG7[6]: TLS state (connect): SSLv3/TLS read finished
+2021.04.15 02:49:51 LOG7[6]: TLS state (connect): SSLv3/TLS write change cipher spec
+2021.04.15 02:49:51 LOG7[6]: TLS state (connect): SSLv3/TLS write finished
+2021.04.15 02:49:51 LOG7[6]: Remove session callback
+2021.04.15 02:49:51 LOG7[6]:      7 client connect(s) requested
+2021.04.15 02:49:51 LOG7[6]:      7 client connect(s) succeeded
+2021.04.15 02:49:51 LOG7[6]:      0 client renegotiation(s) requested
+2021.04.15 02:49:51 LOG7[6]:      4 session reuse(s)
+2021.04.15 02:49:51 LOG6[6]: TLS connected: previous session reused
+2021.04.15 02:49:51 LOG6[6]: TLSv1.3 ciphersuite: TLS_AES_256_GCM_SHA384 (256-bit encryption)
+2021.04.15 02:49:51 LOG6[6]: Peer temporary key: X25519, 253 bits
+2021.04.15 02:49:51 LOG7[6]: Compression: null, expansion: null
+2021.04.15 02:49:51 LOG6[6]: Session id: 6921B7612E652544C441FDA2F07CA051CAD4D1B81B460EFB14CE4ED09860C9F6
+2021.04.15 02:49:51 LOG7[6]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:49:51 LOG7[6]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:49:51 LOG7[6]: Initializing application specific data for session authenticated
+2021.04.15 02:49:51 LOG7[6]: New session callback
+2021.04.15 02:49:51 LOG7[6]: Deallocating application specific data for session connect address
+2021.04.15 02:49:51 LOG6[6]: Session id: 21662527879DB53412DD884D16A13D3F2ED762A12C973E1A6DC27DFE8B65BC4F
+2021.04.15 02:49:51 LOG7[6]: TLS state (connect): SSLv3/TLS read server session ticket
+2021.04.15 02:49:51 LOG6[6]: TLS socket closed (write hangup)
+2021.04.15 02:49:51 LOG7[6]: TLS alert (read): warning: close notify
+2021.04.15 02:49:51 LOG6[6]: TLS closed (SSL_read)
+2021.04.15 02:49:51 LOG7[6]: Sent socket write shutdown
+2021.04.15 02:49:51 LOG5[6]: Connection closed: 260 byte(s) sent to TLS, 170 byte(s) sent to socket
+2021.04.15 02:49:51 LOG7[6]: Remote descriptor (FD=10) closed
+2021.04.15 02:49:51 LOG7[6]: Local descriptor (FD=3) closed
+2021.04.15 02:49:51 LOG7[6]: Service [btcd] finished (0 left)
+2021.04.15 02:49:54 LOG7[main]: Found 1 ready file descriptor(s)
+2021.04.15 02:49:54 LOG7[main]: FD=4 events=0x1 revents=0x0
+2021.04.15 02:49:54 LOG7[main]: FD=8 events=0x1 revents=0x1
+2021.04.15 02:49:54 LOG7[main]: Service [btcd] accepted (FD=3) from 127.0.0.1:61006
+2021.04.15 02:49:54 LOG7[7]: Service [btcd] started
+2021.04.15 02:49:54 LOG7[7]: Setting local socket options (FD=3)
+2021.04.15 02:49:54 LOG7[7]: Option TCP_NODELAY set on local socket
+2021.04.15 02:49:54 LOG5[7]: Service [btcd] accepted connection from 127.0.0.1:61006
+2021.04.15 02:49:54 LOG6[7]: s_connect: connecting 127.0.0.1:18556
+2021.04.15 02:49:54 LOG7[7]: s_connect: s_poll_wait 127.0.0.1:18556: waiting 10 seconds
+2021.04.15 02:49:54 LOG7[7]: FD=6 events=0x1 revents=0x0
+2021.04.15 02:49:54 LOG7[7]: FD=10 events=0x5 revents=0x0
+2021.04.15 02:49:54 LOG5[7]: s_connect: connected 127.0.0.1:18556
+2021.04.15 02:49:54 LOG5[7]: Service [btcd] connected remote server from 127.0.0.1:61007
+2021.04.15 02:49:54 LOG7[7]: Setting remote socket options (FD=10)
+2021.04.15 02:49:54 LOG7[7]: Option TCP_NODELAY set on remote socket
+2021.04.15 02:49:54 LOG7[7]: Remote descriptor (FD=10) initialized
+2021.04.15 02:49:54 LOG6[7]: SNI: sending servername: 127.0.0.1
+2021.04.15 02:49:54 LOG6[7]: Peer certificate not required
+2021.04.15 02:49:54 LOG7[7]: TLS state (connect): before SSL initialization
+2021.04.15 02:49:54 LOG7[7]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:49:54 LOG7[7]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:49:54 LOG7[7]: TLS state (connect): SSLv3/TLS read server hello
+2021.04.15 02:49:54 LOG7[7]: TLS state (connect): TLSv1.3 read encrypted extensions
+2021.04.15 02:49:54 LOG7[7]: TLS state (connect): SSLv3/TLS read finished
+2021.04.15 02:49:54 LOG7[7]: TLS state (connect): SSLv3/TLS write change cipher spec
+2021.04.15 02:49:54 LOG7[7]: TLS state (connect): SSLv3/TLS write finished
+2021.04.15 02:49:54 LOG7[7]: Remove session callback
+2021.04.15 02:49:54 LOG7[7]:      8 client connect(s) requested
+2021.04.15 02:49:54 LOG7[7]:      8 client connect(s) succeeded
+2021.04.15 02:49:54 LOG7[7]:      0 client renegotiation(s) requested
+2021.04.15 02:49:54 LOG7[7]:      5 session reuse(s)
+2021.04.15 02:49:54 LOG6[7]: TLS connected: previous session reused
+2021.04.15 02:49:54 LOG6[7]: TLSv1.3 ciphersuite: TLS_AES_256_GCM_SHA384 (256-bit encryption)
+2021.04.15 02:49:54 LOG6[7]: Peer temporary key: X25519, 253 bits
+2021.04.15 02:49:54 LOG7[7]: Compression: null, expansion: null
+2021.04.15 02:49:54 LOG6[7]: Session id: 21662527879DB53412DD884D16A13D3F2ED762A12C973E1A6DC27DFE8B65BC4F
+2021.04.15 02:49:54 LOG7[7]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:49:54 LOG7[7]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:49:54 LOG7[7]: Initializing application specific data for session authenticated
+2021.04.15 02:49:54 LOG7[7]: New session callback
+2021.04.15 02:49:54 LOG7[7]: Deallocating application specific data for session connect address
+2021.04.15 02:49:54 LOG6[7]: Session id: 5739E7A4589EE1C0C614250B889A177E665D34E4C023F2ACC463B9E452B2B571
+2021.04.15 02:49:54 LOG7[7]: TLS state (connect): SSLv3/TLS read server session ticket
+2021.04.15 02:49:54 LOG6[7]: TLS socket closed (write hangup)
+2021.04.15 02:49:54 LOG7[7]: TLS alert (read): warning: close notify
+2021.04.15 02:49:54 LOG6[7]: TLS closed (SSL_read)
+2021.04.15 02:49:54 LOG7[7]: Sent socket write shutdown
+2021.04.15 02:49:54 LOG5[7]: Connection closed: 260 byte(s) sent to TLS, 170 byte(s) sent to socket
+2021.04.15 02:49:54 LOG7[7]: Remote descriptor (FD=10) closed
+2021.04.15 02:49:54 LOG7[7]: Local descriptor (FD=3) closed
+2021.04.15 02:49:54 LOG7[7]: Service [btcd] finished (0 left)
+2021.04.15 02:50:16 LOG7[main]: Found 1 ready file descriptor(s)
+2021.04.15 02:50:16 LOG7[main]: FD=4 events=0x1 revents=0x0
+2021.04.15 02:50:16 LOG7[main]: FD=8 events=0x1 revents=0x1
+2021.04.15 02:50:16 LOG7[main]: Service [btcd] accepted (FD=3) from 127.0.0.1:61019
+2021.04.15 02:50:16 LOG7[8]: Service [btcd] started
+2021.04.15 02:50:16 LOG7[8]: Setting local socket options (FD=3)
+2021.04.15 02:50:16 LOG7[8]: Option TCP_NODELAY set on local socket
+2021.04.15 02:50:16 LOG5[8]: Service [btcd] accepted connection from 127.0.0.1:61019
+2021.04.15 02:50:16 LOG6[8]: s_connect: connecting 127.0.0.1:18556
+2021.04.15 02:50:16 LOG7[8]: s_connect: s_poll_wait 127.0.0.1:18556: waiting 10 seconds
+2021.04.15 02:50:16 LOG7[8]: FD=6 events=0x1 revents=0x0
+2021.04.15 02:50:16 LOG7[8]: FD=10 events=0x5 revents=0x0
+2021.04.15 02:50:16 LOG5[8]: s_connect: connected 127.0.0.1:18556
+2021.04.15 02:50:16 LOG5[8]: Service [btcd] connected remote server from 127.0.0.1:61020
+2021.04.15 02:50:16 LOG7[8]: Setting remote socket options (FD=10)
+2021.04.15 02:50:16 LOG7[8]: Option TCP_NODELAY set on remote socket
+2021.04.15 02:50:16 LOG7[8]: Remote descriptor (FD=10) initialized
+2021.04.15 02:50:16 LOG6[8]: SNI: sending servername: 127.0.0.1
+2021.04.15 02:50:16 LOG6[8]: Peer certificate not required
+2021.04.15 02:50:16 LOG7[8]: TLS state (connect): before SSL initialization
+2021.04.15 02:50:16 LOG7[8]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:50:16 LOG7[8]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:50:16 LOG7[8]: TLS state (connect): SSLv3/TLS read server hello
+2021.04.15 02:50:16 LOG7[8]: TLS state (connect): TLSv1.3 read encrypted extensions
+2021.04.15 02:50:16 LOG7[8]: TLS state (connect): SSLv3/TLS read finished
+2021.04.15 02:50:16 LOG7[8]: TLS state (connect): SSLv3/TLS write change cipher spec
+2021.04.15 02:50:16 LOG7[8]: TLS state (connect): SSLv3/TLS write finished
+2021.04.15 02:50:16 LOG7[8]: Remove session callback
+2021.04.15 02:50:16 LOG7[8]:      9 client connect(s) requested
+2021.04.15 02:50:16 LOG7[8]:      9 client connect(s) succeeded
+2021.04.15 02:50:16 LOG7[8]:      0 client renegotiation(s) requested
+2021.04.15 02:50:16 LOG7[8]:      6 session reuse(s)
+2021.04.15 02:50:16 LOG6[8]: TLS connected: previous session reused
+2021.04.15 02:50:16 LOG6[8]: TLSv1.3 ciphersuite: TLS_AES_256_GCM_SHA384 (256-bit encryption)
+2021.04.15 02:50:16 LOG6[8]: Peer temporary key: X25519, 253 bits
+2021.04.15 02:50:16 LOG7[8]: Compression: null, expansion: null
+2021.04.15 02:50:16 LOG6[8]: Session id: 5739E7A4589EE1C0C614250B889A177E665D34E4C023F2ACC463B9E452B2B571
+2021.04.15 02:50:16 LOG7[8]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:50:16 LOG7[8]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:50:16 LOG7[8]: Initializing application specific data for session authenticated
+2021.04.15 02:50:16 LOG7[8]: New session callback
+2021.04.15 02:50:16 LOG7[8]: Deallocating application specific data for session connect address
+2021.04.15 02:50:16 LOG6[8]: Session id: 8D37C32C7942C005B3429722CAA6A8A1DEBFCB198960C2B3ED0B3BD743DF7834
+2021.04.15 02:50:16 LOG7[8]: TLS state (connect): SSLv3/TLS read server session ticket
+2021.04.15 02:50:16 LOG6[8]: TLS socket closed (write hangup)
+2021.04.15 02:50:16 LOG7[8]: TLS alert (read): warning: close notify
+2021.04.15 02:50:16 LOG6[8]: TLS closed (SSL_read)
+2021.04.15 02:50:16 LOG7[8]: Sent socket write shutdown
+2021.04.15 02:50:16 LOG5[8]: Connection closed: 260 byte(s) sent to TLS, 170 byte(s) sent to socket
+2021.04.15 02:50:16 LOG7[8]: Remote descriptor (FD=10) closed
+2021.04.15 02:50:16 LOG7[8]: Local descriptor (FD=3) closed
+2021.04.15 02:50:16 LOG7[8]: Service [btcd] finished (0 left)
+2021.04.15 02:50:20 LOG7[main]: Found 1 ready file descriptor(s)
+2021.04.15 02:50:20 LOG7[main]: FD=4 events=0x1 revents=0x0
+2021.04.15 02:50:20 LOG7[main]: FD=8 events=0x1 revents=0x1
+2021.04.15 02:50:20 LOG7[main]: Service [btcd] accepted (FD=3) from 127.0.0.1:61022
+2021.04.15 02:50:20 LOG7[9]: Service [btcd] started
+2021.04.15 02:50:20 LOG7[9]: Setting local socket options (FD=3)
+2021.04.15 02:50:20 LOG7[9]: Option TCP_NODELAY set on local socket
+2021.04.15 02:50:20 LOG5[9]: Service [btcd] accepted connection from 127.0.0.1:61022
+2021.04.15 02:50:20 LOG6[9]: s_connect: connecting 127.0.0.1:18556
+2021.04.15 02:50:20 LOG7[9]: s_connect: s_poll_wait 127.0.0.1:18556: waiting 10 seconds
+2021.04.15 02:50:20 LOG7[9]: FD=6 events=0x1 revents=0x0
+2021.04.15 02:50:20 LOG7[9]: FD=10 events=0x5 revents=0x0
+2021.04.15 02:50:20 LOG5[9]: s_connect: connected 127.0.0.1:18556
+2021.04.15 02:50:20 LOG5[9]: Service [btcd] connected remote server from 127.0.0.1:61023
+2021.04.15 02:50:20 LOG7[9]: Setting remote socket options (FD=10)
+2021.04.15 02:50:20 LOG7[9]: Option TCP_NODELAY set on remote socket
+2021.04.15 02:50:20 LOG7[9]: Remote descriptor (FD=10) initialized
+2021.04.15 02:50:20 LOG6[9]: SNI: sending servername: 127.0.0.1
+2021.04.15 02:50:20 LOG6[9]: Peer certificate not required
+2021.04.15 02:50:20 LOG7[9]: TLS state (connect): before SSL initialization
+2021.04.15 02:50:20 LOG7[9]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:50:20 LOG7[9]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:50:20 LOG7[9]: TLS state (connect): SSLv3/TLS read server hello
+2021.04.15 02:50:20 LOG7[9]: TLS state (connect): TLSv1.3 read encrypted extensions
+2021.04.15 02:50:20 LOG7[9]: TLS state (connect): SSLv3/TLS read finished
+2021.04.15 02:50:20 LOG7[9]: TLS state (connect): SSLv3/TLS write change cipher spec
+2021.04.15 02:50:20 LOG7[9]: TLS state (connect): SSLv3/TLS write finished
+2021.04.15 02:50:20 LOG7[9]: Remove session callback
+2021.04.15 02:50:20 LOG7[9]:     10 client connect(s) requested
+2021.04.15 02:50:20 LOG7[9]:     10 client connect(s) succeeded
+2021.04.15 02:50:20 LOG7[9]:      0 client renegotiation(s) requested
+2021.04.15 02:50:20 LOG7[9]:      7 session reuse(s)
+2021.04.15 02:50:20 LOG6[9]: TLS connected: previous session reused
+2021.04.15 02:50:20 LOG6[9]: TLSv1.3 ciphersuite: TLS_AES_256_GCM_SHA384 (256-bit encryption)
+2021.04.15 02:50:20 LOG6[9]: Peer temporary key: X25519, 253 bits
+2021.04.15 02:50:20 LOG7[9]: Compression: null, expansion: null
+2021.04.15 02:50:20 LOG6[9]: Session id: 8D37C32C7942C005B3429722CAA6A8A1DEBFCB198960C2B3ED0B3BD743DF7834
+2021.04.15 02:50:20 LOG7[9]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:50:20 LOG7[9]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:50:20 LOG7[9]: Initializing application specific data for session authenticated
+2021.04.15 02:50:20 LOG7[9]: New session callback
+2021.04.15 02:50:20 LOG7[9]: Deallocating application specific data for session connect address
+2021.04.15 02:50:20 LOG6[9]: Session id: 701152FC71070A3848D0B24B3B8E4C9912522173E5F845F2A8482DCB8375A507
+2021.04.15 02:50:20 LOG7[9]: TLS state (connect): SSLv3/TLS read server session ticket
+2021.04.15 02:50:20 LOG7[9]: TLS alert (read): warning: close notify
+2021.04.15 02:50:20 LOG6[9]: TLS closed (SSL_read)
+2021.04.15 02:50:20 LOG6[9]: TLS socket closed (write hangup)
+2021.04.15 02:50:20 LOG7[9]: Sent socket write shutdown
+2021.04.15 02:50:20 LOG5[9]: Connection closed: 260 byte(s) sent to TLS, 170 byte(s) sent to socket
+2021.04.15 02:50:20 LOG7[9]: Remote descriptor (FD=10) closed
+2021.04.15 02:50:20 LOG7[9]: Local descriptor (FD=3) closed
+2021.04.15 02:50:20 LOG7[9]: Service [btcd] finished (0 left)
+2021.04.15 02:50:35 LOG7[main]: Found 1 ready file descriptor(s)
+2021.04.15 02:50:35 LOG7[main]: FD=4 events=0x1 revents=0x0
+2021.04.15 02:50:35 LOG7[main]: FD=8 events=0x1 revents=0x1
+2021.04.15 02:50:35 LOG7[main]: Service [btcd] accepted (FD=3) from 127.0.0.1:61038
+2021.04.15 02:50:35 LOG7[10]: Service [btcd] started
+2021.04.15 02:50:35 LOG7[10]: Setting local socket options (FD=3)
+2021.04.15 02:50:35 LOG7[10]: Option TCP_NODELAY set on local socket
+2021.04.15 02:50:35 LOG5[10]: Service [btcd] accepted connection from 127.0.0.1:61038
+2021.04.15 02:50:35 LOG6[10]: s_connect: connecting 127.0.0.1:18556
+2021.04.15 02:50:35 LOG7[10]: s_connect: s_poll_wait 127.0.0.1:18556: waiting 10 seconds
+2021.04.15 02:50:35 LOG7[10]: FD=6 events=0x1 revents=0x0
+2021.04.15 02:50:35 LOG7[10]: FD=10 events=0x5 revents=0x0
+2021.04.15 02:50:35 LOG5[10]: s_connect: connected 127.0.0.1:18556
+2021.04.15 02:50:35 LOG5[10]: Service [btcd] connected remote server from 127.0.0.1:61039
+2021.04.15 02:50:35 LOG7[10]: Setting remote socket options (FD=10)
+2021.04.15 02:50:35 LOG7[10]: Option TCP_NODELAY set on remote socket
+2021.04.15 02:50:35 LOG7[10]: Remote descriptor (FD=10) initialized
+2021.04.15 02:50:35 LOG6[10]: SNI: sending servername: 127.0.0.1
+2021.04.15 02:50:35 LOG6[10]: Peer certificate not required
+2021.04.15 02:50:35 LOG7[10]: TLS state (connect): before SSL initialization
+2021.04.15 02:50:35 LOG7[10]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:50:35 LOG7[10]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:50:35 LOG7[10]: TLS state (connect): SSLv3/TLS read server hello
+2021.04.15 02:50:35 LOG7[10]: TLS state (connect): TLSv1.3 read encrypted extensions
+2021.04.15 02:50:35 LOG7[10]: TLS state (connect): SSLv3/TLS read finished
+2021.04.15 02:50:35 LOG7[10]: TLS state (connect): SSLv3/TLS write change cipher spec
+2021.04.15 02:50:35 LOG7[10]: TLS state (connect): SSLv3/TLS write finished
+2021.04.15 02:50:35 LOG7[10]: Remove session callback
+2021.04.15 02:50:35 LOG7[10]:     11 client connect(s) requested
+2021.04.15 02:50:35 LOG7[10]:     11 client connect(s) succeeded
+2021.04.15 02:50:35 LOG7[10]:      0 client renegotiation(s) requested
+2021.04.15 02:50:35 LOG7[10]:      8 session reuse(s)
+2021.04.15 02:50:35 LOG6[10]: TLS connected: previous session reused
+2021.04.15 02:50:35 LOG6[10]: TLSv1.3 ciphersuite: TLS_AES_256_GCM_SHA384 (256-bit encryption)
+2021.04.15 02:50:35 LOG6[10]: Peer temporary key: X25519, 253 bits
+2021.04.15 02:50:35 LOG7[10]: Compression: null, expansion: null
+2021.04.15 02:50:35 LOG6[10]: Session id: 701152FC71070A3848D0B24B3B8E4C9912522173E5F845F2A8482DCB8375A507
+2021.04.15 02:50:35 LOG7[10]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:50:35 LOG7[10]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:50:35 LOG7[10]: Initializing application specific data for session authenticated
+2021.04.15 02:50:35 LOG7[10]: New session callback
+2021.04.15 02:50:35 LOG7[10]: Deallocating application specific data for session connect address
+2021.04.15 02:50:35 LOG6[10]: Session id: E7B72EDB4802CD1EBF22344FD5BF91A45BF26A61E22426E51BE2B94D11B00B32
+2021.04.15 02:50:35 LOG7[10]: TLS state (connect): SSLv3/TLS read server session ticket
+2021.04.15 02:50:35 LOG6[10]: TLS socket closed (write hangup)
+2021.04.15 02:50:35 LOG7[10]: TLS alert (read): warning: close notify
+2021.04.15 02:50:35 LOG6[10]: TLS closed (SSL_read)
+2021.04.15 02:50:35 LOG7[10]: Sent socket write shutdown
+2021.04.15 02:50:35 LOG5[10]: Connection closed: 260 byte(s) sent to TLS, 170 byte(s) sent to socket
+2021.04.15 02:50:35 LOG7[10]: Remote descriptor (FD=10) closed
+2021.04.15 02:50:35 LOG7[10]: Local descriptor (FD=3) closed
+2021.04.15 02:50:35 LOG7[10]: Service [btcd] finished (0 left)
+2021.04.15 02:52:47 LOG7[main]: Found 1 ready file descriptor(s)
+2021.04.15 02:52:47 LOG7[main]: FD=4 events=0x1 revents=0x0
+2021.04.15 02:52:47 LOG7[main]: FD=8 events=0x1 revents=0x1
+2021.04.15 02:52:47 LOG7[main]: Service [btcd] accepted (FD=3) from 127.0.0.1:61091
+2021.04.15 02:52:47 LOG7[11]: Service [btcd] started
+2021.04.15 02:52:47 LOG7[11]: Setting local socket options (FD=3)
+2021.04.15 02:52:47 LOG7[11]: Option TCP_NODELAY set on local socket
+2021.04.15 02:52:47 LOG5[11]: Service [btcd] accepted connection from 127.0.0.1:61091
+2021.04.15 02:52:47 LOG6[11]: s_connect: connecting 127.0.0.1:18556
+2021.04.15 02:52:47 LOG7[11]: s_connect: s_poll_wait 127.0.0.1:18556: waiting 10 seconds
+2021.04.15 02:52:47 LOG7[11]: FD=6 events=0x1 revents=0x0
+2021.04.15 02:52:47 LOG7[11]: FD=10 events=0x5 revents=0x0
+2021.04.15 02:52:47 LOG5[11]: s_connect: connected 127.0.0.1:18556
+2021.04.15 02:52:47 LOG5[11]: Service [btcd] connected remote server from 127.0.0.1:61092
+2021.04.15 02:52:47 LOG7[11]: Setting remote socket options (FD=10)
+2021.04.15 02:52:47 LOG7[11]: Option TCP_NODELAY set on remote socket
+2021.04.15 02:52:47 LOG7[11]: Remote descriptor (FD=10) initialized
+2021.04.15 02:52:47 LOG6[11]: SNI: sending servername: 127.0.0.1
+2021.04.15 02:52:47 LOG6[11]: Peer certificate not required
+2021.04.15 02:52:47 LOG7[11]: TLS state (connect): before SSL initialization
+2021.04.15 02:52:47 LOG7[11]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:52:47 LOG7[11]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:52:47 LOG7[11]: TLS state (connect): SSLv3/TLS read server hello
+2021.04.15 02:52:47 LOG7[11]: TLS state (connect): TLSv1.3 read encrypted extensions
+2021.04.15 02:52:47 LOG7[11]: TLS state (connect): SSLv3/TLS read finished
+2021.04.15 02:52:47 LOG7[11]: TLS state (connect): SSLv3/TLS write change cipher spec
+2021.04.15 02:52:47 LOG7[11]: TLS state (connect): SSLv3/TLS write finished
+2021.04.15 02:52:47 LOG7[11]: Remove session callback
+2021.04.15 02:52:47 LOG7[11]:     12 client connect(s) requested
+2021.04.15 02:52:47 LOG7[11]:     12 client connect(s) succeeded
+2021.04.15 02:52:47 LOG7[11]:      0 client renegotiation(s) requested
+2021.04.15 02:52:47 LOG7[11]:      9 session reuse(s)
+2021.04.15 02:52:47 LOG6[11]: TLS connected: previous session reused
+2021.04.15 02:52:47 LOG6[11]: TLSv1.3 ciphersuite: TLS_AES_256_GCM_SHA384 (256-bit encryption)
+2021.04.15 02:52:47 LOG6[11]: Peer temporary key: X25519, 253 bits
+2021.04.15 02:52:47 LOG7[11]: Compression: null, expansion: null
+2021.04.15 02:52:47 LOG6[11]: Session id: E7B72EDB4802CD1EBF22344FD5BF91A45BF26A61E22426E51BE2B94D11B00B32
+2021.04.15 02:52:47 LOG7[11]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:52:47 LOG7[11]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:52:47 LOG7[11]: Initializing application specific data for session authenticated
+2021.04.15 02:52:47 LOG7[11]: New session callback
+2021.04.15 02:52:47 LOG7[11]: Deallocating application specific data for session connect address
+2021.04.15 02:52:47 LOG6[11]: Session id: 0F3FE7709C139811085DAB911FBF50C4B22A0ECA94BB9A350216BF40BB3D4A6B
+2021.04.15 02:52:47 LOG7[11]: TLS state (connect): SSLv3/TLS read server session ticket
+2021.04.15 02:52:47 LOG6[11]: TLS socket closed (write hangup)
+2021.04.15 02:52:47 LOG7[11]: TLS alert (read): warning: close notify
+2021.04.15 02:52:47 LOG6[11]: TLS closed (SSL_read)
+2021.04.15 02:52:47 LOG7[11]: Sent socket write shutdown
+2021.04.15 02:52:47 LOG5[11]: Connection closed: 264 byte(s) sent to TLS, 180 byte(s) sent to socket
+2021.04.15 02:52:47 LOG7[11]: Remote descriptor (FD=10) closed
+2021.04.15 02:52:47 LOG7[11]: Local descriptor (FD=3) closed
+2021.04.15 02:52:47 LOG7[11]: Service [btcd] finished (0 left)
+2021.04.15 02:53:30 LOG7[main]: Found 1 ready file descriptor(s)
+2021.04.15 02:53:30 LOG7[main]: FD=4 events=0x1 revents=0x0
+2021.04.15 02:53:30 LOG7[main]: FD=8 events=0x1 revents=0x1
+2021.04.15 02:53:30 LOG7[main]: Service [btcd] accepted (FD=3) from 127.0.0.1:61102
+2021.04.15 02:53:30 LOG7[12]: Service [btcd] started
+2021.04.15 02:53:30 LOG7[12]: Setting local socket options (FD=3)
+2021.04.15 02:53:30 LOG7[12]: Option TCP_NODELAY set on local socket
+2021.04.15 02:53:30 LOG5[12]: Service [btcd] accepted connection from 127.0.0.1:61102
+2021.04.15 02:53:30 LOG6[12]: s_connect: connecting 127.0.0.1:18556
+2021.04.15 02:53:30 LOG7[12]: s_connect: s_poll_wait 127.0.0.1:18556: waiting 10 seconds
+2021.04.15 02:53:30 LOG7[12]: FD=6 events=0x1 revents=0x0
+2021.04.15 02:53:30 LOG7[12]: FD=10 events=0x5 revents=0x0
+2021.04.15 02:53:30 LOG5[12]: s_connect: connected 127.0.0.1:18556
+2021.04.15 02:53:30 LOG5[12]: Service [btcd] connected remote server from 127.0.0.1:61103
+2021.04.15 02:53:30 LOG7[12]: Setting remote socket options (FD=10)
+2021.04.15 02:53:30 LOG7[12]: Option TCP_NODELAY set on remote socket
+2021.04.15 02:53:30 LOG7[12]: Remote descriptor (FD=10) initialized
+2021.04.15 02:53:30 LOG6[12]: SNI: sending servername: 127.0.0.1
+2021.04.15 02:53:30 LOG6[12]: Peer certificate not required
+2021.04.15 02:53:30 LOG7[12]: TLS state (connect): before SSL initialization
+2021.04.15 02:53:30 LOG7[12]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:53:30 LOG7[12]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:53:30 LOG7[12]: TLS state (connect): SSLv3/TLS read server hello
+2021.04.15 02:53:30 LOG7[12]: TLS state (connect): TLSv1.3 read encrypted extensions
+2021.04.15 02:53:30 LOG7[12]: TLS state (connect): SSLv3/TLS read finished
+2021.04.15 02:53:30 LOG7[12]: TLS state (connect): SSLv3/TLS write change cipher spec
+2021.04.15 02:53:30 LOG7[12]: TLS state (connect): SSLv3/TLS write finished
+2021.04.15 02:53:30 LOG7[12]: Remove session callback
+2021.04.15 02:53:30 LOG7[12]:     13 client connect(s) requested
+2021.04.15 02:53:30 LOG7[12]:     13 client connect(s) succeeded
+2021.04.15 02:53:30 LOG7[12]:      0 client renegotiation(s) requested
+2021.04.15 02:53:30 LOG7[12]:     10 session reuse(s)
+2021.04.15 02:53:30 LOG6[12]: TLS connected: previous session reused
+2021.04.15 02:53:30 LOG6[12]: TLSv1.3 ciphersuite: TLS_AES_256_GCM_SHA384 (256-bit encryption)
+2021.04.15 02:53:30 LOG6[12]: Peer temporary key: X25519, 253 bits
+2021.04.15 02:53:30 LOG7[12]: Compression: null, expansion: null
+2021.04.15 02:53:30 LOG6[12]: Session id: 0F3FE7709C139811085DAB911FBF50C4B22A0ECA94BB9A350216BF40BB3D4A6B
+2021.04.15 02:53:30 LOG7[12]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:53:30 LOG7[12]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:53:30 LOG7[12]: Initializing application specific data for session authenticated
+2021.04.15 02:53:30 LOG7[12]: New session callback
+2021.04.15 02:53:30 LOG7[12]: Deallocating application specific data for session connect address
+2021.04.15 02:53:30 LOG6[12]: Session id: 8BF1934EDF7E618DF1CC8E4C336B82828063438AEA8D11DF86C608BE6BB9CBB2
+2021.04.15 02:53:30 LOG7[12]: TLS state (connect): SSLv3/TLS read server session ticket
+2021.04.15 02:53:30 LOG6[12]: TLS socket closed (write hangup)
+2021.04.15 02:53:30 LOG7[12]: TLS alert (read): warning: close notify
+2021.04.15 02:53:30 LOG6[12]: TLS closed (SSL_read)
+2021.04.15 02:53:30 LOG7[12]: Sent socket write shutdown
+2021.04.15 02:53:30 LOG5[12]: Connection closed: 264 byte(s) sent to TLS, 180 byte(s) sent to socket
+2021.04.15 02:53:30 LOG7[12]: Remote descriptor (FD=10) closed
+2021.04.15 02:53:30 LOG7[12]: Local descriptor (FD=3) closed
+2021.04.15 02:53:30 LOG7[12]: Service [btcd] finished (0 left)
+2021.04.15 02:53:56 LOG7[main]: Found 1 ready file descriptor(s)
+2021.04.15 02:53:56 LOG7[main]: FD=4 events=0x1 revents=0x0
+2021.04.15 02:53:56 LOG7[main]: FD=8 events=0x1 revents=0x1
+2021.04.15 02:53:56 LOG7[main]: Service [btcd] accepted (FD=3) from 127.0.0.1:61112
+2021.04.15 02:53:56 LOG7[13]: Service [btcd] started
+2021.04.15 02:53:56 LOG7[13]: Setting local socket options (FD=3)
+2021.04.15 02:53:56 LOG7[13]: Option TCP_NODELAY set on local socket
+2021.04.15 02:53:56 LOG5[13]: Service [btcd] accepted connection from 127.0.0.1:61112
+2021.04.15 02:53:56 LOG6[13]: s_connect: connecting 127.0.0.1:18556
+2021.04.15 02:53:56 LOG7[13]: s_connect: s_poll_wait 127.0.0.1:18556: waiting 10 seconds
+2021.04.15 02:53:56 LOG7[13]: FD=6 events=0x1 revents=0x0
+2021.04.15 02:53:56 LOG7[13]: FD=10 events=0x5 revents=0x0
+2021.04.15 02:53:56 LOG5[13]: s_connect: connected 127.0.0.1:18556
+2021.04.15 02:53:56 LOG5[13]: Service [btcd] connected remote server from 127.0.0.1:61113
+2021.04.15 02:53:56 LOG7[13]: Setting remote socket options (FD=10)
+2021.04.15 02:53:56 LOG7[13]: Option TCP_NODELAY set on remote socket
+2021.04.15 02:53:56 LOG7[13]: Remote descriptor (FD=10) initialized
+2021.04.15 02:53:56 LOG6[13]: SNI: sending servername: 127.0.0.1
+2021.04.15 02:53:56 LOG6[13]: Peer certificate not required
+2021.04.15 02:53:56 LOG7[13]: TLS state (connect): before SSL initialization
+2021.04.15 02:53:56 LOG7[13]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:53:56 LOG7[13]: TLS state (connect): SSLv3/TLS write client hello
+2021.04.15 02:53:56 LOG7[13]: TLS state (connect): SSLv3/TLS read server hello
+2021.04.15 02:53:56 LOG7[13]: TLS state (connect): TLSv1.3 read encrypted extensions
+2021.04.15 02:53:56 LOG7[13]: TLS state (connect): SSLv3/TLS read finished
+2021.04.15 02:53:56 LOG7[13]: TLS state (connect): SSLv3/TLS write change cipher spec
+2021.04.15 02:53:56 LOG7[13]: TLS state (connect): SSLv3/TLS write finished
+2021.04.15 02:53:56 LOG7[13]: Remove session callback
+2021.04.15 02:53:56 LOG7[13]:     14 client connect(s) requested
+2021.04.15 02:53:56 LOG7[13]:     14 client connect(s) succeeded
+2021.04.15 02:53:56 LOG7[13]:      0 client renegotiation(s) requested
+2021.04.15 02:53:56 LOG7[13]:     11 session reuse(s)
+2021.04.15 02:53:56 LOG6[13]: TLS connected: previous session reused
+2021.04.15 02:53:56 LOG6[13]: TLSv1.3 ciphersuite: TLS_AES_256_GCM_SHA384 (256-bit encryption)
+2021.04.15 02:53:56 LOG6[13]: Peer temporary key: X25519, 253 bits
+2021.04.15 02:53:56 LOG7[13]: Compression: null, expansion: null
+2021.04.15 02:53:56 LOG6[13]: Session id: 8BF1934EDF7E618DF1CC8E4C336B82828063438AEA8D11DF86C608BE6BB9CBB2
+2021.04.15 02:53:56 LOG7[13]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:53:56 LOG7[13]: TLS state (connect): SSL negotiation finished successfully
+2021.04.15 02:53:56 LOG7[13]: Initializing application specific data for session authenticated
+2021.04.15 02:53:56 LOG7[13]: New session callback
+2021.04.15 02:53:56 LOG7[13]: Deallocating application specific data for session connect address
+2021.04.15 02:53:56 LOG6[13]: Session id: 49B2710F8E5D0CBA86DF2140783050F125A579CDC4CF5DAD501C026D2D8E4373
+2021.04.15 02:53:56 LOG7[13]: TLS state (connect): SSLv3/TLS read server session ticket
+2021.04.15 02:53:56 LOG6[13]: TLS socket closed (write hangup)
+2021.04.15 02:53:56 LOG7[13]: TLS alert (read): warning: close notify
+2021.04.15 02:53:56 LOG6[13]: TLS closed (SSL_read)
+2021.04.15 02:53:56 LOG7[13]: Sent socket write shutdown
+2021.04.15 02:53:56 LOG5[13]: Connection closed: 264 byte(s) sent to TLS, 180 byte(s) sent to socket
+2021.04.15 02:53:56 LOG7[13]: Remote descriptor (FD=10) closed
+2021.04.15 02:53:56 LOG7[13]: Local descriptor (FD=3) closed
+2021.04.15 02:53:56 LOG7[13]: Service [btcd] finished (0 left)
