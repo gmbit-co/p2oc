@@ -16,7 +16,7 @@ RUN git clone https://github.com/btcsuite/btcwallet.git . \
     && GO111MODULE=on go install -v . ./cmd/...
 
 # Start a new image
-# FROM alpine as final
+FROM alpine as final
 
 # Expose mainnet ports (rpc)
 EXPOSE 8332
@@ -28,7 +28,7 @@ EXPOSE 18332
 EXPOSE 18554
 
 # Copy the compiled binaries from the builder image.
-# COPY --from=builder /go/bin/btcwallet /bin/
+COPY --from=builder /go/bin/btcwallet /bin/
 
 COPY "start-btcwallet.sh" .
 

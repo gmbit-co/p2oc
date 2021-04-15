@@ -1,5 +1,9 @@
 # Setup and Running
 
+```shell
+cd docker
+```
+
 Run btcd container
 
 ```shell
@@ -12,8 +16,7 @@ $ export RPCPASS=deadbeef
 # To get coinbase transaction MINING_ADDRESS=rsbiVJhVHxhnNyntc2Gdrn4BpgmL9pc25j docker-compose up -d btcd
 $ docker-compose up -d btcd
 
-$ docker cp btcd:/rpc ./certs
-$ stunnel stunnel.conf
+# $ docker cp btcd:/rpc ../certs
 
 # Check that we're at the appropriate block height (>1.97M for testnet)
 # $ docker exec -it btcd /start-btcctl.sh getblockcount
@@ -27,13 +30,17 @@ $ export RPCUSER=satoshin
 $ export RPCPASS=deadbeef
 
 # First time you'll need to setup the wallet
-$ docker-compose run --name btcwallet-${NETWORK}-${INSTANCE} --entrypoint bash btcwallet
+$ docker-compose run --name btcwallet-${NETWORK} --entrypoint bash btcwallet
 $ btcwallet --$NETWORK --create --appdata=/root/.btcwallet/data
 >> ...
-$ docker rm btcwallet-simnet-1
+$ docker rm btcwallet-$NETWORK
 
 # Afterward wallet has been created, run with
-$ docker-compose run --name btcwallet-${NETWORK}-${INSTANCE} -p 18554:18554 btcwallet
+$ docker-compose run -d --name btcwallet-${NETWORK} --service-ports btcwallet
+$ stunnel ../stunnel.conf
+
+# Can test with
+# $ curl --user satoshin:deadbeef --data-binary '{"jsonrpc": "1.0", "id":"curltest", "method": "getblockchaininfo", "params": [] }' -H 'content-type: text/plain;' http://127.0.0.1:28554
 ```
 
 Run Nth lnd container
@@ -51,15 +58,6 @@ $ docker exec -i -t ln-node-${NETWORK}-${INSTANCE} bash
 ```shell
 ln-node $ lncli --network=$NETWORK newaddress np2wkh
 ln-node $ lncli --network=$NETWORK walletbalance
-```
-
-Point btcwallet to lightning node wallet
-```shell
-$ export NETWORK="simnet"
-$ export RPCUSER=satoshin
-$ export RPCPASS=deadbeef
-$ export INSTANCE=1
-$ docker-compose run --name btcwallet-${NETWORK}-${INSTANCE} -p 18554:18554 -v lnd_${NETWORK}_${INSTANCE}:/root/.lnd btcwallet
 ```
 
 Setup channels
@@ -106,6 +104,7 @@ $ docker exec -i -t ln-node-light-${NETWORK} bash
 **Communicating with btcd over curl**
 
 ```shell
-# curl --key ./certs/rpc.key --cacert ./certs/rpc.cert
---user satoshin:deadbeef --data-binary '{"jsonrpc": "1.0", "id":"curltest", "method": "getblockchaininfo", "params": [] }' -H 'content-type: text/plain;' https://127.0.0.1:18554
+curl --key ../certs/rpc.key --cacert ../certs/rpc.cert --user satoshin:deadbeef --data-binary '{"jsonrpc": "1.0", "id":"curltest", "method": "getblockchaininfo", "params": [] }' -H 'content-type: text/plain;' https://127.0.0.1:18554
+
+curl --user satoshin:deadbeef --data-binary '{"jsonrpc": "1.0", "id":"curltest", "method": "getblockchaininfo", "params": [] }' -H 'content-type: text/plain;' http://127.0.0.1:28554
 ```

@@ -34,6 +34,7 @@ services:
         - DEBUG
       ports:
         - 18554:18554
+        - 18332:18332
       entrypoint: ["./start-btcwallet.sh"]
       links:
         - "btcd:blockchain"
