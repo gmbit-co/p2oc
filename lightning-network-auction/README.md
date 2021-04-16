@@ -4,7 +4,6 @@
 docker-compose up
 ```
 
-
 ## Debugging
 
 ### btcctl
@@ -31,7 +30,7 @@ curl --user $BTCD_RPCUSER:$BTCD_RPCPASS \
     http://btcwallet-proxy:28334
 ```
 
-
+<!--
 **TODO: update instructions below**
 
 Run Nth lnd container
@@ -67,6 +66,7 @@ ln-node $ lncli --network=$NETWORK sendpayment --pay_req=lntb50n1psxur25pp5ppper
 ln-node $ lncli --network=$NETWORK closechannel --funding_txid=3e7998c6d356cfd3d1d83474894846dc2ee062d4b6e623c56319a924c08707aa --output_index=0
 # confirm locked funds were released with `lncli --network=$NETWORK walletbalance`
 ```
+-->
 
 ## Extras
 
