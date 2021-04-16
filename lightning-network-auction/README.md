@@ -1,7 +1,9 @@
 # Setup and Running
 
 ```shell
-docker-compose up
+# docker-compose up
+# Update .env as needed (e.g. BTCD_NETWORK)
+docker-compose -f docker-compose-bitcoind.yml up
 ```
 
 ## Debugging

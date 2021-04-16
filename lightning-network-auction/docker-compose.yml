@@ -12,8 +12,6 @@ services:
     volumes:
       - btcd-data:/data
       - btcd-rpc:/rpc
-    ports:
-      - 18333:18333
     # https://btcd.readthedocs.io/en/latest/configuration.html
     command: [
         "--${BTCD_NETWORK}",
@@ -27,7 +25,7 @@ services:
         "--rpclisten=0.0.0.0:${BTCD_RPCPORT}",
         "--txindex"
     ]
-  
+
   btcwallet:
     container_name: btcwallet
     hostname: btcwallet
@@ -51,6 +49,7 @@ services:
       "--password=${BTCD_RPCPASS}",
       "--rpccert=/rpc/rpc.cert",
       "--rpckey=/rpc/rpc.key",
+      "--debuglevel=debug",
       "--rpclisten=0.0.0.0:${BTCD_RPCPORT}",
       "--createtemp"
     ]
@@ -70,7 +69,7 @@ services:
       - STUNNEL_CONNECT=btcd:${BTCD_RPCPORT}
       - STUNNEL_CRT=/rpc/rpc.cert
       - STUNNEL_KEY=/rpc/rpc.key
-  
+
   btcwallet-proxy:
     container_name: btcwallet-proxy
     hostname: btcwallet-proxy

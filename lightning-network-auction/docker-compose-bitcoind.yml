@@ -1,0 +1,43 @@
+version: "3"
+
+services:
+  bitcoind:
+    container_name: bitcoind
+    hostname: bitcoind
+    image: kylemanna/bitcoind
+    env_file: .env
+    volumes:
+      - bitcoind-data:/bitcoin/.bitcoin
+    # https://manpages.debian.org/testing/bitcoind/bitcoind.1.en.html
+    command: [
+        "-chain=${BTCD_NETWORK}",
+        "-debug",
+        "-datadir=/bitcoin/.bitcoin",
+        "-rpcuser=${BTCD_RPCUSER}",
+        "-rpcpassword=${BTCD_RPCPASS}",
+        "-rpcport=${BTCD_RPCPORT}",
+        "-rpcbind=0.0.0.0:${BTCD_RPCPORT}",
+        "-rpcallowip=0.0.0.0/0",
+        "-listenonion=0",
+        "-printtoconsole",
+        "-server",
+        "-txindex"
+    ]
+
+  jupyter:
+    container_name: jupyter
+    hostname: jupyter
+    build:
+      context: .
+      dockerfile: docker/jupyter/Dockerfile
+    image: jupyter
+    depends_on:
+      - bitcoind
+    env_file: .env
+    volumes:
+      - ./:/notebooks
+    ports:
+      - 8888:8888
+
+volumes:
+  bitcoind-data:
