@@ -26,14 +26,12 @@ class Proxy:
         if config is None:
             config = Config()
         self._conf_file = NamedTemporaryFile(mode="w+t")
-        print(config.asfilestr())
         self._conf_file.write(config.asfilestr())
         self._conf_file.seek(0)
 
     def __getattr__(self, name):
-        if name.startswith("_"):
-            return getattr(self, name)
-
+#         if name.startswith("_"):
+#             return getattr(self, name)
         proxy = bitcoin.rpc.Proxy(btc_conf_file=self._conf_file.name, timeout=3600)
         self._proxy = proxy  # DEBUG
         return getattr(proxy, name)
