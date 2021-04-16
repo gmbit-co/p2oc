@@ -5,7 +5,10 @@ RUN apk add --no-cache git
 
 WORKDIR $GOPATH/src/github.com/btcsuite/btcd
 
-ARG BTCD_VERSION=v0.21.0-beta
+# ARG BTCD_VERSION=v0.21.0-beta
+# https://github.com/btcsuite/btcd/commit/2d7825cf709fc6ac15921cecfd4d62ec78ccbba2
+ARG BTCD_VERSION=2d7825c
+
 
 # Grab and install the latest version of of btcd and all related dependencies.
 RUN git clone https://github.com/btcsuite/btcd.git . \
