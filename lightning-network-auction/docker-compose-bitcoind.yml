@@ -4,7 +4,7 @@ services:
   bitcoind:
     container_name: bitcoind
     hostname: bitcoind
-    image: kylemanna/bitcoind
+    image: ruimarinho/bitcoin-core:0.20-alpine
     env_file: .env
     volumes:
       - bitcoind-data:/bitcoin/.bitcoin
