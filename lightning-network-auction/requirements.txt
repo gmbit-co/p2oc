@@ -1,3 +1,0 @@
-jupyter==1.0.0
-limit-order-book==2.0.0
-git+git://github.com/flywheelstudio/python-bitcoinlib.git@simnet-params#egg=python-bitcoinlib
