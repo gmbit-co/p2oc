@@ -6,9 +6,8 @@ import bitcoin.rpc
 class Config(NamedTuple):
     rpcuser: str = 'username'
     rpcpassword: str = 'password'
-    rpchost: str = '0.0.0.0'
+    rpcconnect: str = '0.0.0.0'
     rpcport: int = 8332
-    rpctimeout: int = 10000000
 
     def asfilestr(self):
         return (
@@ -16,8 +15,7 @@ f"""
 rpcuser={self.rpcuser}
 rpcpassword={self.rpcpassword}
 rpcport={self.rpcport}
-rpchost={self.rpchost}
-rpctimeout={self.rpctimeout}
+rpcconnect={self.rpcconnect}
 """
         )
 
