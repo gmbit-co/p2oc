@@ -1,47 +1,11 @@
 # Setup and Running
 
 ```shell
-cd docker
+docker-compose up
 ```
 
-Run btcd container
 
-```shell
-# Setup LND w/ local BTC testnet
-$ export NETWORK="simnet"
-$ export RPCUSER=satoshin
-$ export RPCPASS=deadbeef
-# $ export NETWORK="testnet"
-
-# To get coinbase transaction MINING_ADDRESS=rsbiVJhVHxhnNyntc2Gdrn4BpgmL9pc25j docker-compose up -d btcd
-$ docker-compose up -d btcd
-
-# $ docker cp btcd:/rpc ../certs
-
-# Check that we're at the appropriate block height (>1.97M for testnet)
-# $ docker exec -it btcd /start-btcctl.sh getblockcount
-```
-
-Run btcwallet (for auctioneer)
-
-```shell
-$ export NETWORK="simnet"
-$ export RPCUSER=satoshin
-$ export RPCPASS=deadbeef
-
-# First time you'll need to setup the wallet
-$ docker-compose run --name btcwallet-${NETWORK} --entrypoint bash btcwallet
-$ btcwallet --$NETWORK --create --appdata=/root/.btcwallet/data
->> ...
-$ docker rm btcwallet-$NETWORK
-
-# Afterward wallet has been created, run with
-$ docker-compose run -d --name btcwallet-${NETWORK} --service-ports btcwallet
-$ stunnel ../stunnel.conf
-
-# Can test with
-# $ curl --user satoshin:deadbeef --data-binary '{"jsonrpc": "1.0", "id":"curltest", "method": "getblockchaininfo", "params": [] }' -H 'content-type: text/plain;' http://127.0.0.1:28554
-```
+**TODO: update instructions below**
 
 Run Nth lnd container
 
