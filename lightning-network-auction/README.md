@@ -5,6 +5,33 @@ docker-compose up
 ```
 
 
+## Debugging
+
+### btcctl
+
+```sh
+docker exec -it btcd /bin/sh
+
+# from btcd container
+btcctl --rpcuser=$BTCD_RPCUSER \
+    --rpcpass=$BTCD_RPCPASS \
+    --rpccert=/rpc/rpc.cert \
+    --rpcserver=btcd:$BTCD_RPCPORT \
+    getblockcount
+```
+
+### RPC connectivity
+
+```sh
+docker exec -it jupyter bash
+
+# from jupyter container
+curl --user $BTCD_RPCUSER:$BTCD_RPCPASS \
+    --data-binary '{"jsonrpc": "1.0", "id":"curltest", "method": "getblockchaininfo", "params": [] }' -H 'content-type: text/plain;' \
+    http://btcwallet-proxy:28334
+```
+
+
 **TODO: update instructions below**
 
 Run Nth lnd container
