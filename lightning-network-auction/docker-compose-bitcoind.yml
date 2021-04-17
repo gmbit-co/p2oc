@@ -21,7 +21,8 @@ services:
         "-listenonion=0",
         "-printtoconsole",
         "-server",
-        "-txindex"
+        "-txindex",
+        "-fallbackfee=0.001"
     ]
 
   jupyter:
