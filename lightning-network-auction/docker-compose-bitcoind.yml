@@ -6,8 +6,8 @@ services:
     hostname: bitcoind
     image: ruimarinho/bitcoin-core:0.21-alpine
     env_file: .env
-    volumes:
-      - bitcoind-data:/bitcoin/.bitcoin
+    # volumes:
+    #   - bitcoind-data:/home/bitcoin/.bitcoin
     # https://manpages.debian.org/testing/bitcoind/bitcoind.1.en.html
     command: [
         "-chain=${BTCD_NETWORK}",
@@ -41,5 +41,5 @@ services:
     ports:
       - 8888:8888
 
-volumes:
-  bitcoind-data:
+# volumes:
+#   bitcoind-data:
