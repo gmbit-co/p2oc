@@ -1,32 +1,35 @@
 version: "3"
 
+x-bitcoind: &default-bitcoind
+  container_name: bitcoind
+  image: ruimarinho/bitcoin-core:0.20-alpine
+  env_file: .env
+  command: [
+    "-chain=${BTCD_NETWORK}",
+    "-datadir=/bitcoin/.bitcoin",
+    "-rpcuser=${BTCD_RPCUSER}",
+    "-rpcpassword=${BTCD_RPCPASS}",
+    "-rpcport=${BTCD_RPCPORT}",
+    "-rpcbind=0.0.0.0:${BTCD_RPCPORT}",
+    "-rpcallowip=0.0.0.0/0",
+    "-listenonion=0",
+    "-fallbackfee=0.000001",  # 100 sats
+    "-printtoconsole",
+    "-server",
+    "-txindex",
+    # "-addnode=bitcoind-house",
+    # "-addnode=bitcoind-alice",
+    # "-addnode=bitcoind-bob",
+    "-zmqpubrawblock=tcp://0.0.0.0:28332",
+    "-zmqpubrawtx=tcp://0.0.0.0:28333"
+  ]
+
 services:
   bitcoind:
+    <<: *default-bitcoind
     container_name: bitcoind
-    hostname: bitcoind
-    image: ruimarinho/bitcoin-core:0.21-alpine
-    env_file: .env
-    # volumes:
-    #   - bitcoind-data:/home/bitcoin/.bitcoin
-    # https://manpages.debian.org/testing/bitcoind/bitcoind.1.en.html
-    command: [
-        "-chain=${BTCD_NETWORK}",
-        "-debug",
-        "-datadir=/bitcoin/.bitcoin",
-        "-rpcuser=${BTCD_RPCUSER}",
-        "-rpcpassword=${BTCD_RPCPASS}",
-        "-rpcport=${BTCD_RPCPORT}",
-        "-rpcbind=0.0.0.0:${BTCD_RPCPORT}",
-        "-rpcallowip=0.0.0.0/0",
-        "-timeout=3600000",
-        "-listenonion=0",
-        "-printtoconsole",
-        "-server",
-        "-txindex",
-        "-fallbackfee=0.001",
-        "-zmqpubrawblock=tcp://0.0.0.0:28332",
-        "-zmqpubrawtx=tcp://0.0.0.0:28333"
-    ]
+    volumes:
+      - bitcoind-data:/bitcoin/.bitcoin
 
   ali-lnd: &lnd
     container_name: ali-lnd
@@ -65,13 +68,13 @@ services:
       context: .
       dockerfile: docker/jupyter/Dockerfile
     image: jupyter
-    depends_on:
-      - bitcoind
     env_file: .env
     volumes:
       - ./:/notebooks
     ports:
       - 8888:8888
+    depends_on:
+      - bitcoind
 
-# volumes:
-#   bitcoind-data:
+volumes:
+  bitcoind:
