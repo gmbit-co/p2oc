@@ -1,47 +1,39 @@
 # Setup and Running
 
 ```shell
-cd docker
+# docker-compose up
+# Update .env as needed (e.g. BTCD_NETWORK)
+docker-compose -f docker-compose-bitcoind.yml up
 ```
 
-Run btcd container
+## Debugging
 
-```shell
-# Setup LND w/ local BTC testnet
-$ export NETWORK="simnet"
-$ export RPCUSER=satoshin
-$ export RPCPASS=deadbeef
-# $ export NETWORK="testnet"
+### btcctl
 
-# To get coinbase transaction MINING_ADDRESS=rsbiVJhVHxhnNyntc2Gdrn4BpgmL9pc25j docker-compose up -d btcd
-$ docker-compose up -d btcd
+```sh
+docker exec -it btcd /bin/sh
 
-# $ docker cp btcd:/rpc ../certs
-
-# Check that we're at the appropriate block height (>1.97M for testnet)
-# $ docker exec -it btcd /start-btcctl.sh getblockcount
+# from btcd container
+btcctl --rpcuser=$BTCD_RPCUSER \
+    --rpcpass=$BTCD_RPCPASS \
+    --rpccert=/rpc/rpc.cert \
+    --rpcserver=btcd:$BTCD_RPCPORT \
+    getblockcount
 ```
 
-Run btcwallet (for auctioneer)
+### RPC connectivity
 
-```shell
-$ export NETWORK="simnet"
-$ export RPCUSER=satoshin
-$ export RPCPASS=deadbeef
+```sh
+docker exec -it jupyter bash
 
-# First time you'll need to setup the wallet
-$ docker-compose run --name btcwallet-${NETWORK} --entrypoint bash btcwallet
-$ btcwallet --$NETWORK --create --appdata=/root/.btcwallet/data
->> ...
-$ docker rm btcwallet-$NETWORK
-
-# Afterward wallet has been created, run with
-$ docker-compose run -d --name btcwallet-${NETWORK} --service-ports btcwallet
-$ stunnel ../stunnel.conf
-
-# Can test with
-# $ curl --user satoshin:deadbeef --data-binary '{"jsonrpc": "1.0", "id":"curltest", "method": "getblockchaininfo", "params": [] }' -H 'content-type: text/plain;' http://127.0.0.1:28554
+# from jupyter container
+curl --user $BTCD_RPCUSER:$BTCD_RPCPASS \
+    --data-binary '{"jsonrpc": "1.0", "id":"curltest", "method": "getblockchaininfo", "params": [] }' -H 'content-type: text/plain;' \
+    http://btcwallet-proxy:28334
 ```
+
+<!--
+**TODO: update instructions below**
 
 Run Nth lnd container
 
@@ -76,6 +68,7 @@ ln-node $ lncli --network=$NETWORK sendpayment --pay_req=lntb50n1psxur25pp5ppper
 ln-node $ lncli --network=$NETWORK closechannel --funding_txid=3e7998c6d356cfd3d1d83474894846dc2ee062d4b6e623c56319a924c08707aa --output_index=0
 # confirm locked funds were released with `lncli --network=$NETWORK walletbalance`
 ```
+-->
 
 ## Extras
 

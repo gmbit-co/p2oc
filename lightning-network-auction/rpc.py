@@ -6,9 +6,8 @@ import bitcoin.rpc
 class Config(NamedTuple):
     rpcuser: str = 'username'
     rpcpassword: str = 'password'
-    rpchost: str = '0.0.0.0'
+    rpcconnect: str = '0.0.0.0'
     rpcport: int = 8332
-    rpctimeout: int = 10000000
 
     def asfilestr(self):
         return (
@@ -16,8 +15,7 @@ f"""
 rpcuser={self.rpcuser}
 rpcpassword={self.rpcpassword}
 rpcport={self.rpcport}
-rpchost={self.rpchost}
-rpctimeout={self.rpctimeout}
+rpcconnect={self.rpcconnect}
 """
         )
 
@@ -28,17 +26,26 @@ class Proxy:
         if config is None:
             config = Config()
         self._conf_file = NamedTemporaryFile(mode="w+t")
-        print(config.asfilestr())
         self._conf_file.write(config.asfilestr())
         self._conf_file.seek(0)
 
-    def __getattr__(self, name):
-        if name.startswith("_"):
-            return getattr(self, name)
+    @property
+    def _proxy(self):
+        return bitcoin.rpc.Proxy(btc_conf_file=self._conf_file.name, timeout=3600)
 
-        proxy = bitcoin.rpc.Proxy(btc_conf_file=self._conf_file.name, timeout=3600)
-        self._proxy = proxy  # DEBUG
-        return getattr(proxy, name)
+    def __getattr__(self, name):
+        if name.startswith('_'):
+            return getattr(self, name)
+        return getattr(self._proxy, name)
+
+    def createwallet(self, wallet_name, *args):
+        return self._proxy._call('createwallet', wallet_name, *args)
+
+    def loadwallet(self, wallet_name, *args):
+        return self._proxy._call('loadwallet', wallet_name, *args)
+
+    def unloadwallet(self, wallet_name, *args):
+        return self._proxy._call('unloadwallet', wallet_name, *args)
 
     def __del__(self):
         self._conf_file.close()

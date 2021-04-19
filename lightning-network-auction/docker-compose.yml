@@ -1,0 +1,108 @@
+version: "3"
+
+services:
+  btcd:
+    container_name: btcd
+    hostname: btcd
+    build:
+      context: .
+      dockerfile: docker/btcd/Dockerfile
+    image: btcsuite/btcd
+    env_file: .env
+    volumes:
+      - btcd-data:/data
+      - btcd-rpc:/rpc
+    # https://btcd.readthedocs.io/en/latest/configuration.html
+    command: [
+        "--${BTCD_NETWORK}",
+        "--debuglevel=info",
+        "--datadir=/data",
+        "--logdir=/data",
+        "--rpcuser=${BTCD_RPCUSER}",
+        "--rpcpass=${BTCD_RPCPASS}",
+        "--rpccert=/rpc/rpc.cert",
+        "--rpckey=/rpc/rpc.key",
+        "--rpclisten=0.0.0.0:${BTCD_RPCPORT}",
+        "--txindex"
+    ]
+
+  btcwallet:
+    container_name: btcwallet
+    hostname: btcwallet
+    build:
+      context: .
+      dockerfile: docker/btcwallet/Dockerfile
+    image: btcsuite/btcwallet
+    depends_on:
+      - btcd
+    env_file: .env
+    volumes:
+      - btcd-rpc:/rpc:ro
+      - btcwallet-data:/data
+    command: [
+      "--${BTCD_NETWORK}",
+      "--appdata=/data",
+      "--logdir=/data",
+      "--cafile=/rpc/rpc.cert",
+      "--rpcconnect=btcd:${BTCD_RPCPORT}",
+      "--username=${BTCD_RPCUSER}",
+      "--password=${BTCD_RPCPASS}",
+      "--rpccert=/rpc/rpc.cert",
+      "--rpckey=/rpc/rpc.key",
+      "--debuglevel=debug",
+      "--rpclisten=0.0.0.0:${BTCD_RPCPORT}",
+      "--createtemp"
+    ]
+
+  btcd-proxy:
+    container_name: btcd-proxy
+    hostname: btcd-proxy
+    image: dweomer/stunnel
+    volumes:
+      - btcd-rpc:/rpc:ro
+    depends_on:
+      - btcd
+    environment:
+      - STUNNEL_CLIENT=yes
+      - STUNNEL_SERVICE=btcd
+      - STUNNEL_ACCEPT=0.0.0.0:28334
+      - STUNNEL_CONNECT=btcd:${BTCD_RPCPORT}
+      - STUNNEL_CRT=/rpc/rpc.cert
+      - STUNNEL_KEY=/rpc/rpc.key
+
+  btcwallet-proxy:
+    container_name: btcwallet-proxy
+    hostname: btcwallet-proxy
+    image: dweomer/stunnel
+    volumes:
+      - btcd-rpc:/rpc:ro
+    depends_on:
+      - btcwallet
+    environment:
+      - STUNNEL_CLIENT=yes
+      - STUNNEL_SERVICE=btcwallet
+      - STUNNEL_ACCEPT=0.0.0.0:28334
+      - STUNNEL_CONNECT=btcwallet:${BTCD_RPCPORT}
+      - STUNNEL_CRT=/rpc/rpc.cert
+      - STUNNEL_KEY=/rpc/rpc.key
+
+  jupyter:
+    container_name: jupyter
+    hostname: jupyter
+    build:
+      context: .
+      dockerfile: docker/jupyter/Dockerfile
+    image: jupyter
+    depends_on:
+      - btcd-proxy
+      - btcwallet-proxy
+    env_file: .env
+    volumes:
+      - ./:/notebooks
+    ports:
+      - 8888:8888
+
+volumes:
+  btcd-data:
+  btcd-rpc:
+  btcwallet-data:
