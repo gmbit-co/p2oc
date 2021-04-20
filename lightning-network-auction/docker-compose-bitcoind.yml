@@ -23,8 +23,40 @@ services:
         "-printtoconsole",
         "-server",
         "-txindex",
-        "-fallbackfee=0.001"
+        "-fallbackfee=0.001",
+        "-zmqpubrawblock=tcp://0.0.0.0:28332",
+        "-zmqpubrawtx=tcp://0.0.0.0:28333"
     ]
+
+  ali-lnd: &lnd
+    container_name: ali-lnd
+    hostname: ali-lnd
+    build:
+      context: .
+      dockerfile: dockerfile/lnd/Dockerfile
+    image: lnd
+    depends_on:
+      - bitcoind
+    env_file: .env
+    command: [
+      "--noseedbackup",
+      "--bitcoin.active",
+      "--bitcoin.node=bitcoind",
+      "--bitcoin.${BTCD_NETWORK}",
+      "--bitcoind.rpchost=bitcoind",
+      "--bitcoind.rpcuser=${BTCD_RPCUSER}",
+      "--bitcoind.rpcpass=${BTCD_RPCPASS}",
+      "--bitcoind.zmqpubrawblock=tcp://bitcoind:28332",
+      "--bitcoind.zmqpubrawtx=tcp://bitcoind:28333",
+      "--rpclisten=$HOSTNAME:10009",
+      "--rpclisten=localhost:10009",
+      "--debuglevel=info"
+    ]
+
+  bob-lnd:
+    <<: *lnd
+    container_name: bob-lnd
+    hostname: bob-lnd
 
   jupyter:
     container_name: jupyter
