@@ -14,7 +14,7 @@ RUN set -eux; \
     # git clone https://github.com/petertodd/python-bitcoinlib.git
     git clone https://github.com/flywheelstudio/python-bitcoinlib.git; \
     cd python-bitcoinlib; \
-    git checkout simnet-params; \
+    git checkout 0.19.0.1-support; \
     pip3 install .; \
     pip3 install limit-order-book==2.0.0
 
