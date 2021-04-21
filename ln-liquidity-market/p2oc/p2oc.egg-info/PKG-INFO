@@ -1,0 +1,17 @@
+Metadata-Version: 2.1
+Name: p2oc
+Version: 0.1
+Summary: Pay to open LN channel CLI tool
+Home-page: UNKNOWN
+License: UNKNOWN
+Description: # `p2oc` (aka Pay-To-Open-Channel)
+        
+        ![Code style](https://img.shields.io/badge/code%20style-black-000000.svg)
+        
+        ...
+        
+Platform: UNKNOWN
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+Provides-Extra: test
+Provides-Extra: dev
