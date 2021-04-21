@@ -33,7 +33,7 @@ services:
     hostname: ali-lnd
     build:
       context: .
-      dockerfile: dockerfile/lnd/Dockerfile
+      dockerfile: docker/lnd/Dockerfile
     image: lnd
     depends_on:
       - bitcoind
@@ -48,8 +48,7 @@ services:
       "--bitcoind.rpcpass=${BTCD_RPCPASS}",
       "--bitcoind.zmqpubrawblock=tcp://bitcoind:28332",
       "--bitcoind.zmqpubrawtx=tcp://bitcoind:28333",
-      "--rpclisten=$$HOSTNAME:10009",
-      "--rpclisten=localhost:10009",
+      "--rpclisten=:10009",
       "--debuglevel=info"
     ]
 
