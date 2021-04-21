@@ -27,16 +27,15 @@ x-bitcoind: &default-bitcoind
 services:
   bitcoind:
     <<: *default-bitcoind
-    container_name: bitcoind
-    volumes:
-      - bitcoind-data:/bitcoin/.bitcoin
+    # volumes:
+    #   - bitcoind:/bitcoin/.bitcoin
 
   ali-lnd: &lnd
     container_name: ali-lnd
     hostname: ali-lnd
     build:
       context: .
-      dockerfile: dockerfile/lnd/Dockerfile
+      dockerfile: docker/lnd/Dockerfile
     image: lnd
     depends_on:
       - bitcoind
