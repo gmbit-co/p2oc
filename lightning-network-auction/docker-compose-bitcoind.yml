@@ -39,10 +39,8 @@ services:
       - bitcoind
     env_file: .env
     volumes:
-      - ali-lnd-data:/data
+      - ali-lnd-data:/root/.lnd
     command: [
-      "--lnddir=/data",
-      "--adminmacaroonpath=/data/admin.macaroon",
       "--noseedbackup",
       "--bitcoin.active",
       "--bitcoin.node=bitcoind",
@@ -61,7 +59,7 @@ services:
     container_name: bob-lnd
     hostname: bob-lnd
     volumes:
-      - bob-lnd-data:/data
+      - bob-lnd-data:/root/.lnd
 
   jupyter:
     container_name: jupyter
