@@ -4,9 +4,8 @@ import grpc
 
 import rpc_pb2 as lnmsg
 import rpc_pb2_grpc as lnrpc
-from walletrpc import walletkit_pb2_grpc as walletrpc
-from walletrpc import walletkit_pb2 as walletmsg
-
+from walletrpc import walletkit_pb2_grpc as walletrpc, walletkit_pb2 as walletmsg
+from signrpc import signer_pb2_grpc as signrpc, signer_pb2 as signmsg
 
 class LndRpc:
     def __init__(self, host, cert_path, macaroon_path):
