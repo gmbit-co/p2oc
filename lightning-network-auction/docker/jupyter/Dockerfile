@@ -16,7 +16,7 @@ RUN set -eux; \
     # git clone https://github.com/petertodd/python-bitcoinlib.git
     git clone https://github.com/flywheelstudio/python-bitcoinlib.git; \
     cd python-bitcoinlib; \
-    git checkout 0.19.0.1-support; \
+    git checkout simnet-params; \
     pip3 install .; \
     pip3 install limit-order-book==2.0.0; \
     pip3 install grpcio grpcio-tools googleapis-common-protos; \
