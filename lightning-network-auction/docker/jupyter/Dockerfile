@@ -11,7 +11,7 @@ RUN apt-get update \
 USER $NB_UID
 
 # should match lnd docker image
-ARG LND_VERSION=v0.12.1-beta
+ARG LND_VERSION=regata/signpbst
 RUN set -eux; \
     # git clone https://github.com/petertodd/python-bitcoinlib.git
     git clone https://github.com/flywheelstudio/python-bitcoinlib.git; \
@@ -23,7 +23,7 @@ RUN set -eux; \
     # compile LND grpc protos
     # https://github.com/lightningnetwork/lnd/blob/master/docs/grpc/python.md
     cd ..; \
-    git clone https://github.com/lightningnetwork/lnd.git; \
+    git clone https://github.com/flywheelstudio/lnd.git; \
     cd lnd; \
     git checkout $LND_VERSION; \
     cd ..; \

@@ -7,10 +7,10 @@ RUN apk add --no-cache --update alpine-sdk \
 
 WORKDIR $GOPATH/src/github.com/lightningnetwork/lnd
 
-ARG LND_VERSION=v0.12.1-beta
+ARG LND_VERSION=regata/signpbst
 
 # Grab and install the latest version of of btcwallet and all related dependencies.
-RUN git clone https://github.com/lightningnetwork/lnd.git . \
+RUN git clone https://github.com/flywheelstudio/lnd.git . \
     && git checkout $LND_VERSION \
     &&  make release-install
 
