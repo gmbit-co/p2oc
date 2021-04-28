@@ -6,6 +6,7 @@ import rpc_pb2 as lnmsg
 import rpc_pb2_grpc as lnrpc
 from walletrpc import walletkit_pb2_grpc as walletrpc, walletkit_pb2 as walletmsg
 from signrpc import signer_pb2_grpc as signrpc, signer_pb2 as signmsg
+from routerrpc import router_pb2_grpc as routerrpc, router_pb2 as routermsg
 
 class LndRpc:
     def __init__(self, host, cert_path, macaroon_path):
@@ -32,3 +33,4 @@ class LndRpc:
         channel = grpc.secure_channel(host, combined_creds)
         self.lnd = lnrpc.LightningStub(channel)
         self.wallet = walletrpc.WalletKitStub(channel)
+        self.router = routerrpc.RouterStub(channel)
