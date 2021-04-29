@@ -11,7 +11,7 @@ services:
     # https://manpages.debian.org/testing/bitcoind/bitcoind.1.en.html
     command: [
         "-chain=${BTCD_NETWORK}",
-        "-debug",
+        # "-debug",
         "-datadir=/bitcoin/.bitcoin",
         "-rpcuser=${BTCD_RPCUSER}",
         "-rpcpassword=${BTCD_RPCPASS}",
