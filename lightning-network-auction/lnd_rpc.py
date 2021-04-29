@@ -34,3 +34,4 @@ class LndRpc:
         self.lnd = lnrpc.LightningStub(channel)
         self.wallet = walletrpc.WalletKitStub(channel)
         self.router = routerrpc.RouterStub(channel)
+        self.signer = signrpc.SignerStub(channel)
