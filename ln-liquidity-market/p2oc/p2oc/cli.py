@@ -167,7 +167,7 @@ def createchannelfromoffer(offer, network):
     click.echo(
         f"""Send the following offer response back to the party you want to open a channel with:
 
-{offer_response}
+{offer_response.decode('ascii')}
 """
     )
 

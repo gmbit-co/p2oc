@@ -1,9 +1,0 @@
-grpcio
-click
-python-bitcoinlib@ git+https://github.com/flywheelstudio/python-bitcoinlib@0.19.0.1-support#egg=python-bitcoinlib
-
-[dev]
-black
-
-[test]
-pytest

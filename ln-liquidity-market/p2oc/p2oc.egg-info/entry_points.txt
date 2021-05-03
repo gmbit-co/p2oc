@@ -1,3 +1,0 @@
-[console_scripts]
-p2oc = p2oc.cli:cli
-
