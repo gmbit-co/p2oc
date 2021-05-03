@@ -2,6 +2,10 @@ import codecs
 import os
 import grpc
 
+# TODO: Make this portable
+import sys
+sys.path.append('/home/jovyan/lnrpc')
+
 import rpc_pb2 as lnmsg
 import rpc_pb2_grpc as lnrpc
 from walletrpc import walletkit_pb2_grpc as walletrpc, walletkit_pb2 as walletmsg

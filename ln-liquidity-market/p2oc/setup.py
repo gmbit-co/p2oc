@@ -28,5 +28,5 @@ setup(
             "black",
         ],
     },
-    entry_points={"console_scripts": ["p2oc=p2oc:main"]},
+    entry_points={"console_scripts": ["p2oc=p2oc.cli:cli"]},
 )

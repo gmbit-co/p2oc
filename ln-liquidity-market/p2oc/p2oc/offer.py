@@ -12,8 +12,8 @@ import bitcoin.core.script as bs
 import bitcoin.wallet as bw
 from bitcoin.rpc import unhexlify
 
-from lnd_rpc import LndRpc, lnmsg, walletmsg, signmsg
-from btc_rpc import Proxy
+from .lnd_rpc import LndRpc, lnmsg, walletmsg, signmsg
+from .btc_rpc import Proxy
 
 
 # XXX: The bitcoinlib CTxWitness deserialization API lacks a classmethod
