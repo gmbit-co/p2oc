@@ -1,5 +1,6 @@
 from tempfile import NamedTemporaryFile
 from typing import NamedTuple
+
 import bitcoin.rpc
 
 

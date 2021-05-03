@@ -15,14 +15,14 @@ class LndRpc:
         with open(cert_path, 'rb') as f:
             cert = f.read()
         cert_creds = grpc.ssl_channel_credentials(cert)
-        
+
         with open(os.path.expanduser(macaroon_path), 'rb') as f:
             macaroon = f.read()
             macaroon = codecs.encode(macaroon, 'hex')
-        
+
         # for more info see grpc docs
         metadata_callback = lambda context, callback: callback([('macaroon', macaroon)], None)
-        
+
         # now build meta data credentials
         auth_creds = grpc.metadata_call_credentials(metadata_callback)
 
@@ -31,6 +31,7 @@ class LndRpc:
         combined_creds = grpc.composite_channel_credentials(cert_creds, auth_creds)
 
         channel = grpc.secure_channel(host, combined_creds)
+        self.host = host
         self.lnd = lnrpc.LightningStub(channel)
         self.wallet = walletrpc.WalletKitStub(channel)
         self.router = routerrpc.RouterStub(channel)
