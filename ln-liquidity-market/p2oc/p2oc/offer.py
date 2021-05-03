@@ -328,6 +328,7 @@ class FundingTx:
         final_funding_tx.wit = bc.CTxWitness(signed_witnesses)
         return final_funding_tx
 
+
 def genchannelid(taker_pubkey, maker_pubkey):
     # something that is unique to the corresponding matched taker and maker
     channel_id = hashlib.sha256(

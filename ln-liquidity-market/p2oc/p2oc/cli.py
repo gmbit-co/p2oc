@@ -50,11 +50,9 @@ def createoffer(request_fund_amount, premium_amount, network):
     )
     click.echo(offer_ser)
 
-    offer_response = click.prompt(
-        "\nPaste the offer response for the other party"
-    )
+    offer_response = click.prompt("\nPaste the offer response for the other party")
     # It's base64, let's encode from str to bytes
-    offer_response = offer_response.encode('ascii')
+    offer_response = offer_response.encode("ascii")
     offer_response = OfferResponse.deserialize(offer_response)
 
     validator = OfferValidator(lnd_rpc=lnd_rpc, btc_rpc=btc_rpc)
@@ -83,7 +81,7 @@ def createoffer(request_fund_amount, premium_amount, network):
 
     final_funding_tx_id = btc_rpc.sendrawtransaction(final_funding_tx)
 
-    final_funding_tx_id = codecs.encode(final_funding_tx_id, 'hex').decode('ascii')
+    final_funding_tx_id = codecs.encode(final_funding_tx_id, "hex").decode("ascii")
     click.echo(
         f"Success! The published funding transaction ID is {final_funding_tx_id}"
     )

@@ -18,7 +18,7 @@ setup(
     install_requires=[
         "grpcio",
         "click",
-        'python-bitcoinlib@git+https://github.com/flywheelstudio/python-bitcoinlib@0.19.0.1-support#egg=python-bitcoinlib',
+        "python-bitcoinlib@git+https://github.com/flywheelstudio/python-bitcoinlib@0.19.0.1-support#egg=python-bitcoinlib",
     ],
     extras_require={
         "test": [
