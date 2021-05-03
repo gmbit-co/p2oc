@@ -4,14 +4,9 @@ import codecs
 import click
 import bitcoin
 
-from .offer import (
-    Offer,
-    OfferCreator,
-    OfferResponse,
-    OfferValidator,
-    ChannelManager,
-    FundingTx,
-)
+from .offer import Offer, OfferCreator, OfferResponse, OfferValidator
+from .channel import ChannelManager
+from .fund import FundingTx
 from .lnd_rpc import LndRpc, lnmsg
 from .btc_rpc import Proxy, Config
 
@@ -41,6 +36,11 @@ def createoffer(request_fund_amount, premium_amount, network):
     lnd_rpc, btc_rpc = _build_rpc_clients(network)
 
     offer_creator = OfferCreator(lnd_rpc=lnd_rpc, btc_rpc=btc_rpc)
+    validator = OfferValidator(lnd_rpc=lnd_rpc, btc_rpc=btc_rpc)
+    channel_manger = ChannelManager(lnd_rpc=lnd_rpc)
+    funder = FundingTx(lnd_rpc=lnd_rpc, btc_rpc=btc_rpc)
+
+    # 1. Create and send offer
     offer, inputs, key_desc = offer_creator.create(
         premium_amount=premium_amount, fund_amount=request_fund_amount
     )
@@ -55,33 +55,35 @@ def createoffer(request_fund_amount, premium_amount, network):
     offer_response = offer_response.encode("ascii")
     offer_response = OfferResponse.deserialize(offer_response)
 
-    validator = OfferValidator(lnd_rpc=lnd_rpc, btc_rpc=btc_rpc)
+    # 2. Validate response
     validator.validate_offer_response(offer, offer_response)
 
-    ChannelManager.open_pending_channel(
-        lnd_rpc=lnd_rpc,
+    # 3. Open channel
+    channel_manger.open_pending_channel(
         key_desc=key_desc,
         offer_response=offer_response,
         premium_amount=offer.premium_amount,
         fund_amount=offer.fund_amount,
     )
 
-    # Combine signatures
-    signed_witness = FundingTx.signed_witness(
+    # 4. Complete signing
+    signed_witness = funder.signed_witness(
         funding_inputs=inputs,
         funding_tx=offer_response.funding_tx,
         # Assume we are the last one
         input_idx=len(offer_response.funding_tx.vin) - 1,
-        lnd_rpc=lnd_rpc,
     )
 
-    final_funding_tx = FundingTx.create_signed_funding_tx(
-        offer_response.funding_tx, [offer_response.signed_witness, signed_witness]
+    final_funding_tx = funder.create_signed_funding_tx(
+        offer_response.funding_tx,
+        [offer_response.signed_witness, signed_witness],
     )
 
-    final_funding_tx_id = btc_rpc.sendrawtransaction(final_funding_tx)
-
-    final_funding_tx_id = codecs.encode(final_funding_tx_id, "hex").decode("ascii")
+    # 4. Publish
+    final_funding_tx_id = funder.publish(final_funding_tx)
+    final_funding_tx_id = codecs.encode(final_funding_tx.GetTxid(), "hex").decode(
+        "ascii"
+    )
     click.echo(
         f"Success! The published funding transaction ID is {final_funding_tx_id}"
     )
@@ -96,18 +98,31 @@ def createchannelfromoffer(offer, network):
     """The offer we'll use to create a channel from."""
     lnd_rpc, btc_rpc = _build_rpc_clients(network)
 
-    offer = Offer.deserialize(offer)
     offer_validator = OfferValidator(lnd_rpc=lnd_rpc, btc_rpc=btc_rpc)
+    offer_creator = OfferCreator(lnd_rpc=lnd_rpc, btc_rpc=btc_rpc)
+    funder = FundingTx(lnd_rpc=lnd_rpc, btc_rpc=btc_rpc)
+    channel_manger = ChannelManager(lnd_rpc=lnd_rpc)
+
+    # 1. Validate offer
+    offer = Offer.deserialize(offer)
     assert offer_validator.validate(offer)
 
     # XXX: Bob pays funding tx fee but he does not have to
-    offer_creator = OfferCreator(lnd_rpc=lnd_rpc, btc_rpc=btc_rpc)
     funding_offer, inputs, key_desc = offer_creator.create(
         premium_amount=offer.premium_amount, fund_amount=offer.fund_amount, fund=True
     )
 
-    funding_tx_creator = FundingTx()
-    funding_tx, funding_output_idx = funding_tx_creator.create(
+    # 2. Connect to peer
+    connected = channel_manger.connect_peer(offer.node_pubkey, offer.node_host)
+    if not connected:
+        click.echo(
+            f"Failed to connect to peer at pubkey={offer.node_pubkey} "
+            + f"host={offer.node_host}"
+        )
+        return
+
+    # 3. Create funding transaction
+    funding_tx, funding_output_idx = funder.create(
         maker_pubkey=funding_offer.chan_pubkey,
         taker_pubkey=offer.chan_pubkey,
         premium_amount=offer.premium_amount,
@@ -118,26 +133,8 @@ def createchannelfromoffer(offer, network):
         taker_change_output=offer.change_output,
     )
 
-    # TODO: Assumes whoever creates offer is accessible
-    connect_peer_req = lnmsg.ConnectPeerRequest(
-        addr=lnmsg.LightningAddress(
-            pubkey=offer.node_pubkey,
-            # TODO: Why can't we include the port?
-            host=offer.node_host.split(":")[0],
-        )
-    )
-
-    try:
-        lnd_rpc.lnd.ConnectPeer(connect_peer_req)
-    except:
-        pass
-
-    # Confirm that we are connected
-    peers = lnd_rpc.lnd.ListPeers(lnmsg.ListPeersRequest())
-    assert len(peers.peers) == 1 and peers.peers[0].pub_key == offer.node_pubkey
-
-    channel_id = ChannelManager.register_shim(
-        lnd_rpc=lnd_rpc,
+    # 4. Register channel shim
+    channel_id = channel_manger.register_shim(
         fund_amount=offer.fund_amount,
         premium_amount=offer.premium_amount,
         local_key_desc=key_desc,
@@ -146,12 +143,12 @@ def createchannelfromoffer(offer, network):
         funding_output_idx=funding_output_idx,
     )
 
-    signed_witness = FundingTx.signed_witness(
+    # 5. Sign and respond
+    signed_witness = funder.signed_witness(
         funding_inputs=inputs,
         funding_tx=funding_tx,
         # for simplicity Bob's input is 0
         input_idx=0,
-        lnd_rpc=lnd_rpc,
     )
 
     offer_response = OfferResponse(
@@ -168,9 +165,11 @@ def createchannelfromoffer(offer, network):
     offer_response = offer_response.serialize()
 
     click.echo(
-        "Send the following offer response back to the party you want to open a channel with:\n"
+        f"""Send the following offer response back to the party you want to open a channel with:
+
+{offer_response}
+"""
     )
-    click.echo(offer_response)
 
 
 def _build_rpc_clients(network):
