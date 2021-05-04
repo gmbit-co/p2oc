@@ -77,11 +77,30 @@ services:
       - GRANT_SUDO=yes
     user: root
     volumes:
-      - ./:/notebooks
+      - ./research:/notebooks
+      - ./:/src/p2oc
       - ali-lnd-data:/ali-lnd:ro
       - bob-lnd-data:/bob-lnd:ro
     ports:
       - 8888:8888
+
+  p2oc:
+    container_name: p2oc
+    hostname: p2oc
+    build:
+      context: .
+    image: p2oc
+    tty: true
+    depends_on:
+      - bitcoind
+      - ali-lnd
+      - bob-lnd
+    env_file: .env
+    volumes:
+      - ./:/src/p2oc
+      - ali-lnd-data:/ali-lnd:ro
+      - bob-lnd-data:/bob-lnd:ro
+    entrypoint: /bin/bash
 
 volumes:
   ali-lnd-data:

@@ -36,7 +36,7 @@ def createoffer(request_fund_amount, premium_amount, network):
     lnd_rpc, btc_rpc = _build_rpc_clients(network)
 
     offer_creator = OfferCreator(lnd_rpc=lnd_rpc, btc_rpc=btc_rpc)
-    validator = OfferValidator(lnd_rpc=lnd_rpc, btc_rpc=btc_rpc)
+    offer_validator = OfferValidator(lnd_rpc=lnd_rpc, btc_rpc=btc_rpc)
     channel_manger = ChannelManager(lnd_rpc=lnd_rpc)
     funder = FundingTx(lnd_rpc=lnd_rpc, btc_rpc=btc_rpc)
 
@@ -56,7 +56,7 @@ def createoffer(request_fund_amount, premium_amount, network):
     offer_response = OfferResponse.deserialize(offer_response)
 
     # 2. Validate response
-    validator.validate_offer_response(offer, offer_response)
+    offer_validator.validate_offer_response(offer, offer_response)
 
     # 3. Open channel
     channel_manger.open_pending_channel(
@@ -79,7 +79,7 @@ def createoffer(request_fund_amount, premium_amount, network):
         [offer_response.signed_witness, signed_witness],
     )
 
-    # 4. Publish
+    # 5. Publish
     final_funding_tx_id = funder.publish(final_funding_tx)
     final_funding_tx_id = codecs.encode(final_funding_tx.GetTxid(), "hex").decode(
         "ascii"

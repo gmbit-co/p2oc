@@ -11,21 +11,21 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     version="0.1",
-    packages=find_packages(exclude="tests"),
+    packages=find_packages(include=("p2oc", "lnrpc")),
     include_package_data=True,
     zip_safe=True,
     python_requires=">=3.7",
     install_requires=[
         "grpcio",
         "click",
-        "python-bitcoinlib@git+https://github.com/flywheelstudio/python-bitcoinlib@0.19.0.1-support#egg=python-bitcoinlib",
+        "python-bitcoinlib@git+https://github.com/flywheelstudio/python-bitcoinlib@master#egg=python-bitcoinlib",
     ],
     extras_require={
-        "test": [
-            "pytest",
-        ],
         "dev": [
+            "pytest",
             "black",
+            "grpcio-tools",
+            "googleapis-common-protos",
         ],
     },
     entry_points={"console_scripts": ["p2oc=p2oc.cli:cli"]},

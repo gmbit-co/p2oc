@@ -166,11 +166,11 @@ class OfferCreator:
 
     def _dummy_psbt(self, premium_amount, fund_amount, fund=False):
         # Create dummy PSBT to extract 'funding' UTXO and change addresses
-        dummy_addr = self._lnd_rpc.lnd.NewAddress(
+        dummy_address = self._lnd_rpc.lnd.NewAddress(
             lnmsg.NewAddressRequest(type=lnmsg.AddressType.NESTED_PUBKEY_HASH)
         ).address
         amount = fund_amount if fund else premium_amount
-        tx_template = walletmsg.TxTemplate(outputs={str(dummy_addr): amount})
+        tx_template = walletmsg.TxTemplate(outputs={str(dummy_address): amount})
         psbt_request = walletmsg.FundPsbtRequest(raw=tx_template, target_conf=6)
         dummy_psbt = self._lnd_rpc.wallet.FundPsbt(request=psbt_request)
         dummy_psbt_b64 = base64.b64encode(dummy_psbt.funded_psbt).decode()
