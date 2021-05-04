@@ -1,6 +1,6 @@
 # Crypto Playground
 
 Repository of different crypto experiments. Visit each project's directory for setup instructions.
-### [Lightning Network Liquidity Market](./ln-liquidity)
+### [`p2oc`](./p2oc)
 
-Centralized auction house for trading lightning network channels.
+Pay-2-open-channel, double-fund your lightning channels.
