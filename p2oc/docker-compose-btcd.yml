@@ -1,3 +1,5 @@
+# XXX: This docker-compose file hasn't been updated and doesn't work.
+
 version: "3"
 
 services:
