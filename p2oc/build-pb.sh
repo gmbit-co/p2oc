@@ -1,11 +1,15 @@
-export LND_VERSION=regata/signpbst
+#!/bin/sh
+set -eux
+
+# export LND_VERSION=v0.12.1-beta
+export LND_VERSION=6d66133
 
 echo "Downloading source..."
 
 cd /src
 git clone https://github.com/googleapis/googleapis.git
 
-git clone https://github.com/flywheelstudio/lnd.git
+git clone https://github.com/lightningnetwork/lnd.git
 cd lnd
 git checkout $LND_VERSION
 
