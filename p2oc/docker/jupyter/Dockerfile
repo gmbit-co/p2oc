@@ -12,7 +12,7 @@ RUN apt-get update \
 
 # Install p2oc package
 COPY . /src/p2oc
-RUN cd /src/p2oc && pip install p2oc[dev]
+RUN cd /src/p2oc && pip install .[dev]
 RUN mkdir -p /usr/local/lib/python3.8/site-packages && cd /usr/local/lib/python3.8/site-packages && python /src/p2oc/setup.py develop
 
 USER $NB_UID
