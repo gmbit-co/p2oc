@@ -7,6 +7,7 @@ USER root
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
     curl \
+    libsecp256k1-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
