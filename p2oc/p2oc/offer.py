@@ -1,3 +1,51 @@
+import json
+import base64
+from dataclasses import dataclass
+from typing import Sequence
+
+from bitcointx.core.psbt import PSBT_ProprietaryTypeData
+
+
+@dataclass(frozen=True)
+class Offer:
+    # The offer creator's node host and pubkey
+    node_host: str
+    node_pubkey: str
+    premium_amount: float
+    fund_amount: float
+    # Positions into the PSBT inputs metadata list
+    input_indices: Sequence[int]
+    output_indices: Sequence[int]
+    channel_pubkey: bytes
+
+    def serialize(self):
+        offer = json.dumps(self.__dict__).encode()
+        return base64.b64encode(offer)
+
+    @classmethod
+    def deserialize(cls, offer):
+        offer = base64.b64decode(offer)
+        offer = json.loads(offer)
+        offer = Offer(**offer)
+        return offer
+
+    def sign(key_desc):
+        """Sign the offer with the given key returning a signed digest (signature)."""
+        pass
+
+
+def attach_offer_to_psbt(offer, psbt):
+    """Serializes the offer and attaches it to the proprietary fields of the PSBT in
+    place.
+    """
+    psbt.proprietary_fields[b"offer"] = [
+        PSBT_ProprietaryTypeData(0, b"params", offer.serialize()),
+        # TODO: Add signature
+        PSBT_ProprietaryTypeData(0, b"signature", b"..."),
+    ]
+
+
+"""
 import io
 import base64
 import hashlib
@@ -245,3 +293,4 @@ class OfferValidator:
 
         funding_output = bc.CTxOut(premium_amount + fund_amount, script_pubkey)
         assert funding_output == tx.vout[0]
+"""
