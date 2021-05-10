@@ -70,10 +70,10 @@ len(derivation_map)={len(inp.derivation_map)} != 1
 """
             )
         pubkey = list(inp.derivation_map.keys())[0]
+        key_desc = signmsg.KeyDescriptor(raw_key_bytes=pubkey)
 
         utxo_addr = bw.CBitcoinAddress.from_scriptPubKey(inp.witness_utxo.scriptPubKey)
 
-        # key_desc = signmsg.KeyDescriptor(raw_key_bytes=pubkey)
         sign_desc = signmsg.SignDescriptor(
             key_desc=key_desc,
             witness_script=utxo_addr.to_redeemScript(),
@@ -95,7 +95,7 @@ len(derivation_map)={len(inp.derivation_map)} != 1
         inp.final_script_witness = bs.CScriptWitness(witness)
         # XXX: We must remove 'bip32_derivs' since the bitcointx package does not like
         # that `final_script_witness` and `derivation_map` exist together.
-        inp.derivation_map = None
+        inp.derivation_map = {}
 
 
 def copy_inputs(from_psbt, to_psbt):

@@ -6,6 +6,8 @@ from dataclasses import dataclass
 from bitcointx.core.psbt import PartiallySignedTransaction
 from bitcointx.core.psbt import PSBT_ProprietaryTypeData
 
+from .address import KeyDescriptor
+
 
 @dataclass(frozen=True)
 class Offer:
@@ -17,16 +19,21 @@ class Offer:
     # Positions into the PSBT inputs metadata list
     input_indices: Sequence[int]
     output_indices: Sequence[int]
-    channel_pubkey: bytes
+    channel_pubkey_key_desc: KeyDescriptor
 
     def serialize(self):
-        offer = json.dumps(self.__dict__).encode()
+        offer = self.__dict__.copy()
+        key_desc = offer["channel_pubkey_key_desc"]
+        offer["channel_pubkey_key_desc"] = key_desc.to_json()
+        offer = json.dumps(offer).encode()
         return base64.b64encode(offer)
 
     @classmethod
     def deserialize(cls, offer):
         offer = base64.b64decode(offer)
         offer = json.loads(offer)
+        key_desc = offer["channel_pubkey_key_desc"]
+        offer["channel_pubkey_key_desc"] = KeyDescriptor.from_json(key_desc)
         offer = cls(**offer)
         return offer
 

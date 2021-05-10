@@ -54,19 +54,10 @@ def create_channel_point_shim(
         funding_txid_bytes=funding_txid, output_index=funding_output_idx
     )
 
-    # define our key for funding output
-    local_key = lnmsg.KeyDescriptor(
-        raw_key_bytes=local_key_desc.raw_key_bytes,
-        key_loc=lnmsg.KeyLocator(
-            key_family=local_key_desc.key_loc.key_family,
-            key_index=local_key_desc.key_loc.key_index,
-        ),
-    )
-
     channel_point_shim = lnmsg.ChanPointShim(
         amt=fund_amount + premium_amount,
         chan_point=channel_point,
-        local_key=local_key,
+        local_key=local_key_desc.to_pb(),
         remote_key=remote_pubkey,
         pending_chan_id=unhexlify(channel_id),
         # TODO: Revisit that this is the appropriate value
@@ -84,14 +75,16 @@ def register_channel_point_shim(shim, lnd):
     lnd.lnd.FundingStateStep(msg)
 
 
-def open_channel(node_pubkey, fund_amount, premium_amount, channel_point_shim, lnd):
+def open_channel(
+    node_pubkey, fund_amount, premium_amount, channel_point_shim, lnd, confirmations=6
+):
     open_chan_req = lnmsg.OpenChannelRequest(
         # TODO: Ensure consistency on where unhexlification is done (i.e. within
         #       functions or outside).
         node_pubkey=node_pubkey,
         local_funding_amount=fund_amount + premium_amount,
         push_sat=fund_amount,
-        target_conf=6,
+        target_conf=confirmations,
         funding_shim=lnmsg.FundingShim(chan_point_shim=channel_point_shim),
     )
 
@@ -116,6 +109,11 @@ def validate_pending_channel_matches_offer(offer, psbt, lnd):
         if pending_chan.channel.channel_point == channel_point:
             target_channel = pending_chan.channel
             break
+
+    if target_channel is None:
+        raise RuntimeError(
+            f"Unable to find created pending channel for channel point={channel_point}"
+        )
 
     if target_channel.local_balance != offer.fund_amount:
         raise RuntimeError(

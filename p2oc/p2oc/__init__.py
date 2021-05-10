@@ -16,7 +16,7 @@ from p2oc import address as p2oc_address
 from p2oc import funding as p2oc_funding
 from p2oc import channel as p2oc_channel
 from p2oc import offer as p2oc_offer
-from bitcoin.rpc import hexlify, unhexlify
+from bitcoin.rpc import unhexlify
 
 
 def create_offer(premium_amount, fund_amount, lnd):
@@ -30,14 +30,14 @@ def create_offer(premium_amount, fund_amount, lnd):
         node_pubkey=node_pubkey,
         premium_amount=premium_amount,
         fund_amount=fund_amount,
-        channel_pubkey=hexlify(key_desc.raw_key_bytes),
+        channel_pubkey_key_desc=key_desc,
         input_indices=list(range(len(psbt.unsigned_tx.vin))),
         output_indices=list(range(len(psbt.unsigned_tx.vout))),
     )
 
     p2oc_offer.attach_offer_to_psbt(offer, psbt)
 
-    return psbt, key_desc
+    return psbt
 
 
 def accept_offer(offer_psbt, lnd):
@@ -56,7 +56,7 @@ def accept_offer(offer_psbt, lnd):
     key_desc = p2oc_address.next_key_desc(lnd)
 
     funding_output = p2oc_funding.create_funding_output(
-        taker_pubkey=unhexlify(offer.channel_pubkey),
+        taker_pubkey=offer.channel_pubkey_key_desc.raw_key_bytes,
         maker_pubkey=key_desc.raw_key_bytes,
         premium_amount=offer.premium_amount,
         fund_amount=offer.fund_amount,
@@ -74,7 +74,7 @@ def accept_offer(offer_psbt, lnd):
     #       to pay the fees.
 
     channel_id = p2oc_channel.generate_channel_id(
-        unhexlify(offer.channel_pubkey), key_desc.raw_key_bytes
+        offer.channel_pubkey_key_desc.raw_key_bytes, key_desc.raw_key_bytes
     )
 
     channel_point_shim = p2oc_channel.create_channel_point_shim(
@@ -83,7 +83,7 @@ def accept_offer(offer_psbt, lnd):
         premium_amount=offer.premium_amount,
         fund_amount=offer.fund_amount,
         local_key_desc=key_desc,
-        remote_pubkey=unhexlify(offer.channel_pubkey),
+        remote_pubkey=offer.channel_pubkey_key_desc.raw_key_bytes,
     )
 
     p2oc_channel.register_channel_point_shim(channel_point_shim, lnd)
@@ -106,7 +106,7 @@ def accept_offer(offer_psbt, lnd):
         premium_amount=offer.premium_amount,
         fund_amount=offer.fund_amount,
         channel_id=channel_id,
-        channel_pubkey=hexlify(key_desc.raw_key_bytes),
+        channel_pubkey_key_desc=key_desc,
         input_indices=input_indices,
         output_indices=output_indices,
     )
@@ -115,17 +115,12 @@ def accept_offer(offer_psbt, lnd):
 
     # Offer PSBT has been modified to now become the reply PSBT
     reply_psbt = offer_psbt
-    return reply_psbt, key_desc
+    return reply_psbt
 
 
-def open_channel(unsigned_psbt, key_desc, lnd):
+def open_channel(unsigned_psbt, lnd):
     offer = p2oc_offer.get_offer_from_psbt(unsigned_psbt)
     reply = p2oc_offer.get_offer_reply_from_psbt(unsigned_psbt)
-
-    # TODO: In the old implementation, we had reused the memory earlier in the
-    #       notebook to use the taker's key description. Here we generate the next key
-    #       which may have changed. Confirm this isn't a problem...
-    # key_desc = p2oc_address.next_key_desc(lnd)
 
     # fundign output is the last one
     assert (
@@ -139,8 +134,8 @@ def open_channel(unsigned_psbt, key_desc, lnd):
         psbt=unsigned_psbt,
         premium_amount=offer.premium_amount,
         fund_amount=offer.fund_amount,
-        local_key_desc=key_desc,
-        remote_pubkey=unhexlify(reply.channel_pubkey),
+        local_key_desc=offer.channel_pubkey_key_desc,
+        remote_pubkey=reply.channel_pubkey_key_desc.raw_key_bytes,
     )
 
     p2oc_channel.open_channel(
@@ -156,19 +151,23 @@ def open_channel(unsigned_psbt, key_desc, lnd):
 
     # At this point we should have commitment transactions signed and we can sign the funding transaction
     # TODO: How can we check with lnd that this is the case?
-    p2oc_signing.sign_inputs(unsigned_psbt, offer.input_indices, key_desc, lnd)
+    p2oc_signing.sign_inputs(
+        unsigned_psbt, offer.input_indices, offer.channel_pubkey_key_desc, lnd
+    )
 
     # Unsigned PSBT has been modified to now become the half-signed PSBT
     half_signed_psbt = unsigned_psbt
     return half_signed_psbt
 
 
-def finalize_offer(half_signed_psbt, key_desc, lnd):
+def finalize_offer(half_signed_psbt, lnd):
     offer = p2oc_offer.get_offer_from_psbt(half_signed_psbt)
     reply = p2oc_offer.get_offer_reply_from_psbt(half_signed_psbt)
 
     p2oc_channel.validate_pending_channel_matches_offer(offer, half_signed_psbt, lnd)
-    p2oc_signing.sign_inputs(half_signed_psbt, reply.input_indices, key_desc, lnd)
+    p2oc_signing.sign_inputs(
+        half_signed_psbt, reply.input_indices, reply.channel_pubkey_key_desc, lnd
+    )
     p2oc_signing.finalize_and_publish_psbt(half_signed_psbt, lnd)
 
 
