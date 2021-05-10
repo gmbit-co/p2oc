@@ -53,7 +53,7 @@ def create_change_only_psbt(fee_amount, lnd):
     return psbt
 
 
-def sign_inputs(psbt, input_indices, lnd):
+def sign_inputs(psbt, input_indices, key_desc, lnd):
     """Signs all inputs of the given PSBT according to the supplied indices. This
     function mutates the PSBT in place (doesn't return a copy).
     """
@@ -73,8 +73,9 @@ len(derivation_map)={len(inp.derivation_map)} != 1
 
         utxo_addr = bw.CBitcoinAddress.from_scriptPubKey(inp.witness_utxo.scriptPubKey)
 
+        # key_desc = signmsg.KeyDescriptor(raw_key_bytes=pubkey)
         sign_desc = signmsg.SignDescriptor(
-            key_desc=signmsg.KeyDescriptor(raw_key_bytes=pubkey),
+            key_desc=key_desc,
             witness_script=utxo_addr.to_redeemScript(),
             output=signmsg.TxOut(
                 value=inp.witness_utxo.nValue, pk_script=utxo_addr.to_scriptPubKey()
@@ -95,3 +96,28 @@ len(derivation_map)={len(inp.derivation_map)} != 1
         # XXX: We must remove 'bip32_derivs' since the bitcointx package does not like
         # that `final_script_witness` and `derivation_map` exist together.
         inp.derivation_map = None
+
+
+def copy_inputs(from_psbt, to_psbt):
+    """Copy inputs from `from_psbt` into `to_psbt` (and do so in place)."""
+    for i, vin in enumerate(from_psbt.unsigned_tx.vin):
+        inp = from_psbt.inputs[i]
+        # XXX: Reset index (an implementation detail of bitcointx to have it it
+        #      re-calculate the index position).
+        inp.index = None
+        to_psbt.add_input(vin, inp)
+
+    for i, vout in enumerate(from_psbt.unsigned_tx.vout):
+        out = from_psbt.outputs[i]
+        out.index = None
+        to_psbt.add_output(vout, out)
+
+
+def finalize_and_publish_psbt(psbt, lnd):
+    tx = bc.CMutableTransaction.from_instance(psbt.unsigned_tx)
+
+    wits = [inp.final_script_witness for inp in psbt.inputs]
+    wits = [bc.CTxInWitness(wit) for wit in wits]
+    tx.wit = bc.CTxWitness(wits)
+
+    lnd.wallet.PublishTransaction(walletmsg.Transaction(tx_hex=tx.serialize()))

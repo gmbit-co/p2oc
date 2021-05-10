@@ -3,6 +3,7 @@ import hashlib
 import bitcointx.core as bc
 import bitcointx.core.script as bs
 
+
 def create_funding_output(
     taker_pubkey,
     maker_pubkey,
