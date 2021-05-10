@@ -94,7 +94,7 @@ def accept_offer(offer_psbt, lnd):
             input_indices.append(i)
 
     output_indices = []
-    for i in range(len(offer_psbt.unsigned_tx.vout) - 1): # '-1' to exclude funding tx
+    for i in range(len(offer_psbt.unsigned_tx.vout) - 1):  # '-1' to exclude funding tx
         if i not in offer.output_indices:
             output_indices.append(i)
 
