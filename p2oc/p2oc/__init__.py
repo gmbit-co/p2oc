@@ -9,6 +9,7 @@ sys.path.append(os.path.join(parent_path, "lnrpc"))
 
 
 from bitcointx.core.psbt import PSBT_Output
+import bitcointx.core as bc
 
 from p2oc.lnd_rpc import lnmsg
 from p2oc import signing as p2oc_signing
@@ -151,8 +152,9 @@ def open_channel(unsigned_psbt, lnd):
         lnd=lnd,
     )
 
-    # TODO: Check that the channel is pending
-    # if lnd.lnd.PendingChannels(lnmsg.PendingChannelsRequest())...
+    # Check that the channel is pending
+    channel_point = f"{bc.b2lx(unsigned_psbt.unsigned_tx.GetTxid())}:{len(unsigned_psbt.unsigned_tx.vout)-1}"
+    _ = p2oc_channel.get_pending_channel(channel_point, lnd)
 
     # At this point we should have commitment transactions signed and we can sign the funding transaction
     # TODO: How can we check with lnd that this is the case?

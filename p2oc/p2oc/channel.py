@@ -92,27 +92,29 @@ def open_channel(
     next(chan_event_stream)
 
 
-def validate_pending_channel_matches_offer(offer, psbt, lnd):
-    # check that the channel is pending
+def get_pending_channel(channel_point, lnd):
+    # returns pending channel object for given `channel_point` in the format of "tx_id:vout_id"
+    # if a channel is not found, raises error
     resp = lnd.lnd.PendingChannels(lnmsg.PendingChannelsRequest())
     if not resp.pending_open_channels:
         raise RuntimeError("No pending channels")
 
+    for pending_chan in resp.pending_open_channels:
+        if pending_chan.channel.channel_point == channel_point:
+            return pending_chan
+
+    raise RuntimeError(
+        f"Unable to find created pending channel for channel point={channel_point}"
+    )
+
+
+def validate_pending_channel_matches_offer(offer, psbt, lnd):
+    # check that the channel is pending
     channel_point = (
         f"{bc.b2lx(psbt.unsigned_tx.GetTxid())}:{len(psbt.unsigned_tx.vout)-1}"
     )
 
-    target_channel = None
-    for pending_chan in resp.pending_open_channels:
-        if pending_chan.channel.channel_point == channel_point:
-            target_channel = pending_chan
-            break
-
-    if target_channel is None:
-        raise RuntimeError(
-            f"Unable to find created pending channel for channel point={channel_point}"
-        )
-
+    target_channel = get_pending_channel(channel_point, lnd)
     if target_channel.channel.local_balance != offer.fund_amount:
         raise RuntimeError(
             f"Pending channel's local balance={target_channel.channel.local_balance} does not "
