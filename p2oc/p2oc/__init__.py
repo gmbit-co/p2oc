@@ -9,6 +9,7 @@ sys.path.append(os.path.join(parent_path, "lnrpc"))
 
 
 from bitcointx.core.psbt import PSBT_Output
+import bitcointx.core as bc
 
 from p2oc.lnd_rpc import lnmsg
 from p2oc import signing as p2oc_signing
@@ -73,9 +74,6 @@ def accept_offer(offer_psbt, lnd):
             f"PSBT output amount ({offer_psbt.get_output_amounts()[-1]}) does not add "
             + f"up to fund + premium ({offer.fund_amount + offer.premium_amount})"
         )
-
-    # TODO: Currently both parties pay fees. It makes more sense for only the taker
-    #       to pay the fees.
 
     channel_id = p2oc_channel.generate_channel_id(
         offer.channel_pubkey_key_desc.raw_key_bytes, key_desc.raw_key_bytes
@@ -152,8 +150,9 @@ def open_channel(unsigned_psbt, lnd):
         lnd=lnd,
     )
 
-    # TODO: Check that the channel is pending
-    # if lnd.lnd.PendingChannels(lnmsg.PendingChannelsRequest())...
+    # Check that the channel is pending
+    channel_point = f"{bc.b2lx(unsigned_psbt.unsigned_tx.GetTxid())}:{len(unsigned_psbt.unsigned_tx.vout)-1}"
+    _ = p2oc_channel.get_pending_channel(channel_point, lnd)
 
     # At this point we should have commitment transactions signed and we can sign the funding transaction
     # TODO: How can we check with lnd that this is the case?
