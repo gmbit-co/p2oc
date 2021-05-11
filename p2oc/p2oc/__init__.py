@@ -156,9 +156,7 @@ def open_channel(unsigned_psbt, lnd):
 
     # At this point we should have commitment transactions signed and we can sign the funding transaction
     # TODO: How can we check with lnd that this is the case?
-    p2oc_signing.sign_inputs(
-        unsigned_psbt, offer.input_indices, offer.channel_pubkey_key_desc, lnd
-    )
+    p2oc_signing.sign_inputs(unsigned_psbt, offer.input_indices, lnd)
 
     # Unsigned PSBT has been modified to now become the half-signed PSBT
     half_signed_psbt = unsigned_psbt
@@ -173,9 +171,7 @@ def finalize_offer(half_signed_psbt, lnd):
     p2oc_offer.validate_offer_reply_was_not_tampered(half_signed_psbt, lnd)
 
     p2oc_channel.validate_pending_channel_matches_offer(offer, half_signed_psbt, lnd)
-    p2oc_signing.sign_inputs(
-        half_signed_psbt, reply.input_indices, reply.channel_pubkey_key_desc, lnd
-    )
+    p2oc_signing.sign_inputs(half_signed_psbt, reply.input_indices, lnd)
     p2oc_psbt.finalize_and_publish_psbt(half_signed_psbt, lnd)
 
 
