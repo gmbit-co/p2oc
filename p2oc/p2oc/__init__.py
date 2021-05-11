@@ -22,7 +22,7 @@ from bitcoin.rpc import unhexlify
 def create_offer(premium_amount, fund_amount, lnd):
     psbt = p2oc_signing.create_change_only_psbt(premium_amount, lnd)
 
-    key_desc = p2oc_address.next_key_desc(lnd)
+    key_desc = p2oc_address.derive_next_multisig_key_desc(lnd)
     node_pubkey = lnd.lnd.GetInfo(lnmsg.GetInfoRequest()).identity_pubkey
     offer = p2oc_offer.Offer(
         # TODO: Find a way to get this internally
@@ -35,7 +35,7 @@ def create_offer(premium_amount, fund_amount, lnd):
         output_indices=list(range(len(psbt.unsigned_tx.vout))),
     )
 
-    p2oc_offer.attach_offer_to_psbt(offer, psbt)
+    p2oc_offer.attach_offer_to_psbt(offer, psbt, lnd)
 
     return psbt
 
@@ -43,17 +43,18 @@ def create_offer(premium_amount, fund_amount, lnd):
 def accept_offer(offer_psbt, lnd):
     offer = p2oc_offer.get_offer_from_psbt(offer_psbt)
 
+    p2oc_offer.validate_offer_was_not_tampered(offer_psbt, lnd)
+    p2oc_offer.validate_offer_psbt(offer_psbt)
+
     p2oc_channel.connect_peer(
         node_pubkey=offer.node_pubkey, node_host=offer.node_host, lnd=lnd
     )
-
-    p2oc_offer.validate_offer_psbt(offer_psbt)
 
     # This is to obtain our UTXOs
     change_only_psbt = p2oc_signing.create_change_only_psbt(offer.fund_amount, lnd)
     p2oc_signing.copy_inputs(from_psbt=change_only_psbt, to_psbt=offer_psbt)
 
-    key_desc = p2oc_address.next_key_desc(lnd)
+    key_desc = p2oc_address.derive_next_multisig_key_desc(lnd)
 
     funding_output = p2oc_funding.create_funding_output(
         taker_pubkey=offer.channel_pubkey_key_desc.raw_key_bytes,
@@ -111,7 +112,7 @@ def accept_offer(offer_psbt, lnd):
         output_indices=output_indices,
     )
 
-    p2oc_offer.attach_offer_reply_to_psbt(reply, offer_psbt)
+    p2oc_offer.attach_offer_reply_to_psbt(reply, offer_psbt, lnd)
 
     # Offer PSBT has been modified to now become the reply PSBT
     reply_psbt = offer_psbt
@@ -122,7 +123,10 @@ def open_channel(unsigned_psbt, lnd):
     offer = p2oc_offer.get_offer_from_psbt(unsigned_psbt)
     reply = p2oc_offer.get_offer_reply_from_psbt(unsigned_psbt)
 
-    # fundign output is the last one
+    p2oc_offer.validate_offer_was_not_tampered(unsigned_psbt, lnd)
+    p2oc_offer.validate_offer_reply_was_not_tampered(unsigned_psbt, lnd)
+
+    # Funding output is the last one
     assert (
         offer.premium_amount + offer.fund_amount
         == unsigned_psbt.get_output_amounts()[-1]
@@ -163,6 +167,9 @@ def open_channel(unsigned_psbt, lnd):
 def finalize_offer(half_signed_psbt, lnd):
     offer = p2oc_offer.get_offer_from_psbt(half_signed_psbt)
     reply = p2oc_offer.get_offer_reply_from_psbt(half_signed_psbt)
+
+    p2oc_offer.validate_offer_was_not_tampered(half_signed_psbt, lnd)
+    p2oc_offer.validate_offer_reply_was_not_tampered(half_signed_psbt, lnd)
 
     p2oc_channel.validate_pending_channel_matches_offer(offer, half_signed_psbt, lnd)
     p2oc_signing.sign_inputs(
