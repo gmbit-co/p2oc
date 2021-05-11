@@ -27,8 +27,7 @@ def create_offer(premium_amount, fund_amount, lnd):
     key_desc = p2oc_address.derive_next_multisig_key_desc(lnd)
     node_pubkey = lnd.lnd.GetInfo(lnmsg.GetInfoRequest()).identity_pubkey
     offer = p2oc_offer.Offer(
-        # TODO: Find a way to get this internally
-        node_host="ali-lnd",
+        node_host=lnd.host,
         node_pubkey=node_pubkey,
         premium_amount=premium_amount,
         fund_amount=fund_amount,
@@ -105,8 +104,7 @@ def accept_offer(offer_psbt, lnd):
 
     node_pubkey = lnd.lnd.GetInfo(lnmsg.GetInfoRequest()).identity_pubkey
     reply = p2oc_offer.OfferReply(
-        # TODO: Find a way to get this internally
-        node_host="bob-lnd",
+        node_host=lnd.host,
         node_pubkey=node_pubkey,
         premium_amount=offer.premium_amount,
         fund_amount=offer.fund_amount,

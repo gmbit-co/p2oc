@@ -1,8 +1,7 @@
-import bitcointx.core.script as bs
-import bitcointx.core as bc
 import bitcoin.wallet as bw
+import bitcointx.core.script as bs
 
-from .lnd_rpc import signmsg, walletmsg
+from .lnd_rpc import signmsg
 
 
 def sign_message(message, key_loc, lnd):
