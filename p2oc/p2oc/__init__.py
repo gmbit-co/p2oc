@@ -22,7 +22,7 @@ from bitcoin.rpc import unhexlify
 def create_offer(premium_amount, fund_amount, lnd):
     psbt = p2oc_signing.create_change_only_psbt(premium_amount, lnd)
 
-    key_desc = p2oc_address.next_key_desc(lnd)
+    key_desc = p2oc_address.derive_next_multisig_key_desc(lnd)
     node_pubkey = lnd.lnd.GetInfo(lnmsg.GetInfoRequest()).identity_pubkey
     offer = p2oc_offer.Offer(
         # TODO: Find a way to get this internally
@@ -54,7 +54,7 @@ def accept_offer(offer_psbt, lnd):
     change_only_psbt = p2oc_signing.create_change_only_psbt(offer.fund_amount, lnd)
     p2oc_signing.copy_inputs(from_psbt=change_only_psbt, to_psbt=offer_psbt)
 
-    key_desc = p2oc_address.next_key_desc(lnd)
+    key_desc = p2oc_address.derive_next_multisig_key_desc(lnd)
 
     funding_output = p2oc_funding.create_funding_output(
         taker_pubkey=offer.channel_pubkey_key_desc.raw_key_bytes,

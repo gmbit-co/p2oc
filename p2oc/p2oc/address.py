@@ -58,7 +58,7 @@ def create_dummy_p2wpkh_address():
     return dummy_address
 
 
-def next_key_desc(lnd):
+def derive_next_multisig_key_desc(lnd):
     """Derive the next pubkey within the key family account (rel: BIP43 and BIP32)."""
     # `key_family=0` is the `KeyFamilyMultiSig` (https://git.io/J3HJ5)
     key_req = walletmsg.KeyReq(key_family=0)
