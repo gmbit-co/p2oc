@@ -3,7 +3,6 @@ import base64
 from typing import Sequence
 from dataclasses import dataclass
 
-from bitcointx.core.psbt import PartiallySignedTransaction
 from bitcointx.core.psbt import PSBT_ProprietaryTypeData
 
 from .lnd_rpc import signmsg
@@ -131,7 +130,3 @@ def validate_offer_reply_was_not_tampered(psbt, lnd):
             "The received offer reply has an invalid signature. It may have been "
             + "tampered with."
         )
-
-
-def deserialize_psbt(psbt):
-    return PartiallySignedTransaction.from_base64(psbt)

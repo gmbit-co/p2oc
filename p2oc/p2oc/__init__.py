@@ -15,12 +15,14 @@ from p2oc import signing as p2oc_signing
 from p2oc import address as p2oc_address
 from p2oc import funding as p2oc_funding
 from p2oc import channel as p2oc_channel
+from p2oc import wallet as p2oc_wallet
 from p2oc import offer as p2oc_offer
+from p2oc import psbt as p2oc_psbt
 from bitcoin.rpc import unhexlify
 
 
 def create_offer(premium_amount, fund_amount, lnd):
-    psbt = p2oc_signing.allocate_funds(premium_amount, lnd, include_tx_fee=True)
+    psbt = p2oc_wallet.allocate_funds(premium_amount, lnd, include_tx_fee=True)
 
     key_desc = p2oc_address.derive_next_multisig_key_desc(lnd)
     node_pubkey = lnd.lnd.GetInfo(lnmsg.GetInfoRequest()).identity_pubkey
@@ -51,10 +53,10 @@ def accept_offer(offer_psbt, lnd):
     )
 
     # This is to obtain our UTXOs
-    allocated_psbt = p2oc_signing.allocate_funds(
+    allocated_psbt = p2oc_wallet.allocate_funds(
         offer.fund_amount, lnd, include_tx_fee=False
     )
-    p2oc_signing.copy_inputs(from_psbt=allocated_psbt, to_psbt=offer_psbt)
+    p2oc_psbt.merge_psbts(from_psbt=allocated_psbt, to_psbt=offer_psbt)
 
     key_desc = p2oc_address.derive_next_multisig_key_desc(lnd)
 
@@ -177,8 +179,8 @@ def finalize_offer(half_signed_psbt, lnd):
     p2oc_signing.sign_inputs(
         half_signed_psbt, reply.input_indices, reply.channel_pubkey_key_desc, lnd
     )
-    p2oc_signing.finalize_and_publish_psbt(half_signed_psbt, lnd)
+    p2oc_psbt.finalize_and_publish_psbt(half_signed_psbt, lnd)
 
 
 def inspect(psbt):
-    return p2oc_offer.deserialize_psbt(psbt)
+    return p2oc_psbt.deserialize_psbt(psbt)

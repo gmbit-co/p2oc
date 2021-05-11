@@ -120,7 +120,10 @@ def validate_pending_channel_matches_offer(offer, psbt, lnd):
         )
 
     # the other party is paying all commitment tx fees
-    if target_channel.channel.remote_balance != offer.premium_amount - target_channel.commit_fee:
+    if (
+        target_channel.channel.remote_balance
+        != offer.premium_amount - target_channel.commit_fee
+    ):
         raise RuntimeError(
             f"Pending channel's remote balance={target_channel.channel.remote_balance} does not "
             + f"match offer premium amount={offer.premium_amount} minus commit_fee={target_channel.commit_fee}"
