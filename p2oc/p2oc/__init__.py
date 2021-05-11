@@ -75,9 +75,6 @@ def accept_offer(offer_psbt, lnd):
             + f"up to fund + premium ({offer.fund_amount + offer.premium_amount})"
         )
 
-    # TODO: Currently both parties pay fees. It makes more sense for only the taker
-    #       to pay the fees.
-
     channel_id = p2oc_channel.generate_channel_id(
         offer.channel_pubkey_key_desc.raw_key_bytes, key_desc.raw_key_bytes
     )

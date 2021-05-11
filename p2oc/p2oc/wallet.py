@@ -18,17 +18,9 @@ def allocate_funds(amount, lnd, include_tx_fee=True, min_confirmations=6):
     dummy_address = create_dummy_p2wpkh_address()
     tx_template = walletmsg.TxTemplate(outputs={str(dummy_address): amount})
 
-    if include_tx_fee:
-        psbt_request = walletmsg.FundPsbtRequest(
-            raw=tx_template, target_conf=6, min_confs=min_confirmations
-        )
-    else:
-        # XXX: Setting the `sat_per_vbyte` to 0 fails because 0 is a null value in
-        #      Golang for the int type. As a result we need to set it to some
-        #      non-zero value.
-        psbt_request = walletmsg.FundPsbtRequest(
-            raw=tx_template, sat_per_vbyte=1, min_confs=min_confirmations
-        )
+    psbt_request = walletmsg.FundPsbtRequest(
+        raw=tx_template, target_conf=6, min_confs=min_confirmations
+    )
 
     psbt = lnd.wallet.FundPsbt(request=psbt_request)
 
@@ -47,9 +39,16 @@ def allocate_funds(amount, lnd, include_tx_fee=True, min_confirmations=6):
 
     # Add change output
     tx = bc.CMutableTransaction.from_instance(psbt.unsigned_tx)
-    tx.vout = [psbt.unsigned_tx.vout[change_output_index]]
+    change_output = psbt.unsigned_tx.vout[change_output_index]
+    change_output = bc.CMutableTxOut.from_instance(change_output)
+    tx.vout = [change_output]
 
     original_fee = psbt.get_fee()
+
+    if not include_tx_fee:
+        # remove tx fee by adding the fee amount to the change output
+        tx.vout[0].nValue += psbt.get_fee()
+        original_fee = 0
 
     # Update PSBT
     psbt.unsigned_tx = tx
