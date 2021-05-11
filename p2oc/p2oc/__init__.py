@@ -20,7 +20,7 @@ from bitcoin.rpc import unhexlify
 
 
 def create_offer(premium_amount, fund_amount, lnd):
-    psbt = p2oc_signing.create_change_only_psbt(premium_amount, lnd)
+    psbt = p2oc_signing.allocate_funds(premium_amount, lnd, include_tx_fee=True)
 
     key_desc = p2oc_address.derive_next_multisig_key_desc(lnd)
     node_pubkey = lnd.lnd.GetInfo(lnmsg.GetInfoRequest()).identity_pubkey
@@ -51,8 +51,10 @@ def accept_offer(offer_psbt, lnd):
     )
 
     # This is to obtain our UTXOs
-    change_only_psbt = p2oc_signing.create_change_only_psbt(offer.fund_amount, lnd)
-    p2oc_signing.copy_inputs(from_psbt=change_only_psbt, to_psbt=offer_psbt)
+    allocated_psbt = p2oc_signing.allocate_funds(
+        offer.fund_amount, lnd, include_tx_fee=False
+    )
+    p2oc_signing.copy_inputs(from_psbt=allocated_psbt, to_psbt=offer_psbt)
 
     key_desc = p2oc_address.derive_next_multisig_key_desc(lnd)
 
