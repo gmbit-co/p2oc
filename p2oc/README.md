@@ -7,8 +7,8 @@
 Here's an example of running p2oc among 2 peers to perform a double funded channel opening.
 ```
 docker exec -it p2oc p2oc createoffer \
-    --premium=10_000 \
-    --fund=500_000 \
+    --premium=100000 \
+    --fund=1500000 \
     --network="regtest" \
     --host="ali-lnd:10009" \
     --tlscertpath="/ali-lnd/tls.cert" \
