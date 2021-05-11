@@ -82,7 +82,7 @@ def accept_offer(offer_psbt, lnd):
 
     channel_point_shim = p2oc_channel.create_channel_point_shim(
         channel_id=channel_id,
-        psbt=offer_psbt,
+        unsigned_tx_out=offer_psbt.unsigned_tx,
         premium_amount=offer.premium_amount,
         fund_amount=offer.fund_amount,
         local_key_desc=key_desc,
@@ -137,7 +137,7 @@ def open_channel(unsigned_psbt, lnd):
     # TODO: check that our inputs and outputs were included
     channel_point_shim = p2oc_channel.create_channel_point_shim(
         channel_id=reply.channel_id,
-        psbt=unsigned_psbt,
+        unsigned_tx_out=unsigned_psbt.unsigned_tx,
         premium_amount=offer.premium_amount,
         fund_amount=offer.fund_amount,
         local_key_desc=offer.channel_pubkey_key_desc,

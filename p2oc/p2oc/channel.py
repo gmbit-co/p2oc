@@ -40,15 +40,15 @@ def generate_channel_id(taker_pubkey, maker_pubkey):
 
 def create_channel_point_shim(
     channel_id,
-    psbt,
+    unsigned_tx_out,
     premium_amount,
     fund_amount,
     local_key_desc,
     remote_pubkey,
 ):
     # TODO: Add additional check in this function so it's safe to assume last output
-    funding_output_idx = len(psbt.unsigned_tx.vout) - 1
-    funding_txid = psbt.unsigned_tx.GetTxid()
+    funding_output_idx = len(unsigned_tx_out.vout) - 1
+    funding_txid = unsigned_tx_out.GetTxid()
 
     channel_point = lnmsg.ChannelPoint(
         funding_txid_bytes=funding_txid, output_index=funding_output_idx
