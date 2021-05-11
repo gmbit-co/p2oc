@@ -107,7 +107,7 @@ def validate_pending_channel_matches_offer(offer, psbt, lnd):
     target_channel = None
     for pending_chan in resp.pending_open_channels:
         if pending_chan.channel.channel_point == channel_point:
-            target_channel = pending_chan.channel
+            target_channel = pending_chan
             break
 
     if target_channel is None:
@@ -115,22 +115,21 @@ def validate_pending_channel_matches_offer(offer, psbt, lnd):
             f"Unable to find created pending channel for channel point={channel_point}"
         )
 
-    if target_channel.local_balance != offer.fund_amount:
+    if target_channel.channel.local_balance != offer.fund_amount:
         raise RuntimeError(
-            f"Pending channel's local balance={target_channel.local_balance} does not "
+            f"Pending channel's local balance={target_channel.channel.local_balance} does not "
             + f"match offer funding amount={offer.fund_amount}"
         )
 
-    # TODO: check why remote_balance was slightly reduced. Looks like fees
-    # assert target_channel.remote_balance == premiumAmount
-    if target_channel.remote_balance <= 0:
+    # the other party is paying all commitment tx fees
+    if target_channel.channel.remote_balance != offer.premium_amount - target_channel.commit_fee:
         raise RuntimeError(
-            f"Pending channel's remote balance={target_channel.remote_balance} does not "
-            + f"match offer premium amount={offer.premium_amount}"
+            f"Pending channel's remote balance={target_channel.channel.remote_balance} does not "
+            + f"match offer premium amount={offer.premium_amount} minus commit_fee={target_channel.commit_fee}"
         )
 
-    if target_channel.remote_node_pub != offer.node_pubkey:
+    if target_channel.channel.remote_node_pub != offer.node_pubkey:
         raise RuntimeError(
-            f"Pending channel's remote node pubkey={target_channel.remote_node_pub} "
+            f"Pending channel's remote node pubkey={target_channel.channel.remote_node_pub} "
             + f"does not match offer's node pubkey={offer.node_pubkey}"
         )
