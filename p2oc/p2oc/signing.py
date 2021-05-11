@@ -53,6 +53,18 @@ def create_change_only_psbt(fee_amount, lnd):
     return psbt
 
 
+def sign_message(message, key_loc, lnd):
+    resp = lnd.signer.SignMessage(signmsg.SignMessageReq(msg=message, key_loc=key_loc))
+    return resp.signature
+
+
+def verify_message(message, signature, pubkey, lnd):
+    resp = lnd.signer.VerifyMessage(
+        signmsg.VerifyMessageReq(msg=message, signature=signature, pubkey=pubkey)
+    )
+    return resp.valid
+
+
 def sign_inputs(psbt, input_indices, key_desc, lnd):
     """Signs all inputs of the given PSBT according to the supplied indices. This
     function mutates the PSBT in place (doesn't return a copy).
@@ -62,12 +74,10 @@ def sign_inputs(psbt, input_indices, key_desc, lnd):
 
         if len(inp.derivation_map.keys()) != 1:
             raise RuntimeError(
-                f"""A _single_ deriviation path was not detected for a supplied input. This scenario is not presently handled.
-
-input={inp}
-derivation_map={inp.derivation_map}
-len(derivation_map)={len(inp.derivation_map)} != 1
-"""
+                "A _single_ (== 1) deriviation path was not detected for the "
+                + f"supplied input. This scenario is not presently handled.\n\n"
+                + f"input={inp}\nderivation_map={inp.derivation_map}\n"
+                + f"len(derivation_map)={len(inp.derivation_map)} != 1"
             )
         pubkey = list(inp.derivation_map.keys())[0]
         key_desc = signmsg.KeyDescriptor(raw_key_bytes=pubkey)

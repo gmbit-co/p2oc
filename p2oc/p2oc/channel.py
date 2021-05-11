@@ -88,9 +88,7 @@ def open_channel(
         funding_shim=lnmsg.FundingShim(chan_point_shim=channel_point_shim),
     )
 
-    # TODO: Use sync API instead
     chan_event_stream = lnd.lnd.OpenChannel(open_chan_req)
-
     next(chan_event_stream)
 
 
