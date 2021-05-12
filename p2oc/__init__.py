@@ -155,7 +155,7 @@ def open_channel(unsigned_psbt, lnd):
 
     if unsigned_psbt.unsigned_tx.vout[-1] != funding_output:
         raise RuntimeError(
-            "Channel funding does not match between parameters of offer and reply"
+            "Channel funding does not match parameters between offer and reply"
             + f"Expected funding_output={funding_output}, got {unsigned_psbt.unsigned_tx.vout[-1]}"
         )
 
@@ -210,7 +210,7 @@ def finalize_offer(half_signed_psbt, lnd):
 
     if half_signed_psbt.unsigned_tx.vout[-1] != funding_output:
         raise RuntimeError(
-            "Channel funding does not match between parameters of offer and reply"
+            "Channel funding does not match parameters between offer and reply"
             + f"Expected funding_output={funding_output}, got {half_signed_psbt.unsigned_tx.vout[-1]}"
         )
 
