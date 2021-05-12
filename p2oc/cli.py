@@ -237,7 +237,7 @@ def finalizeoffer(ctx, half_signed_psbt):
 being passed back and forth."""
 )
 @click.argument("psbt", required=True)
-def inspect(psbt):
+def inspect(ctx, psbt):
     bitcoin.SelectParams(ctx.obj["group_options"]["network"])
 
     psbt = deserialize_psbt(psbt)
