@@ -35,6 +35,7 @@ def create_offer(premium_amount, fund_amount, lnd):
         channel_pubkey_key_desc=key_desc,
         input_indices=list(range(len(psbt.unsigned_tx.vin))),
         output_indices=list(range(len(psbt.unsigned_tx.vout))),
+        input_output_hash=bc.Hash160(psbt.unsigned_tx.serialize()),
     )
 
     p2oc_offer.attach_offer_to_psbt(offer, psbt, lnd)
@@ -110,6 +111,7 @@ def accept_offer(offer_psbt, lnd):
         channel_pubkey_key_desc=key_desc,
         input_indices=input_indices,
         output_indices=output_indices,
+        input_output_hash=bc.Hash160(allocated_psbt.unsigned_tx.serialize()),
     )
 
     p2oc_offer.attach_offer_reply_to_psbt(reply, offer_psbt, lnd)
