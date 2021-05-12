@@ -46,7 +46,7 @@ def create_offer(premium_amount, fund_amount, lnd):
 def accept_offer(offer_psbt, lnd):
     offer = p2oc_offer.get_offer_from_psbt(offer_psbt)
 
-    p2oc_offer.validate_offer_was_not_tampered(offer_psbt, lnd)
+    p2oc_offer.validate_offer_integrity(offer_psbt, lnd)
     p2oc_offer.validate_offer_psbt(offer_psbt)
 
     p2oc_channel.connect_peer(
@@ -125,7 +125,7 @@ def open_channel(unsigned_psbt, lnd):
     offer = p2oc_offer.get_offer_from_psbt(unsigned_psbt)
     reply = p2oc_offer.get_offer_reply_from_psbt(unsigned_psbt)
 
-    p2oc_offer.validate_offer_was_not_tampered(unsigned_psbt, lnd)
+    p2oc_offer.validate_offer_integrity(unsigned_psbt, lnd)
     p2oc_offer.validate_offer_reply_was_not_tampered(unsigned_psbt, lnd)
 
     # Funding output is the last one
@@ -169,7 +169,7 @@ def finalize_offer(half_signed_psbt, lnd):
     offer = p2oc_offer.get_offer_from_psbt(half_signed_psbt)
     reply = p2oc_offer.get_offer_reply_from_psbt(half_signed_psbt)
 
-    p2oc_offer.validate_offer_was_not_tampered(half_signed_psbt, lnd)
+    p2oc_offer.validate_offer_integrity(half_signed_psbt, lnd)
     p2oc_offer.validate_offer_reply_was_not_tampered(half_signed_psbt, lnd)
 
     p2oc_channel.validate_pending_channel_matches_offer(offer, half_signed_psbt, lnd)

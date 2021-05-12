@@ -144,7 +144,7 @@ def validate_offer_psbt(offer_psbt):
         )
 
 
-def validate_offer_was_not_tampered(psbt, lnd):
+def validate_offer_integrity(psbt, lnd):
     offer, signature = psbt.proprietary_fields[b"offer"]
     offer, signature = Offer.deserialize(offer.value), signature.value
 
