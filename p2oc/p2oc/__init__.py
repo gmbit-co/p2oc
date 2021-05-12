@@ -173,7 +173,7 @@ def finalize_offer(half_signed_psbt, lnd):
     p2oc_offer.validate_offer_reply_was_not_tampered(half_signed_psbt, lnd)
 
     p2oc_channel.validate_pending_channel_matches_offer(offer, half_signed_psbt, lnd)
-    p2oc_signing.sign_inputs(half_signed_psbt, reply.input_indices, lnd)
+    p2oc_sign.sign_inputs(half_signed_psbt, reply.input_indices, lnd)
     p2oc_psbt.finalize_and_publish_psbt(half_signed_psbt, lnd)
 
 
