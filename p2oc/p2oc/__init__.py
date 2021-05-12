@@ -12,9 +12,9 @@ from bitcointx.core.psbt import PSBT_Output
 import bitcointx.core as bc
 
 from p2oc.lnd_rpc import lnmsg
-from p2oc import signing as p2oc_signing
+from p2oc import sign as p2oc_sign
 from p2oc import address as p2oc_address
-from p2oc import funding as p2oc_funding
+from p2oc import fund as p2oc_fund
 from p2oc import channel as p2oc_channel
 from p2oc import wallet as p2oc_wallet
 from p2oc import offer as p2oc_offer
@@ -60,7 +60,7 @@ def accept_offer(offer_psbt, lnd):
 
     key_desc = p2oc_address.derive_next_multisig_key_desc(lnd)
 
-    funding_output = p2oc_funding.create_funding_output(
+    funding_output = p2oc_fund.create_funding_output(
         taker_pubkey=offer.channel_pubkey_key_desc.raw_key_bytes,
         maker_pubkey=key_desc.raw_key_bytes,
         premium_amount=offer.premium_amount,
@@ -132,6 +132,12 @@ def open_channel(unsigned_psbt, lnd):
         == unsigned_psbt.get_output_amounts()[-1]
     )
 
+    # At this point we should have commitment transactions signed and we can sign the funding transaction
+    # TODO: How can we check with lnd that this is the case?
+    p2oc_sign.sign_inputs(
+        unsigned_psbt, offer.input_indices, offer.channel_pubkey_key_desc, lnd
+    )
+
     # TODO: check that our inputs and outputs were included
     channel_point_shim = p2oc_channel.create_channel_point_shim(
         channel_id=reply.channel_id,
@@ -154,12 +160,6 @@ def open_channel(unsigned_psbt, lnd):
     channel_point = f"{bc.b2lx(unsigned_psbt.unsigned_tx.GetTxid())}:{len(unsigned_psbt.unsigned_tx.vout)-1}"
     _ = p2oc_channel.get_pending_channel(channel_point, lnd)
 
-    # At this point we should have commitment transactions signed and we can sign the funding transaction
-    # TODO: How can we check with lnd that this is the case?
-    p2oc_signing.sign_inputs(
-        unsigned_psbt, offer.input_indices, offer.channel_pubkey_key_desc, lnd
-    )
-
     # Unsigned PSBT has been modified to now become the half-signed PSBT
     half_signed_psbt = unsigned_psbt
     return half_signed_psbt
@@ -173,7 +173,7 @@ def finalize_offer(half_signed_psbt, lnd):
     p2oc_offer.validate_offer_reply_was_not_tampered(half_signed_psbt, lnd)
 
     p2oc_channel.validate_pending_channel_matches_offer(offer, half_signed_psbt, lnd)
-    p2oc_signing.sign_inputs(
+    p2oc_sign.sign_inputs(
         half_signed_psbt, reply.input_indices, reply.channel_pubkey_key_desc, lnd
     )
     p2oc_psbt.finalize_and_publish_psbt(half_signed_psbt, lnd)
