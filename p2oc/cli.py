@@ -2,6 +2,7 @@ import textwrap
 import collections
 
 import click
+import bitcoin
 
 import p2oc
 from .lnd_rpc import LndRpc
@@ -68,6 +69,7 @@ config file.""",
 @click.option(
     "-n",
     "--network",
+    default="regtest",
     type=click.Choice(["mainnet", "testnet", "simnet", "regtest"]),
     help="The network your lightning node is running on.",
 )
@@ -83,11 +85,11 @@ config file.""",
     ~/.lnd/data/chain/bitcoin/testnet/admin.macaroon).""",
 )
 @click.pass_context
-def cli(ctx, **lnd_options):
+def cli(ctx, **group_options):
     # Ensure that ctx.obj exists and is a dict (in case `cli()` is called by means
     # other than the `if` block below).
     ctx.ensure_object(dict)
-    ctx.obj["lnd_options"] = lnd_options
+    ctx.obj["group_options"] = group_options
 
 
 @cli.command(
@@ -110,9 +112,11 @@ can send this offer to another node operator for them to accept and provide liqu
 )
 @click.pass_context
 def createoffer(ctx, premium, fund):
+    bitcoin.SelectParams(ctx.obj["group_options"]["network"])
+
     pretty_echo_header("Create Offer")
 
-    lnd = _lnd_from_options(ctx.obj["lnd_options"])
+    lnd = _lnd_from_options(ctx.obj["group_options"])
     offer_psbt = p2oc.create_offer(premium_amount=premium, fund_amount=fund, lnd=lnd)
 
     pretty_echo_psbt(offer_psbt, "taker")
@@ -137,9 +141,11 @@ receive an upfront fee (of premium amount)."""
 @click.argument("offer_psbt", required=True)
 @click.pass_context
 def acceptoffer(ctx, offer_psbt):
+    bitcoin.SelectParams(ctx.obj["group_options"]["network"])
+
     pretty_echo_header("Accept Offer")
 
-    lnd = _lnd_from_options(ctx.obj["lnd_options"])
+    lnd = _lnd_from_options(ctx.obj["group_options"])
     offer_psbt = deserialize_psbt(offer_psbt)
 
     pretty_echo_psbt(offer_psbt, "maker")
@@ -168,9 +174,11 @@ create and open the channel. It will be in pending state after this command."""
 @click.argument("unsigned_psbt", required=True)
 @click.pass_context
 def openchannel(ctx, unsigned_psbt):
+    bitcoin.SelectParams(ctx.obj["group_options"]["network"])
+
     pretty_echo_header("Open Channel")
 
-    lnd = _lnd_from_options(ctx.obj["lnd_options"])
+    lnd = _lnd_from_options(ctx.obj["group_options"])
     unsigned_psbt = deserialize_psbt(unsigned_psbt)
 
     pretty_echo_psbt(unsigned_psbt, "taker")
@@ -201,9 +209,11 @@ confirmations."""
 @click.argument("half_signed_psbt", required=True)
 @click.pass_context
 def finalizeoffer(ctx, half_signed_psbt):
+    bitcoin.SelectParams(ctx.obj["group_options"]["network"])
+
     pretty_echo_header("Finalize Offer")
 
-    lnd = _lnd_from_options(ctx.obj["lnd_options"])
+    lnd = _lnd_from_options(ctx.obj["group_options"])
     half_signed_psbt = deserialize_psbt(half_signed_psbt)
 
     pretty_echo_psbt(half_signed_psbt, "maker")
@@ -228,6 +238,8 @@ being passed back and forth."""
 )
 @click.argument("psbt", required=True)
 def inspect(psbt):
+    bitcoin.SelectParams(ctx.obj["group_options"]["network"])
+
     psbt = deserialize_psbt(psbt)
     offer = p2oc.offer.get_offer_from_psbt(psbt, raise_if_missing=False)
     reply = p2oc.offer.get_offer_reply_from_psbt(psbt, raise_if_missing=False)

@@ -10,14 +10,11 @@ from p2oc.btc_rpc import Proxy, Config
 from p2oc.address import create_dummy_p2wpkh_address
 
 
-@pytest.fixture
-def network():
-    return "regtest"
+bitcoin.SelectParams("regtest")
 
 
 @pytest.fixture
-def btc_rpc(network):
-    bitcoin.SelectParams(network)
+def btc_rpc():
     btc_rpc = Proxy(
         config=Config(
             rpcuser=os.environ["BTCD_RPCUSER"],
