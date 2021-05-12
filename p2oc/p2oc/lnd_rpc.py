@@ -66,7 +66,7 @@ class LndRpc:
 
         parser = configparser.ConfigParser()
         if len(parser.read(config_path)) == 0:
-            log.info(
+            log.debug(
                 f"No valid config file found at {config_path}, using overrides or "
                 + "defaults."
             )
