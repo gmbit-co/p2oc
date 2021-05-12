@@ -208,9 +208,7 @@ def open_channel(unsigned_psbt, lnd):
     half_signed_psbt = unsigned_psbt
 
     # update state and re-sign offer
-    offer_dict = offer.__dict__.copy()
-    offer_dict["state"] = offer.CHANNEL_OPENED_STATE
-    offer = p2oc_offer.Offer(**offer_dict)
+    offer = offer.copy_with_update(state=offer.CHANNEL_OPENED_STATE)
     p2oc_offer.attach_offer_to_psbt(offer, half_signed_psbt, lnd)
     return half_signed_psbt
 

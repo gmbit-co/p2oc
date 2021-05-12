@@ -1,7 +1,8 @@
 import json
 import base64
 from typing import Sequence
-from dataclasses import dataclass
+import dataclasses
+
 
 from bitcointx.core.psbt import PSBT_ProprietaryTypeData
 import bitcointx.core as bc
@@ -11,7 +12,7 @@ from .address import KeyDescriptor
 from .sign import sign_message, verify_message
 
 
-@dataclass(frozen=True)
+@dataclasses.dataclass(frozen=True)
 class Offer:
     # class variables
     CREATED_STATE = "CREATED"
@@ -71,8 +72,11 @@ class Offer:
         expected_signature = self.sign(self.channel_pubkey_key_desc, lnd)
         return expected_signature == signature
 
+    def copy_with_update(self, **kwarg):
+        return dataclasses.replace(self, **kwarg)
 
-@dataclass(frozen=True)
+
+@dataclasses.dataclass(frozen=True)
 class OfferReply(Offer):
     channel_id: str
 
