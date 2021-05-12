@@ -200,6 +200,20 @@ def finalize_offer(half_signed_psbt, lnd):
         half_signed_psbt, lnd, check_our_signature=True
     )
 
+    # check that the funding output is correct
+    funding_output = p2oc_fund.create_funding_output(
+        taker_pubkey=offer.channel_pubkey_key_desc.raw_key_bytes,
+        maker_pubkey=reply.channel_pubkey_key_desc.raw_key_bytes,
+        premium_amount=reply.premium_amount,
+        fund_amount=reply.fund_amount,
+    )
+
+    if half_signed_psbt.unsigned_tx.vout[-1] != funding_output:
+        raise RuntimeError(
+            "Channel funding does not match between parameters of offer and reply"
+            + f"Expected funding_output={funding_output}, got {half_signed_psbt.unsigned_tx.vout[-1]}"
+        )
+
     # check that the channel is pending and has the right config
     channel_point = f"{bc.b2lx(half_signed_psbt.unsigned_tx.GetTxid())}:{len(half_signed_psbt.unsigned_tx.vout)-1}"
 
