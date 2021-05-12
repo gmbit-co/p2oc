@@ -16,7 +16,7 @@ def verify_message(message, signature, pubkey, lnd):
     return resp.valid
 
 
-def sign_inputs(psbt, input_indices, key_desc, lnd):
+def sign_inputs(psbt, input_indices, lnd):
     """Signs all inputs of the given PSBT according to the supplied indices. This
     function mutates the PSBT in place (doesn't return a copy).
     """
