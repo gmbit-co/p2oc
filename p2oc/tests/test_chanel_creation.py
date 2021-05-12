@@ -5,9 +5,9 @@ import pytest
 import bitcoin
 
 import p2oc
-from p2oc.address import create_dummy_p2wpkh_address
 from p2oc.lnd_rpc import LndRpc, lnmsg
 from p2oc.btc_rpc import Proxy, Config
+from p2oc.address import create_dummy_p2wpkh_address
 
 
 @pytest.fixture
@@ -30,7 +30,7 @@ def btc_rpc(network):
 
 
 @pytest.fixture
-def taker(btc_rpc):
+def taker():
     return LndRpc(
         config_overrides={
             "host": "ali-lnd:10009",
@@ -41,7 +41,7 @@ def taker(btc_rpc):
 
 
 @pytest.fixture
-def maker(btc_rpc):
+def maker():
     return LndRpc(
         config_overrides={
             "host": "bob-lnd:10009",

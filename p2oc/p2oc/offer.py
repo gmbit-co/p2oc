@@ -8,7 +8,7 @@ import bitcointx.core as bc
 
 from .lnd_rpc import signmsg
 from .address import KeyDescriptor
-from .signing import sign_message, verify_message
+from .sign import sign_message, verify_message
 
 
 @dataclass(frozen=True)
@@ -84,16 +84,28 @@ def attach_offer_reply_to_psbt(offer_reply, psbt, lnd):
     ]
 
 
-def get_offer_from_psbt(psbt):
-    offer = psbt.proprietary_fields[b"offer"][0].value
-    offer = Offer.deserialize(offer)
-    return offer
+def get_offer_from_psbt(psbt, raise_if_missing=True):
+    try:
+        offer = psbt.proprietary_fields[b"offer"][0].value
+        offer = Offer.deserialize(offer)
+        return offer
+    except:
+        if raise_if_missing:
+            raise
+        else:
+            return None
 
 
-def get_offer_reply_from_psbt(psbt):
-    reply = psbt.proprietary_fields[b"reply"][0].value
-    reply = OfferReply.deserialize(reply)
-    return reply
+def get_offer_reply_from_psbt(psbt, raise_if_missing=True):
+    try:
+        reply = psbt.proprietary_fields[b"reply"][0].value
+        reply = OfferReply.deserialize(reply)
+        return reply
+    except:
+        if raise_if_missing:
+            raise
+        else:
+            return None
 
 
 def validate_input_output_hash(psbt, proprietary_field):
