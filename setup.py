@@ -25,7 +25,8 @@ setup(
         "dev": [
             "pytest~=6.2.0",
             "black~=21.5b0",
-            "grpcio-tools==1.37.*",
+            "pylint~=2.8.2",
+            "grpcio-tools~=1.37.0",
             "googleapis-common-protos~=1.53.0",
         ],
     },
