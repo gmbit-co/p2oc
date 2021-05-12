@@ -49,7 +49,7 @@ def accept_offer(offer_psbt, lnd):
     p2oc_offer.validate_offer_integrity(offer_psbt, lnd, check_our_signature=False)
 
     if offer.state != offer.CREATED_STATE:
-        raise (
+        raise RuntimeError(
             f"Got offer in a wrong state. Expected state='{offer.CREATED_STATE}'"
             + f", got '{offer.state}'"
         )
@@ -154,13 +154,13 @@ def open_channel(unsigned_psbt, lnd):
     )
 
     if offer.state != offer.CREATED_STATE:
-        raise (
+        raise RuntimeError(
             f"Got offer in a wrong state. Expected state='{offer.CREATED_STATE}'"
             + f", got '{offer.state}'"
         )
 
     if reply.state != reply.ACCEPTED_STATE:
-        raise (
+        raise RuntimeError(
             f"Got reply in a wrong state. Expected state='{reply.ACCEPTED_STATE}'"
             + f", got '{reply.state}'"
         )
@@ -227,13 +227,13 @@ def finalize_offer(half_signed_psbt, lnd):
     )
 
     if offer.state != offer.CHANNEL_OPENED_STATE:
-        raise (
+        raise RuntimeError(
             f"Got offer in a wrong state. Expected state='{offer.CHANNEL_OPENED_STATE}'"
             + f", got '{offer.state}'"
         )
 
     if reply.state != reply.ACCEPTED_STATE:
-        raise (
+        raise RuntimeError(
             f"Got reply in a wrong state. Expected state='{reply.ACCEPTED_STATE}'"
             + f", got '{reply.state}'"
         )
