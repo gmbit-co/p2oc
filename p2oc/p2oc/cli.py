@@ -1,193 +1,288 @@
-import os
-import codecs
+import textwrap
+import collections
 
 import click
-import bitcoin
 
-from .offer import Offer, OfferCreator, OfferResponse, OfferValidator
-from .channel import ChannelManager
-from .fund import FundingTx
-from .lnd_rpc import LndRpc, lnmsg
-from .btc_rpc import Proxy, Config
+import p2oc
+from .lnd_rpc import LndRpc
+from .psbt import deserialize_psbt
+from . import pretty_print as pprint
+
+class OrderedGroup(click.Group):
+    def __init__(self, name=None, commands=None, **attrs):
+        super(OrderedGroup, self).__init__(name, commands, **attrs)
+        #: the registered subcommands by their exported names.
+        self.commands = commands or collections.OrderedDict()
+
+    def list_commands(self, ctx):
+        return self.commands
 
 
-@click.group()
-def cli():
-    pass
+@click.group(cls=OrderedGroup, help=f"""
+{click.style("p2oc (Pay to Open Channel)", bold=True)} is a protocol atop running
+lightning network nodes (presently LND - https://github.com/lightningnetwork/lnd) to
+allow a node to request an inbound channel of a given size ("fund amount") from another
+node in exchange for a fee ("premium amount") which is paid immediately as part of the
+funding transaction. The procedure presently involves going back and forth 2x, but will
+be made more streamlined in the future.
 
+Under the hood, we are creating a custom funding transaction with multiple inputs by
+passing a PSBT back and forth between the two parties to build up this transaction.
 
-@cli.command()
+~
+
+{click.style("Following is the order of commands to be run and by which party:", bold=True)}
+
+\b
+{click.style("Step 1 (run by Taker, requesting inbound channel)", bold=True)}
+$ p2oc p2oc createoffer --premium=100000 --fund=1500000
+<offer_psbt>
+
+\b
+{click.style("Step 2 (run by Maker, providing channel)", bold=True)}
+$ p2oc acceptoffer <offer_psbt>
+<unsigned_psbt>
+
+\b
+{click.style("Step 3 (run by Taker)", bold=True)}
+$ p2oc openchannel <unsigned_psbt>
+<half_signed_psbt>
+
+\b
+{click.style("Step 4 (run by Maker)", bold=True)}
+$ p2oc finalizeoffer <half_signed_psbt>""")
 @click.option(
-    "--request_fund_amount",
+    "-c",
+    "--configfile",
+    type=str,
+    help="""The path to the LND config file (by default under ~/.lnd/lnd.conf). The
+host, network, tlscertpath, and adminmacaroonpath will be looked for in this config
+file. If those params are passed manually they will override what was found in the
+config file.""")
+@click.option("-h", "--host", type=str, help="The host of your node.")
+@click.option(
+    "-n",
+    "--network",
+    type=click.Choice(["mainnet", "testnet", "simnet", "regtest"]),
+    help="The network your lightning node is running on."
+)
+@click.option(
+    "--tlscertpath",
+    type=str,
+    help="The path to the LND's tls certificate (by default under ~/.lnd/tls.cert).")
+@click.option(
+    "--adminmacaroonpath",
+    type=str,
+    help="""The path to the LND's admin macaroon path (by default under
+    ~/.lnd/data/chain/bitcoin/testnet/admin.macaroon).""")
+@click.pass_context
+def cli(ctx, **lnd_options):
+    # Ensure that ctx.obj exists and is a dict (in case `cli()` is called by means
+    # other than the `if` block below).
+    ctx.ensure_object(dict)
+    ctx.obj["lnd_options"] = lnd_options
+
+
+@cli.command(
+    short_help=f"""{click.style("(Step 1)", bold=True)} Create an offer to request an
+inbound funded channel (of fund amount) in exchange for a fee (premium amount). You
+can send this offer to another node operator for them to accept and provide liquidity.""")
+@click.option(
+    "--premium",
     required=True,
     type=int,
-    help="Satoshis to request from liquidity provider",
+    help="Amount in satoshis to pay to liquidity provider in exchange for the " +
+    "inbound liquidity.",
 )
 @click.option(
-    "--premium_amount",
+    "--fund",
     required=True,
     type=int,
-    help="Satoshis to pay to liquidity provider in exchange for the inbound liquidity.",
+    help="Amount in satoshis to request from liquidity provider.",
 )
-@click.option(
-    "--network", default="regtest", help="Bitcoin network to use (e.g. regtest"
-)
-def createoffer(request_fund_amount, premium_amount, network):
-    lnd_rpc, btc_rpc = _build_rpc_clients(network)
+@click.pass_context
+def createoffer(ctx, premium, fund):
+    pretty_echo_header("Create Offer")
 
-    offer_creator = OfferCreator(lnd_rpc=lnd_rpc, btc_rpc=btc_rpc)
-    offer_validator = OfferValidator(lnd_rpc=lnd_rpc, btc_rpc=btc_rpc)
-    channel_manger = ChannelManager(lnd_rpc=lnd_rpc)
-    funder = FundingTx(lnd_rpc=lnd_rpc, btc_rpc=btc_rpc)
+    lnd = _lnd_from_options(ctx.obj["lnd_options"])
+    offer_psbt = p2oc.create_offer(premium_amount=premium, fund_amount=fund, lnd=lnd)
 
-    # 1. Create and send offer
-    offer, inputs, key_desc = offer_creator.create(
-        premium_amount=premium_amount, fund_amount=request_fund_amount
-    )
-    offer_ser = offer.serialize()
-    click.echo(
-        "Send the following offer to the party you want to open a channel with:\n"
-    )
-    click.echo(offer_ser)
-
-    offer_response = click.prompt("\nPaste the offer response for the other party")
-    # It's base64, let's encode from str to bytes
-    offer_response = offer_response.encode("ascii")
-    offer_response = OfferResponse.deserialize(offer_response)
-
-    # 2. Validate response
-    offer_validator.validate_offer_response(offer, offer_response)
-
-    # 3. Open channel
-    channel_manger.open_pending_channel(
-        key_desc=key_desc,
-        offer_response=offer_response,
-        premium_amount=offer.premium_amount,
-        fund_amount=offer.fund_amount,
+    pretty_echo_psbt(offer_psbt, "taker")
+    click.confirm(
+        "Please confirm if you'd like to create this offer", default=True, abort=True
     )
 
-    # 4. Complete signing
-    signed_witness = funder.signed_witness(
-        funding_inputs=inputs,
-        funding_tx=offer_response.funding_tx,
-        # Assume we are the last one
-        input_idx=len(offer_response.funding_tx.vin) - 1,
+    click.secho(
+        "\nSend the following offer to the funding peer you want to open a channel " +
+        "with for them to accept:\n",
+        bold=True,
     )
 
-    final_funding_tx = funder.create_signed_funding_tx(
-        offer_response.funding_tx,
-        [offer_response.signed_witness, signed_witness],
+    click.echo(offer_psbt.to_base64())
+
+
+@cli.command(
+    short_help=f"""{click.style("(Step 2)", bold=True)} Accept an offer requesting an
+inbound funded channel (of fund amount) of which you'd provide. In exchange you'll
+receive an upfront fee (of premium amount).""")
+@click.argument("offer_psbt", required=True)
+@click.pass_context
+def acceptoffer(ctx, offer_psbt):
+    pretty_echo_header("Accept Offer")
+
+    lnd = _lnd_from_options(ctx.obj["lnd_options"])
+    offer_psbt = deserialize_psbt(offer_psbt)
+
+    pretty_echo_psbt(offer_psbt, "maker")
+    click.confirm(
+        "Please confirm if you'd like to accept this offer", default=True, abort=True
     )
 
-    # 5. Publish
-    final_funding_tx_id = funder.publish(final_funding_tx)
-    final_funding_tx_id = codecs.encode(final_funding_tx.GetTxid(), "hex").decode(
-        "ascii"
-    )
-    click.echo(
-        f"Success! The published funding transaction ID is {final_funding_tx_id}"
-    )
+    reply_psbt = p2oc.accept_offer(offer_psbt, lnd)
 
+    pretty_echo_psbt(reply_psbt, "maker")
+    click.confirm("Please confirm your reply", default=True, abort=True)
 
-@cli.command()
-@click.argument("offer", required=True)
-@click.option(
-    "--network", default="regtest", help="Bitcoin network to use (e.g. regtest"
-)
-def createchannelfromoffer(offer, network):
-    """The offer we'll use to create a channel from."""
-    lnd_rpc, btc_rpc = _build_rpc_clients(network)
-
-    offer_validator = OfferValidator(lnd_rpc=lnd_rpc, btc_rpc=btc_rpc)
-    offer_creator = OfferCreator(lnd_rpc=lnd_rpc, btc_rpc=btc_rpc)
-    funder = FundingTx(lnd_rpc=lnd_rpc, btc_rpc=btc_rpc)
-    channel_manger = ChannelManager(lnd_rpc=lnd_rpc)
-
-    # 1. Validate offer
-    offer = Offer.deserialize(offer)
-    assert offer_validator.validate(offer)
-
-    # XXX: Bob pays funding tx fee but he does not have to
-    funding_offer, inputs, key_desc = offer_creator.create(
-        premium_amount=offer.premium_amount, fund_amount=offer.fund_amount, fund=True
+    click.secho(
+        "\nSend the following reply back to peer requesting liquidity to indicate " +
+        "you have approved the offer:\n",
+        bold=True,
     )
 
-    # 2. Connect to peer
-    connected = channel_manger.connect_peer(offer.node_pubkey, offer.node_host)
-    if not connected:
-        click.echo(
-            f"Failed to connect to peer at pubkey={offer.node_pubkey} "
-            + f"host={offer.node_host}"
-        )
-        return
+    click.echo(reply_psbt.to_base64())
 
-    # 3. Create funding transaction
-    funding_tx, funding_output_idx = funder.create(
-        maker_pubkey=funding_offer.chan_pubkey,
-        taker_pubkey=offer.chan_pubkey,
-        premium_amount=offer.premium_amount,
-        fund_amount=offer.fund_amount,
-        maker_inputs=funding_offer.inputs,
-        taker_inputs=offer.inputs,
-        maker_change_output=funding_offer.change_output,
-        taker_change_output=offer.change_output,
+
+@cli.command(
+    short_help=f"""{click.style("(Step 3)", bold=True)} With an accepted offer in-hand,
+create and open the channel. It will be in pending state after this command.""")
+@click.argument("unsigned_psbt", required=True)
+@click.pass_context
+def openchannel(ctx, unsigned_psbt):
+    pretty_echo_header("Open Channel")
+
+    lnd = _lnd_from_options(ctx.obj["lnd_options"])
+    unsigned_psbt = deserialize_psbt(unsigned_psbt)
+
+    pretty_echo_psbt(unsigned_psbt, "taker")
+    click.confirm(
+        "Please confirm if you'd like to proceed in opening the channel",
+        default=True,
+        abort=True,
     )
 
-    # 4. Register channel shim
-    channel_id = channel_manger.register_shim(
-        fund_amount=offer.fund_amount,
-        premium_amount=offer.premium_amount,
-        local_key_desc=key_desc,
-        remote_pubkey=offer.chan_pubkey,
-        funding_txid=funding_tx.GetTxid(),
-        funding_output_idx=funding_output_idx,
+    half_signed_psbt = p2oc.open_channel(unsigned_psbt, lnd)
+    half_signed_psbt = half_signed_psbt.to_base64()
+
+    click.secho(
+        "\nYou've successfully signed the funding tx and opened a pending channel. "
+        + "Send the final reply back to the funder for them to finalize and publish. "
+        + "The channel can be used after 6 confirmation.:\n",
+        bold=True,
     )
 
-    # 5. Sign and respond
-    signed_witness = funder.signed_witness(
-        funding_inputs=inputs,
-        funding_tx=funding_tx,
-        # for simplicity Bob's input is 0
-        input_idx=0,
+    click.echo(half_signed_psbt)
+
+
+@cli.command(
+    short_help=f"""{click.style("(Step 4)", bold=True)} Finalize the p2oc procedure by
+publishing the funding transaction. This channel can begin to be used after 6
+confirmations.""")
+@click.argument("half_signed_psbt", required=True)
+@click.pass_context
+def finalizeoffer(ctx, half_signed_psbt):
+    pretty_echo_header("Finalize Offer")
+
+    lnd = _lnd_from_options(ctx.obj["lnd_options"])
+    half_signed_psbt = deserialize_psbt(half_signed_psbt)
+
+    pretty_echo_psbt(half_signed_psbt, "maker")
+    click.confirm(
+        "Please confirm to publish the funding tx and complete channel opening",
+        default=True,
+        abort=True,
     )
 
-    offer_response = OfferResponse(
-        offer_id=offer.offer_id,
-        node_host=funding_offer.node_host,
-        node_pubkey=funding_offer.node_pubkey,
-        channel_id=channel_id,
-        chan_pubkey=key_desc.raw_key_bytes,
-        funding_output_idx=funding_output_idx,
-        funding_tx=funding_tx,
-        signed_witness=signed_witness,
+    p2oc.finalize_offer(half_signed_psbt, lnd)
+
+    click.secho(
+        "\nCongratulations! The channel has been opened and funded. It can be used "
+        + "after 6 confirmations.\n",
+        bold=True,
     )
 
-    offer_response = offer_response.serialize()
 
-    click.echo(
-        f"""Send the following offer response back to the party you want to open a channel with:
+@cli.command(
+    short_help="""Inspect the p2oc payload at anytime to see the details of the PSBT
+being passed back and forth.""")
+@click.argument("psbt", required=True)
+def inspect(psbt):
+    psbt = deserialize_psbt(psbt)
+    offer = p2oc.offer.get_offer_from_psbt(psbt, raise_if_missing=False)
+    reply = p2oc.offer.get_offer_reply_from_psbt(psbt, raise_if_missing=False)
 
-{offer_response.decode('ascii')}
+    click.echo()
+    click.secho("Inspect PSBT\n", bold=True, underline=True)
+    click.secho("psbt.inputs:", bold=True)
+    click.echo(textwrap.indent(pprint.pretty_psbt_inputs(psbt.inputs), "  "))
+    click.secho("psbt.outputs:", bold=True)
+    click.echo(textwrap.indent(pprint.pretty_outputs(psbt.outputs), "  "))
+    click.secho("psbt.unsigned_tx:", bold=True)
+    click.echo(textwrap.indent(pprint.pretty_tx(psbt.unsigned_tx), "  "))
+
+    click.secho("Inspect Offer\n", bold=True, underline=True)
+    if offer is not None:
+        click.echo(pprint.pretty_offer(offer))
+    else:
+        click.echo("N/A")
+
+    click.secho("Inspect Reply\n", bold=True, underline=True)
+    if reply is not None:
+        click.echo(pprint.pretty_reply(reply))
+    else:
+        click.echo("N/A")
+
+
+def _lnd_from_options(options):
+    def _without_nones(dict_):
+        return {k: v for k, v in dict_.items() if v is not None}
+
+    config_path = options.pop("configfile")
+    options = _without_nones(options)
+    lnd = LndRpc(config_path=config_path, config_overrides=options)
+    return lnd
+
+
+def pretty_echo_psbt(psbt, side):
+    offer = p2oc.offer.get_offer_from_psbt(psbt, raise_if_missing=False)
+    reply = p2oc.offer.get_offer_reply_from_psbt(psbt, raise_if_missing=False)
+
+    message = ""
+    if side == "taker" and offer is not None:
+        message = f"""
+- You're paying {click.style("{:,}".format(offer.premium_amount), fg="red", bold=True)} SATS premium
+- In exchange for a funded channel of {click.style("{:,}".format(offer.fund_amount), fg="green", bold=True)} SATS
+- To {click.style(f"{offer.node_pubkey}@{offer.node_host}", bold=True)} (your node)
 """
-    )
+
+    if side == "taker" and reply is not None:
+        message += f"- From {click.style(f'{reply.node_pubkey}@{reply.node_host}', bold=True)} (their node)"
+
+    if side == "maker" and offer is not None:
+        message = f"""
+- You're receiving {click.style("{:,}".format(offer.premium_amount), fg="green", bold=True)} SATS
+- In exchange for your funded channel of {click.style("{:,}".format(offer.fund_amount), fg="red", bold=True)} SATS
+- To {click.style(f"{offer.node_pubkey}@{offer.node_host}", bold=True)} (their node)
+"""
+
+    if side == "maker" and reply is not None:
+        message += f"- From {click.style(f'{reply.node_pubkey}@{reply.node_host}', bold=True)} (your node)"
+
+    click.echo(message)
 
 
-def _build_rpc_clients(network):
-    # TODO: Find better approach than envvars for passing inc onfig
-    lnd_rpc = LndRpc(
-        host=os.environ["LND_ENDPOINT"],
-        cert_path=os.environ["LND_CERTPATH"],
-        macaroon_path=os.environ["LND_MRNPATH"],
-    )
-
-    bitcoin.SelectParams(network)
-    btc_rpc = Proxy(
-        config=Config(
-            rpcuser=os.environ["BTCD_RPCUSER"],
-            rpcpassword=os.environ["BTCD_RPCPASS"],
-            rpcconnect=os.environ["BTCD_RPCHOST"],
-            rpcport=os.environ["BTCD_RPCPORT"],
-        )
-    )
-
-    return lnd_rpc, btc_rpc
+def pretty_echo_header(step):
+    click.echo()  # newline
+    click.secho("┌────────────────────────────┐", bold=True)
+    click.secho("│ p2oc (Pay to Open Channel) │", bold=True)
+    click.secho("└────────────────────────────┘", bold=True)
+    click.echo("\nStep: " + click.style(step, underline=True))
