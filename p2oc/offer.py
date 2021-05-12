@@ -1,7 +1,8 @@
 import json
 import base64
 from typing import Sequence
-from dataclasses import dataclass
+import dataclasses
+
 
 from bitcointx.core.psbt import PSBT_ProprietaryTypeData
 import bitcointx.core as bc
@@ -11,8 +12,15 @@ from .address import KeyDescriptor
 from .sign import sign_message, verify_message
 
 
-@dataclass(frozen=True)
+@dataclasses.dataclass(frozen=True)
 class Offer:
+    # class variables
+    CREATED_STATE = "CREATED"
+    ACCEPTED_STATE = "ACCEPTED"
+    CHANNEL_OPENED_STATE = "CHANNEL_OPENED"
+
+    # instance variables
+    state: str
     # The offer creator's node host and pubkey
     node_host: str
     node_pubkey: str
@@ -52,12 +60,23 @@ class Offer:
         signature = sign_message(self.serialize(), key_locator, lnd)
         return signature
 
-    def verify(self, signature, pubkey, lnd):
-        valid = verify_message(self.serialize(), signature, pubkey, lnd)
+    def verify(self, signature, lnd):
+        """Verify that provide signature matches payload of this offer/reply"""
+        valid = verify_message(
+            self.serialize(), signature, self.channel_pubkey_key_desc.raw_key_bytes, lnd
+        )
         return valid
 
+    def check_our_signature(self, signature, lnd):
+        """Re-sign offer/reply and check that it matches provided signature"""
+        expected_signature = self.sign(self.channel_pubkey_key_desc, lnd)
+        return expected_signature == signature
 
-@dataclass(frozen=True)
+    def copy_with_update(self, **kwarg):
+        return dataclasses.replace(self, **kwarg)
+
+
+@dataclasses.dataclass(frozen=True)
 class OfferReply(Offer):
     channel_id: str
 
@@ -127,28 +146,15 @@ def validate_input_output_hash(psbt, proprietary_field):
         raise RuntimeError("PSBT inputs or outputs has been changed")
 
 
-def validate_offer_psbt(offer_psbt):
-    # check that funding UTXOs has not been spent
-    # note we can't use `lnd.GetTransactions` since it only knows about our wallet's transactions
-    # it's probably safe to skip this step because blockchain will prevent from double spending
-    #
-    # for vin in psbt1.unsigned_tx.vin:
-    #     utxo = brpc.gettxout(vin.prevout)
-    #     assert utxo is not None
-    #
-    offer = get_offer_from_psbt(offer_psbt)
-    fees_amount = offer_psbt.get_fee() - offer.premium_amount
-    if fees_amount <= 0:
-        raise RuntimeError(
-            f"Offer PSBT does not incorporate sufficient fees (fees={fees_amount})"
-        )
-
-
-def validate_offer_was_not_tampered(psbt, lnd):
+def validate_offer_integrity(psbt, lnd, check_our_signature):
     offer, signature = psbt.proprietary_fields[b"offer"]
     offer, signature = Offer.deserialize(offer.value), signature.value
 
-    valid = offer.verify(signature, offer.channel_pubkey_key_desc.raw_key_bytes, lnd)
+    if check_our_signature:
+        valid = offer.check_our_signature(signature, lnd)
+    else:
+        valid = offer.verify(signature, lnd)
+
     if not valid:
         raise RuntimeError(
             "The received offer has an invalid signature. It may have been "
@@ -158,11 +164,15 @@ def validate_offer_was_not_tampered(psbt, lnd):
     validate_input_output_hash(psbt, b"offer")
 
 
-def validate_offer_reply_was_not_tampered(psbt, lnd):
+def validate_offer_reply_integrity(psbt, lnd, check_our_signature):
     reply, signature = psbt.proprietary_fields[b"reply"]
     reply, signature = OfferReply.deserialize(reply.value), signature.value
 
-    valid = reply.verify(signature, reply.channel_pubkey_key_desc.raw_key_bytes, lnd)
+    if check_our_signature:
+        valid = reply.check_our_signature(signature, lnd)
+    else:
+        valid = reply.verify(signature, lnd)
+
     if not valid:
         raise RuntimeError(
             "The received offer reply has an invalid signature. It may have been "
