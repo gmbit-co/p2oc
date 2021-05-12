@@ -58,6 +58,11 @@ class Offer:
         )
         return valid
 
+    def check_our_signature(self, signature, lnd):
+        expected_signature = self.sign(self.channel_pubkey_key_desc, lnd)
+        if expected_signature != signature:
+            raise RuntimeError("Our signature is not valid")
+
 
 @dataclass(frozen=True)
 class OfferReply(Offer):
