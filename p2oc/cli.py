@@ -20,7 +20,7 @@ class OrderedGroup(click.Group):
 
 @click.group(cls=OrderedGroup, help=f"""
 {click.style("p2oc (Pay to Open Channel)", bold=True)} is a protocol atop running
-lightning network nodes (presently LND - https://github.com/lightningnetwork/lnd) to
+Lightning Network nodes (presently LND - https://github.com/lightningnetwork/lnd) to
 allow a node to request an inbound channel of a given size ("fund amount") from another
 node in exchange for a fee ("premium amount") which is paid immediately as part of the
 funding transaction. The procedure presently involves going back and forth 2x, but will
