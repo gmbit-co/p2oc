@@ -13,6 +13,13 @@ from .sign import sign_message, verify_message
 
 @dataclass(frozen=True)
 class Offer:
+    # class variables
+    CREATED_STATE = "CREATED"
+    ACCEPTED_STATE = "ACCEPTED"
+    CHANNEL_OPENED_STATE = "CHANNEL_OPENED"
+
+    # instance variables
+    state: str
     # The offer creator's node host and pubkey
     node_host: str
     node_pubkey: str

@@ -28,6 +28,7 @@ def create_offer(premium_amount, fund_amount, lnd):
     key_desc = p2oc_address.derive_next_multisig_key_desc(lnd)
     node_pubkey = lnd.lnd.GetInfo(lnmsg.GetInfoRequest()).identity_pubkey
     offer = p2oc_offer.Offer(
+        state=p2oc_offer.Offer.CREATED_STATE,
         node_host=lnd.host,
         node_pubkey=node_pubkey,
         premium_amount=premium_amount,
@@ -46,6 +47,12 @@ def create_offer(premium_amount, fund_amount, lnd):
 def accept_offer(offer_psbt, lnd):
     offer = p2oc_offer.get_offer_from_psbt(offer_psbt)
     p2oc_offer.validate_offer_integrity(offer_psbt, lnd, check_our_signature=False)
+
+    if offer.state != offer.CREATED_STATE:
+        raise (
+            f"Got offer in a wrong state. Expected state='{offer.CREATED_STATE}'"
+            + f", got '{offer.state}'"
+        )
 
     # check that funding UTXOs has not been spent
     # note we can't use `lnd.GetTransactions` since it only knows about our wallet's transactions
@@ -117,6 +124,7 @@ def accept_offer(offer_psbt, lnd):
 
     node_pubkey = lnd.lnd.GetInfo(lnmsg.GetInfoRequest()).identity_pubkey
     reply = p2oc_offer.OfferReply(
+        state=p2oc_offer.OfferReply.ACCEPTED_STATE,
         node_host=lnd.host,
         node_pubkey=node_pubkey,
         premium_amount=offer.premium_amount,
@@ -144,6 +152,18 @@ def open_channel(unsigned_psbt, lnd):
     p2oc_offer.validate_offer_reply_integrity(
         unsigned_psbt, lnd, check_our_signature=False
     )
+
+    if offer.state != offer.CREATED_STATE:
+        raise (
+            f"Got offer in a wrong state. Expected state='{offer.CREATED_STATE}'"
+            + f", got '{offer.state}'"
+        )
+
+    if reply.state != reply.ACCEPTED_STATE:
+        raise (
+            f"Got reply in a wrong state. Expected state='{reply.ACCEPTED_STATE}'"
+            + f", got '{reply.state}'"
+        )
 
     # check that the funding output is correct
     funding_output = p2oc_fund.create_funding_output(
@@ -186,6 +206,12 @@ def open_channel(unsigned_psbt, lnd):
 
     # Unsigned PSBT has been modified to now become the half-signed PSBT
     half_signed_psbt = unsigned_psbt
+
+    # update state and re-sign offer
+    offer_dict = offer.__dict__.copy()
+    offer_dict["state"] = offer.CHANNEL_OPENED_STATE
+    offer = p2oc_offer.Offer(**offer_dict)
+    p2oc_offer.attach_offer_to_psbt(offer, half_signed_psbt, lnd)
     return half_signed_psbt
 
 
@@ -199,6 +225,18 @@ def finalize_offer(half_signed_psbt, lnd):
     p2oc_offer.validate_offer_reply_integrity(
         half_signed_psbt, lnd, check_our_signature=True
     )
+
+    if offer.state != offer.CHANNEL_OPENED_STATE:
+        raise (
+            f"Got offer in a wrong state. Expected state='{offer.CHANNEL_OPENED_STATE}'"
+            + f", got '{offer.state}'"
+        )
+
+    if reply.state != reply.ACCEPTED_STATE:
+        raise (
+            f"Got reply in a wrong state. Expected state='{reply.ACCEPTED_STATE}'"
+            + f", got '{reply.state}'"
+        )
 
     # check that the funding output is correct
     funding_output = p2oc_fund.create_funding_output(
