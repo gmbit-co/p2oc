@@ -6,7 +6,13 @@
 
 ## Introduction
 
-p2oc (Pay to Open Channel) is a protocol atop running lightning network nodes (presently [LND](https://github.com/lightningnetwork/lnd)) to allow a node to request an inbound channel of a given size ("fund amount") from another node in exchange for a fee ("premium amount") which is paid immediately as part of the funding transaction. The procedure presently involves going back and forth 2x, but will be made more streamlined in the future. Under the hood, we are creating a custom funding transaction with multiple inputs by passing a PSBT back and forth between the two parties to build up this transaction.
+p2oc (Pay to Open Channel) is a protocol atop running Lightning Network nodes (presently [LND](https://github.com/lightningnetwork/lnd)) to allow a node to request an inbound channel of a given size ("fund amount") from another node in exchange for a fee ("premium amount") which is paid immediately as part of the funding transaction. The procedure presently involves going back and forth 2x, but will be made more streamlined in the future. Under the hood, we are creating a custom funding transaction with multiple inputs by passing a PSBT back and forth between the two parties to build up this transaction.
+
+### Requirements
+
+* [LND](https://github.com/lightningnetwork/lnd) on `master`
+  * Why? A required change to include the BIP 32 derivation path was added to LND via btcwallet dependency [3 months ago](35b4b237c997a5a57dcc8dc06a5f85aa703d6df6). A new release should be cut [mid-late May](https://github.com/lightningnetwork/lnd/projects/12). We personally have been using commit [6d66133](6d661334599ffa2a409ad6b0942328f9fd213d09)
+* Python >= 3.6
 
 ### How To Use
 
@@ -161,4 +167,22 @@ black p2oc tests scripts
 ```bash
 docker build -t p2oc .
 docker run --rm -it -v $PWD:/src/p2oc --entrypoint /bin/bash p2oc scripts/build-pb.sh
+```
+
+### Pushing to PyPi
+
+```bash
+pip install --upgrade build twine
+
+# Make sure your ~/.pypirc is updated with your keys
+#     https://packaging.python.org/tutorials/packaging-projects
+
+# rm -rf build dist
+python -m build
+
+# Test Registry
+python -m twine upload --repository testpypi dist/*
+
+# Production Registry
+python -m twine upload --repository pypi dist/*
 ```

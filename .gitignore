@@ -6,3 +6,6 @@ __pycache__/
 .ipynb_checkpoints/
 certs/
 stunnel.log
+
+dist/
+build/
