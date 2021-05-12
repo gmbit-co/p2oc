@@ -55,6 +55,8 @@ def accept_offer(offer_psbt, lnd):
     #     utxo = brpc.gettxout(vin.prevout)
     #     assert utxo is not None
     #
+
+    # TODO: do proper check that there are enough fees for the funding tx
     fees_amount = offer_psbt.get_fee() - offer.premium_amount
     if fees_amount <= 0:
         raise RuntimeError(
