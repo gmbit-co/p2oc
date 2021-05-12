@@ -126,7 +126,7 @@ def open_channel(unsigned_psbt, lnd):
     reply = p2oc_offer.get_offer_reply_from_psbt(unsigned_psbt)
 
     p2oc_offer.validate_offer_integrity(unsigned_psbt, lnd)
-    p2oc_offer.validate_offer_reply_was_not_tampered(unsigned_psbt, lnd)
+    p2oc_offer.validate_offer_reply_integrity(unsigned_psbt, lnd)
 
     # Funding output is the last one
     assert (
@@ -170,7 +170,7 @@ def finalize_offer(half_signed_psbt, lnd):
     reply = p2oc_offer.get_offer_reply_from_psbt(half_signed_psbt)
 
     p2oc_offer.validate_offer_integrity(half_signed_psbt, lnd)
-    p2oc_offer.validate_offer_reply_was_not_tampered(half_signed_psbt, lnd)
+    p2oc_offer.validate_offer_reply_integrity(half_signed_psbt, lnd)
 
     p2oc_channel.validate_pending_channel_matches_offer(offer, half_signed_psbt, lnd)
     p2oc_sign.sign_inputs(half_signed_psbt, reply.input_indices, lnd)

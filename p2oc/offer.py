@@ -158,7 +158,7 @@ def validate_offer_integrity(psbt, lnd):
     validate_input_output_hash(psbt, b"offer")
 
 
-def validate_offer_reply_was_not_tampered(psbt, lnd):
+def validate_offer_reply_integrity(psbt, lnd):
     reply, signature = psbt.proprietary_fields[b"reply"]
     reply, signature = OfferReply.deserialize(reply.value), signature.value
 
