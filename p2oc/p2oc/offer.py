@@ -116,12 +116,12 @@ def validate_input_output_hash(psbt, proprietary_field):
     elif proprietary_field == b"reply":
         offer_reply = get_offer_reply_from_psbt(psbt)
     else:
-        raise RuntimeError(f"Unsupported proprietary_field = {proprietary_field}")
+        raise RuntimeError(f"Unsupported proprietary_field={proprietary_field}")
 
-    vin = map(lambda i: psbt.unsigned_tx.vin[i], offer_reply.input_indices)
-    vout = map(lambda i: psbt.unsigned_tx.vout[i], offer_reply.output_indices)
+    vin = (psbt.unsigned_tx.vin[i] for i in offer_reply.input_indices)
+    vout = (psbt.unsigned_tx.vout[i] for i in offer_reply.output_indices)
 
-    tx = bc.CTransaction(list(vin), list(vout))
+    tx = bc.CTransaction(vin, vout)
 
     if offer_reply.input_output_hash != bc.Hash160(tx.serialize()):
         raise RuntimeError("PSBT inputs or outputs has been changed")
