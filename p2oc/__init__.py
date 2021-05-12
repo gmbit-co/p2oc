@@ -45,9 +45,21 @@ def create_offer(premium_amount, fund_amount, lnd):
 
 def accept_offer(offer_psbt, lnd):
     offer = p2oc_offer.get_offer_from_psbt(offer_psbt)
-
     p2oc_offer.validate_offer_integrity(offer_psbt, lnd)
-    p2oc_offer.validate_offer_psbt(offer_psbt)
+
+    # check that funding UTXOs has not been spent
+    # note we can't use `lnd.GetTransactions` since it only knows about our wallet's transactions
+    # it's probably safe to skip this step because blockchain will prevent from double spending
+    #
+    # for vin in offer_psbt.unsigned_tx.vin:
+    #     utxo = brpc.gettxout(vin.prevout)
+    #     assert utxo is not None
+    #
+    fees_amount = offer_psbt.get_fee() - offer.premium_amount
+    if fees_amount <= 0:
+        raise RuntimeError(
+            f"Offer PSBT does not incorporate sufficient fees (fees={fees_amount})"
+        )
 
     p2oc_channel.connect_peer(
         node_pubkey=offer.node_pubkey, node_host=offer.node_host, lnd=lnd
