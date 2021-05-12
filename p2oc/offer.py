@@ -53,12 +53,14 @@ class Offer:
         return signature
 
     def verify(self, signature, lnd):
+        """Verify that provide signature matches payload of this offer/reply"""
         valid = verify_message(
             self.serialize(), signature, self.channel_pubkey_key_desc.raw_key_bytes, lnd
         )
         return valid
 
     def check_our_signature(self, signature, lnd):
+        """Re-sign offer/reply and check that it matches provided signature"""
         expected_signature = self.sign(self.channel_pubkey_key_desc, lnd)
         return expected_signature == signature
 
