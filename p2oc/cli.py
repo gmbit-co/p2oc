@@ -8,6 +8,7 @@ from .lnd_rpc import LndRpc
 from .psbt import deserialize_psbt
 from . import pretty_print as pprint
 
+
 class OrderedGroup(click.Group):
     def __init__(self, name=None, commands=None, **attrs):
         super(OrderedGroup, self).__init__(name, commands, **attrs)
@@ -18,7 +19,9 @@ class OrderedGroup(click.Group):
         return self.commands
 
 
-@click.group(cls=OrderedGroup, help=f"""
+@click.group(
+    cls=OrderedGroup,
+    help=f"""
 {click.style("p2oc (Pay to Open Channel)", bold=True)} is a protocol atop running
 Lightning Network nodes (presently LND - https://github.com/lightningnetwork/lnd) to
 allow a node to request an inbound channel of a given size ("fund amount") from another
@@ -50,7 +53,8 @@ $ p2oc openchannel <unsigned_psbt>
 
 \b
 {click.style("Step 4 (run by Maker)", bold=True)}
-$ p2oc finalizeoffer <half_signed_psbt>""")
+$ p2oc finalizeoffer <half_signed_psbt>""",
+)
 @click.option(
     "-c",
     "--configfile",
@@ -58,23 +62,26 @@ $ p2oc finalizeoffer <half_signed_psbt>""")
     help="""The path to the LND config file (by default under ~/.lnd/lnd.conf). The
 host, network, tlscertpath, and adminmacaroonpath will be looked for in this config
 file. If those params are passed manually they will override what was found in the
-config file.""")
+config file.""",
+)
 @click.option("-h", "--host", type=str, help="The host of your node.")
 @click.option(
     "-n",
     "--network",
     type=click.Choice(["mainnet", "testnet", "simnet", "regtest"]),
-    help="The network your lightning node is running on."
+    help="The network your lightning node is running on.",
 )
 @click.option(
     "--tlscertpath",
     type=str,
-    help="The path to the LND's tls certificate (by default under ~/.lnd/tls.cert).")
+    help="The path to the LND's tls certificate (by default under ~/.lnd/tls.cert).",
+)
 @click.option(
     "--adminmacaroonpath",
     type=str,
     help="""The path to the LND's admin macaroon path (by default under
-    ~/.lnd/data/chain/bitcoin/testnet/admin.macaroon).""")
+    ~/.lnd/data/chain/bitcoin/testnet/admin.macaroon).""",
+)
 @click.pass_context
 def cli(ctx, **lnd_options):
     # Ensure that ctx.obj exists and is a dict (in case `cli()` is called by means
@@ -86,13 +93,14 @@ def cli(ctx, **lnd_options):
 @cli.command(
     short_help=f"""{click.style("(Step 1)", bold=True)} Create an offer to request an
 inbound funded channel (of fund amount) in exchange for a fee (premium amount). You
-can send this offer to another node operator for them to accept and provide liquidity.""")
+can send this offer to another node operator for them to accept and provide liquidity."""
+)
 @click.option(
     "--premium",
     required=True,
     type=int,
-    help="Amount in satoshis to pay to liquidity provider in exchange for the " +
-    "inbound liquidity.",
+    help="Amount in satoshis to pay to liquidity provider in exchange for the "
+    + "inbound liquidity.",
 )
 @click.option(
     "--fund",
@@ -113,8 +121,8 @@ def createoffer(ctx, premium, fund):
     )
 
     click.secho(
-        "\nSend the following offer to the funding peer you want to open a channel " +
-        "with for them to accept:\n",
+        "\nSend the following offer to the funding peer you want to open a channel "
+        + "with for them to accept:\n",
         bold=True,
     )
 
@@ -124,7 +132,8 @@ def createoffer(ctx, premium, fund):
 @cli.command(
     short_help=f"""{click.style("(Step 2)", bold=True)} Accept an offer requesting an
 inbound funded channel (of fund amount) of which you'd provide. In exchange you'll
-receive an upfront fee (of premium amount).""")
+receive an upfront fee (of premium amount)."""
+)
 @click.argument("offer_psbt", required=True)
 @click.pass_context
 def acceptoffer(ctx, offer_psbt):
@@ -144,8 +153,8 @@ def acceptoffer(ctx, offer_psbt):
     click.confirm("Please confirm your reply", default=True, abort=True)
 
     click.secho(
-        "\nSend the following reply back to peer requesting liquidity to indicate " +
-        "you have approved the offer:\n",
+        "\nSend the following reply back to peer requesting liquidity to indicate "
+        + "you have approved the offer:\n",
         bold=True,
     )
 
@@ -154,7 +163,8 @@ def acceptoffer(ctx, offer_psbt):
 
 @cli.command(
     short_help=f"""{click.style("(Step 3)", bold=True)} With an accepted offer in-hand,
-create and open the channel. It will be in pending state after this command.""")
+create and open the channel. It will be in pending state after this command."""
+)
 @click.argument("unsigned_psbt", required=True)
 @click.pass_context
 def openchannel(ctx, unsigned_psbt):
@@ -186,7 +196,8 @@ def openchannel(ctx, unsigned_psbt):
 @cli.command(
     short_help=f"""{click.style("(Step 4)", bold=True)} Finalize the p2oc procedure by
 publishing the funding transaction. This channel can begin to be used after 6
-confirmations.""")
+confirmations."""
+)
 @click.argument("half_signed_psbt", required=True)
 @click.pass_context
 def finalizeoffer(ctx, half_signed_psbt):
@@ -213,7 +224,8 @@ def finalizeoffer(ctx, half_signed_psbt):
 
 @cli.command(
     short_help="""Inspect the p2oc payload at anytime to see the details of the PSBT
-being passed back and forth.""")
+being passed back and forth."""
+)
 @click.argument("psbt", required=True)
 def inspect(psbt):
     psbt = deserialize_psbt(psbt)

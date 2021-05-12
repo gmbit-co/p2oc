@@ -23,9 +23,8 @@ setup(
         "Operating System :: OS Independent",
     ],
     packages=find_packages(include=("p2oc", "lnrpc")),
-    include_package_data=True,
     zip_safe=True,
-    python_requires=">=3.7",
+    python_requires=">=3.6",
     install_requires=[
         "grpcio~=1.37.0",
         "click~=7.1.0",

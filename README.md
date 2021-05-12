@@ -12,7 +12,7 @@ p2oc (Pay to Open Channel) is a protocol atop running Lightning Network nodes (p
 
 * [LND](https://github.com/lightningnetwork/lnd) on `master`
   * Why? A required change to include the BIP 32 derivation path was added to LND via btcwallet dependency [3 months ago](35b4b237c997a5a57dcc8dc06a5f85aa703d6df6). A new release should be cut [mid-late May](https://github.com/lightningnetwork/lnd/projects/12). We personally have been using commit [6d66133](6d661334599ffa2a409ad6b0942328f9fd213d09)
-* Python 3
+* Python >= 3.6
 
 ### How To Use
 
