@@ -52,8 +52,10 @@ class Offer:
         signature = sign_message(self.serialize(), key_locator, lnd)
         return signature
 
-    def verify(self, signature, pubkey, lnd):
-        valid = verify_message(self.serialize(), signature, pubkey, lnd)
+    def verify(self, signature, lnd):
+        valid = verify_message(
+            self.serialize(), signature, self.channel_pubkey_key_desc.raw_key_bytes, lnd
+        )
         return valid
 
 
@@ -131,7 +133,7 @@ def validate_offer_integrity(psbt, lnd):
     offer, signature = psbt.proprietary_fields[b"offer"]
     offer, signature = Offer.deserialize(offer.value), signature.value
 
-    valid = offer.verify(signature, offer.channel_pubkey_key_desc.raw_key_bytes, lnd)
+    valid = offer.verify(signature, lnd)
     if not valid:
         raise RuntimeError(
             "The received offer has an invalid signature. It may have been "
@@ -145,7 +147,7 @@ def validate_offer_reply_integrity(psbt, lnd):
     reply, signature = psbt.proprietary_fields[b"reply"]
     reply, signature = OfferReply.deserialize(reply.value), signature.value
 
-    valid = reply.verify(signature, reply.channel_pubkey_key_desc.raw_key_bytes, lnd)
+    valid = reply.verify(signature, lnd)
     if not valid:
         raise RuntimeError(
             "The received offer reply has an invalid signature. It may have been "
