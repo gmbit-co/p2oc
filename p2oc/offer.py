@@ -60,7 +60,7 @@ class Offer:
 
     def check_our_signature(self, signature, lnd):
         expected_signature = self.sign(self.channel_pubkey_key_desc, lnd)
-        return expected_signature != signature
+        return expected_signature == signature
 
 
 @dataclass(frozen=True)
