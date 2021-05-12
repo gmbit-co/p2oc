@@ -200,7 +200,32 @@ def finalize_offer(half_signed_psbt, lnd):
         half_signed_psbt, lnd, check_our_signature=True
     )
 
-    p2oc_channel.validate_pending_channel_matches_offer(offer, half_signed_psbt, lnd)
+    # check that the channel is pending and has the right config
+    channel_point = f"{bc.b2lx(half_signed_psbt.unsigned_tx.GetTxid())}:{len(half_signed_psbt.unsigned_tx.vout)-1}"
+
+    target_channel = p2oc_channel.get_pending_channel(channel_point, lnd)
+    if target_channel.channel.local_balance != reply.fund_amount:
+        raise RuntimeError(
+            f"Pending channel's local balance={target_channel.channel.local_balance} does not "
+            + f"match offer funding amount={reply.fund_amount}"
+        )
+
+    # the other party is paying all commitment tx fees
+    if (
+        target_channel.channel.remote_balance
+        != reply.premium_amount - target_channel.commit_fee
+    ):
+        raise RuntimeError(
+            f"Pending channel's remote balance={target_channel.channel.remote_balance} does not "
+            + f"match offer premium amount={reply.premium_amount} minus commit_fee={target_channel.commit_fee}"
+        )
+
+    if target_channel.channel.remote_node_pub != offer.node_pubkey:
+        raise RuntimeError(
+            f"Pending channel's remote node pubkey={target_channel.channel.remote_node_pub} "
+            + f"does not match offer's node pubkey={offer.node_pubkey}"
+        )
+
     p2oc_sign.sign_inputs(half_signed_psbt, reply.input_indices, lnd)
     p2oc_psbt.finalize_and_publish_psbt(half_signed_psbt, lnd)
 

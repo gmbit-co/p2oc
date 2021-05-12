@@ -106,33 +106,3 @@ def get_pending_channel(channel_point, lnd):
     raise RuntimeError(
         f"Unable to find created pending channel for channel point={channel_point}"
     )
-
-
-def validate_pending_channel_matches_offer(offer, psbt, lnd):
-    # check that the channel is pending
-    channel_point = (
-        f"{bc.b2lx(psbt.unsigned_tx.GetTxid())}:{len(psbt.unsigned_tx.vout)-1}"
-    )
-
-    target_channel = get_pending_channel(channel_point, lnd)
-    if target_channel.channel.local_balance != offer.fund_amount:
-        raise RuntimeError(
-            f"Pending channel's local balance={target_channel.channel.local_balance} does not "
-            + f"match offer funding amount={offer.fund_amount}"
-        )
-
-    # the other party is paying all commitment tx fees
-    if (
-        target_channel.channel.remote_balance
-        != offer.premium_amount - target_channel.commit_fee
-    ):
-        raise RuntimeError(
-            f"Pending channel's remote balance={target_channel.channel.remote_balance} does not "
-            + f"match offer premium amount={offer.premium_amount} minus commit_fee={target_channel.commit_fee}"
-        )
-
-    if target_channel.channel.remote_node_pub != offer.node_pubkey:
-        raise RuntimeError(
-            f"Pending channel's remote node pubkey={target_channel.channel.remote_node_pub} "
-            + f"does not match offer's node pubkey={offer.node_pubkey}"
-        )
