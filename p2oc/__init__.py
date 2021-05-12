@@ -45,7 +45,7 @@ def create_offer(premium_amount, fund_amount, lnd):
 
 def accept_offer(offer_psbt, lnd):
     offer = p2oc_offer.get_offer_from_psbt(offer_psbt)
-    p2oc_offer.validate_offer_integrity(offer_psbt, lnd)
+    p2oc_offer.validate_offer_integrity(offer_psbt, lnd, check_our_signature=False)
 
     # check that funding UTXOs has not been spent
     # note we can't use `lnd.GetTransactions` since it only knows about our wallet's transactions
@@ -139,8 +139,10 @@ def open_channel(unsigned_psbt, lnd):
     offer = p2oc_offer.get_offer_from_psbt(unsigned_psbt)
     reply = p2oc_offer.get_offer_reply_from_psbt(unsigned_psbt)
 
-    p2oc_offer.validate_offer_integrity(unsigned_psbt, lnd)
-    p2oc_offer.validate_offer_reply_integrity(unsigned_psbt, lnd)
+    p2oc_offer.validate_offer_integrity(unsigned_psbt, lnd, check_our_signature=True)
+    p2oc_offer.validate_offer_reply_integrity(
+        unsigned_psbt, lnd, check_our_signature=False
+    )
 
     # Funding output is the last one
     assert (
@@ -183,8 +185,12 @@ def finalize_offer(half_signed_psbt, lnd):
     offer = p2oc_offer.get_offer_from_psbt(half_signed_psbt)
     reply = p2oc_offer.get_offer_reply_from_psbt(half_signed_psbt)
 
-    p2oc_offer.validate_offer_integrity(half_signed_psbt, lnd)
-    p2oc_offer.validate_offer_reply_integrity(half_signed_psbt, lnd)
+    p2oc_offer.validate_offer_integrity(
+        half_signed_psbt, lnd, check_our_signature=False
+    )
+    p2oc_offer.validate_offer_reply_integrity(
+        half_signed_psbt, lnd, check_our_signature=True
+    )
 
     p2oc_channel.validate_pending_channel_matches_offer(offer, half_signed_psbt, lnd)
     p2oc_sign.sign_inputs(half_signed_psbt, reply.input_indices, lnd)

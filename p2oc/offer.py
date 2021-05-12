@@ -60,8 +60,7 @@ class Offer:
 
     def check_our_signature(self, signature, lnd):
         expected_signature = self.sign(self.channel_pubkey_key_desc, lnd)
-        if expected_signature != signature:
-            raise RuntimeError("Our signature is not valid")
+        return expected_signature != signature
 
 
 @dataclass(frozen=True)
@@ -134,11 +133,15 @@ def validate_input_output_hash(psbt, proprietary_field):
         raise RuntimeError("PSBT inputs or outputs has been changed")
 
 
-def validate_offer_integrity(psbt, lnd):
+def validate_offer_integrity(psbt, lnd, check_our_signature):
     offer, signature = psbt.proprietary_fields[b"offer"]
     offer, signature = Offer.deserialize(offer.value), signature.value
 
-    valid = offer.verify(signature, lnd)
+    if check_our_signature:
+        valid = offer.check_our_signature(signature, lnd)
+    else:
+        valid = offer.verify(signature, lnd)
+
     if not valid:
         raise RuntimeError(
             "The received offer has an invalid signature. It may have been "
@@ -148,11 +151,15 @@ def validate_offer_integrity(psbt, lnd):
     validate_input_output_hash(psbt, b"offer")
 
 
-def validate_offer_reply_integrity(psbt, lnd):
+def validate_offer_reply_integrity(psbt, lnd, check_our_signature):
     reply, signature = psbt.proprietary_fields[b"reply"]
     reply, signature = OfferReply.deserialize(reply.value), signature.value
 
-    valid = reply.verify(signature, lnd)
+    if check_our_signature:
+        valid = reply.check_our_signature(signature, lnd)
+    else:
+        valid = reply.verify(signature, lnd)
+
     if not valid:
         raise RuntimeError(
             "The received offer reply has an invalid signature. It may have been "
