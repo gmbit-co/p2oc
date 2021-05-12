@@ -145,12 +145,18 @@ def open_channel(unsigned_psbt, lnd):
         unsigned_psbt, lnd, check_our_signature=False
     )
 
-    # Check that the funding output has the right amount of satoshis
-    channel_capacity = offer.premium_amount + offer.fund_amount
-    if channel_capacity != unsigned_psbt.get_output_amounts()[-1]:
+    # check that the funding output is correct
+    funding_output = p2oc_fund.create_funding_output(
+        taker_pubkey=offer.channel_pubkey_key_desc.raw_key_bytes,
+        maker_pubkey=reply.channel_pubkey_key_desc.raw_key_bytes,
+        premium_amount=offer.premium_amount,
+        fund_amount=offer.fund_amount,
+    )
+
+    if unsigned_psbt.unsigned_tx.vout[-1] != funding_output:
         raise RuntimeError(
-            "Channel funding output does not have the right amount of satoshis"
-            + f"Expected channel_capacity={channel_capacity}, got {unsigned_psbt.get_output_amounts()[-1]}"
+            "Channel funding does not match between parameters of offer and reply"
+            + f"Expected funding_output={funding_output}, got {unsigned_psbt.unsigned_tx.vout[-1]}"
         )
 
     # first, we try to sign the funding tx. In case it fails, we will abort early
