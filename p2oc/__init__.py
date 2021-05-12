@@ -139,22 +139,24 @@ def open_channel(unsigned_psbt, lnd):
     offer = p2oc_offer.get_offer_from_psbt(unsigned_psbt)
     reply = p2oc_offer.get_offer_reply_from_psbt(unsigned_psbt)
 
+    # this should also check that our inputs and outputs were included
     p2oc_offer.validate_offer_integrity(unsigned_psbt, lnd, check_our_signature=True)
     p2oc_offer.validate_offer_reply_integrity(
         unsigned_psbt, lnd, check_our_signature=False
     )
 
-    # Funding output is the last one
-    assert (
-        offer.premium_amount + offer.fund_amount
-        == unsigned_psbt.get_output_amounts()[-1]
-    )
+    # Check that the funding output has the right amount of satoshis
+    channel_capacity = offer.premium_amount + offer.fund_amount
+    if channel_capacity != unsigned_psbt.get_output_amounts()[-1]:
+        raise RuntimeError(
+            "Channel funding output does not have the right amount of satoshis"
+            + f"Expected channel_capacity={channel_capacity}, got {unsigned_psbt.get_output_amounts()[-1]}"
+        )
 
-    # At this point we should have commitment transactions signed and we can sign the funding transaction
-    # TODO: How can we check with lnd that this is the case?
+    # first, we try to sign the funding tx. In case it fails, we will abort early
+    # and not leave pending channel open
     p2oc_sign.sign_inputs(unsigned_psbt, offer.input_indices, lnd)
 
-    # TODO: check that our inputs and outputs were included
     channel_point_shim = p2oc_channel.create_channel_point_shim(
         channel_id=reply.channel_id,
         unsigned_tx_out=unsigned_psbt.unsigned_tx,
