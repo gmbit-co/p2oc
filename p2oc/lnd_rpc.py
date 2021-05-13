@@ -76,6 +76,9 @@ class LndRpc:
             "Application Options", "rpclisten", fallback="localhost:10009"
         )
 
+        if config["host"].split(":")[0] == "0.0.0.0":
+            config["host"] = config["host"].replace("0.0.0.0", "localhost")
+
         config["tlscertpath"] = parser.get(
             "Application Options", "tlscertpath", fallback="~/.lnd/tls.cert"
         )
