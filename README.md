@@ -102,7 +102,12 @@ You can also use the provided docker container with,
 git clone <this_repo>
 docker build -t p2oc .
 
-docker run --rm -it p2oc --help
+# Example how to run p2oc on raspiblitz
+docker run -it --rm \
+    -v $(pwd):/src/p2oc \
+    -v /mnt/hdd/lnd:/root/.lnd \
+    --network=host \
+    p2oc --network=testnet createoffer --premium=100000 --fund=1500000
 ```
 
 ## Run
