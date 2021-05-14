@@ -14,23 +14,24 @@ def _resolve_path(path):
 
 DEFAULTS = {
     "rpchost": "localhost:10009",
-    "tlscertpath": _resolve_path("~/.lnd/tls.cert"),
-    "adminmacaroonpath": _resolve_path(
-        "~/.lnd/data/chain/bitcoin/testnet/admin.macaroon"
-    ),
+    "tlscertpath": "~/.lnd/tls.cert",
+    "adminmacaroonpath": "~/.lnd/data/chain/bitcoin/testnet/admin.macaroon",
     "network": "testnet",
 }
 
 
+# Consider moving to dataclass
 class Config:
     def __init__(self, config_path=None, config_overrides={}):
         config = Config.load_config_or_defaults(config_path)
         config.update(config_overrides)
 
-        # Consider moving to dataclass
         self.rpchost = config["rpchost"]
-        self.tlscertpath = config["tlscertpath"]
-        self.adminmacaroonpath = config["adminmacaroonpath"]
+        if self.rpchost.split(":")[0] == "0.0.0.0":
+            self.rpchost = self.rpchost.replace("0.0.0.0", "localhost")
+
+        self.tlscertpath = _resolve_path(config["tlscertpath"])
+        self.adminmacaroonpath = _resolve_path(config["adminmacaroonpath"])
         self.network = config["network"]
 
     @classmethod
@@ -53,16 +54,15 @@ class Config:
         config["rpchost"] = parser.get(
             "Application Options", "rpclisten", fallback=DEFAULTS["rpchost"]
         )
+
         config["tlscertpath"] = parser.get(
             "Application Options", "tlscertpath", fallback=DEFAULTS["tlscertpath"]
         )
-        config["tlscertpath"] = _resolve_path(config["tlscertpath"])
         config["adminmacaroonpath"] = parser.get(
             "Application Options",
             "adminmacaroonpath",
             fallback=DEFAULTS["adminmacaroonpath"],
         )
-        config["adminmacaroonpath"] = _resolve_path(config["adminmacaroonpath"])
 
         network = "testnet"
         if parser.getboolean("Bitcoin", "bitcoin.mainnet", fallback=False):
