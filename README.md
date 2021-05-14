@@ -6,13 +6,56 @@
 
 ## Introduction
 
-p2oc (Pay to Open Channel) is a protocol atop running Lightning Network nodes (presently [LND](https://github.com/lightningnetwork/lnd)) to allow a node to request an inbound channel of a given size ("fund amount") from another node in exchange for a fee ("premium amount") which is paid immediately as part of the funding transaction. The procedure presently involves going back and forth 2x, but will be made more streamlined in the future. Under the hood, we are creating a custom funding transaction with multiple inputs by passing a PSBT back and forth between the two parties to build up this transaction.
+p2oc (Pay to Open Channel) is a protocol atop running Lightning Network nodes (presently [LND](https://github.com/lightningnetwork/lnd)) to allow a node to request an inbound channel of a given size ("fund amount") from another node in exchange for a fee ("premium amount") which can be paid immediately or gradually upon channel opening. The procedure presently involves 4 steps between participating nodes, but will be made more streamlined in the future. Under the hood, we are creating a custom funding transaction with multiple inputs by passing a [PSBT](https://github.com/bitcoin/bitcoin/blob/master/doc/psbt.md) back and forth between the two parties to build up this transaction.
 
 ### Requirements
 
 * [LND](https://github.com/lightningnetwork/lnd) on `master`
   * Why? A required change to include the BIP 32 derivation path was added to LND via btcwallet dependency [3 months ago](35b4b237c997a5a57dcc8dc06a5f85aa703d6df6). A new release should be cut [mid-late May](https://github.com/lightningnetwork/lnd/projects/12). We personally have been using commit [6d66133](6d661334599ffa2a409ad6b0942328f9fd213d09)
 * Python >= 3.6
+* libsecp256k1. See [Dockerfile](./Dockerfile) how to install it.
+
+### How it works
+
+Pay to open channel protocol consist of 4 steps performed between **Taker**, a node requesting inbound liquidity channel and paying a premium for it, and **Maker**, a node providing outbound liquidity in exchange for premium:
+
+1. Taker creates an offer which includes funding amount (inbound liquidity amount), premium amount, UTXOs to pay the premium, a change address, node address and a pubkey for 2-2 multisig of channel funding output. In addition, the offer specifies transaction fee<sup>1</sup> for the funding transaction. The offer is packaged as a PSBT packet and sent to the Maker. How PSBT packet is delivered to the Maker is currently outside of the scope of this protocol. It can be done over email, chat, programmatic API and so on.
+2. Maker reviews the offer and, if they decide to accept it, they first complete the funding transaction<sup>2</sup> by adding their own UTXOs for the funding amount, their change address and 2-2 multisig for [the channel funding output](https://github.com/lightningnetwork/lightning-rfc/blob/master/03-transactions.md#funding-transaction-output). Then the Maker connects to the Taker's node, updates PSBT with complete but not yet signed funding transaction and sends the PSBT packet back to Taker.
+3. Taker verifies that the funding transaction is correct. For example, they check that their inputs and outputs were included, that the channel funding output is correctly constructed with the right amount. Then they sign their inputs and open a pending channel with the Maker's node using the channel point of the funding transaction (`funding_tx_id:vout_id`). The channel will have the total capacity of funding amount + premium amount. The channel's capacity is split between Taker and Maker according to the terms of the offer: funding amount on Maker's side and premium amount on Taker side. The PSBT packet is updated to include Taker's signatures and sent back to Maker for the final step.
+4. Makers verifies that PSBT and the included funding transaction are correct. They also check that there is a pending channel with the Taker that points to the funding transaction and has the right balances between Maker and Taker<sup>3</sup>. They sign their inputs, finalize PSBT and publish the funding transaction. After the funding transaction is confirmed, the channel is fully open and active.
+
+
+<sup>1</sup> Currently this fee is paid by the Taker, however the protocol can support splitting the fee between 2 participants
+
+<sup>2</sup> In the most basic case the funding transaction will look the following:
+
+```
+                FUNDING TRANSACTION                                           
+                                                                              
++---------------------------------------------------+                         
+|         INPUTS                   OUTPUTS          |                         
+|  +------------------+    +---------------------+  |                         
+|  |   Taker's UTXO   |    |                     |  |                         
+|  | premium + tx fee |    |   Taker's change    |  |                         
+|  |                  |    |                     |  |                         
+|  +------------------+    +---------------------+  |                         
+|                                                   |                         
+|  +-------------------+   +---------------------+  |                         
+|  |   Maker's UTXO    |   |                     |  |                         
+|  |      funding      |   |   Maker's change    |  |                         
+|  |                   |   |                     |  |                         
+|  +-------------------+   +---------------------+  |                         
+|                                                   |                         
+|                          +---------------------+  |                         
+|                          |   Channel funding   |  |                         
+|                          |   2-2 multisig      |  |                         
+|                          |   output            |  |                         
+|                          +---------------------+  |                         
++---------------------------------------------------+
+```
+
+<sup>3</sup> Note that the Taker's balance would be slightly less than the premium because additional funds would be automatically reserved by  LND for the commitment transaction fees.
+
 
 ### How To Use
 
