@@ -63,11 +63,11 @@ $ p2oc finalizeoffer <half_signed_psbt>""",
     default=None,
     type=str,
     help="""The path to the LND config file (by default under ~/.lnd/lnd.conf). The
-host, network, tlscertpath, and adminmacaroonpath will be looked for in this config
+rpchost, network, tlscertpath, and adminmacaroonpath will be looked for in this config
 file. If those params are passed manually they will override what was found in the
 config file.""",
 )
-@click.option("-h", "--host", type=str, help="The host of your node.")
+@click.option("-h", "--rpchost", type=str, help="The rpc endpoint of your node.")
 @click.option(
     "-n",
     "--network",
@@ -288,7 +288,7 @@ def inspect(ctx, psbt):
 
 def _lnd_from_options(config):
     lnd = LndRpc(
-        host=config.host,
+        rpchost=config.rpchost,
         tlscertpath=config.tlscertpath,
         adminmacaroonpath=config.adminmacaroonpath,
     )

@@ -11,7 +11,7 @@ from lnrpc.routerrpc import router_pb2_grpc as routerrpc, router_pb2 as routerms
 
 
 class LndRpc:
-    def __init__(self, host, tlscertpath, adminmacaroonpath):
+    def __init__(self, rpchost, tlscertpath, adminmacaroonpath):
         os.environ["GRPC_SSL_CIPHER_SUITES"] = "HIGH+ECDSA"
 
         with open(tlscertpath, "rb") as f:
@@ -34,8 +34,8 @@ class LndRpc:
         # such that every call is properly encrypted and authenticated
         combined_creds = grpc.composite_channel_credentials(cert_creds, auth_creds)
 
-        channel = grpc.secure_channel(host, combined_creds)
-        self.host = host
+        channel = grpc.secure_channel(rpchost, combined_creds)
+        self.rpchost = rpchost
         self.lnd = lnrpc.LightningStub(channel)
         self.wallet = walletrpc.WalletKitStub(channel)
         self.router = routerrpc.RouterStub(channel)

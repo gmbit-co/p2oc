@@ -13,7 +13,7 @@ def _resolve_path(path):
 
 
 DEFAULTS = {
-    "host": "localhost:10009",
+    "rpchost": "localhost:10009",
     "tlscertpath": _resolve_path("~/.lnd/tls.cert"),
     "adminmacaroonpath": _resolve_path(
         "~/.lnd/data/chain/bitcoin/testnet/admin.macaroon"
@@ -28,7 +28,7 @@ class Config:
         config.update(config_overrides)
 
         # Consider moving to dataclass
-        self.host = config["host"]
+        self.rpchost = config["rpchost"]
         self.tlscertpath = config["tlscertpath"]
         self.adminmacaroonpath = config["adminmacaroonpath"]
         self.network = config["network"]
@@ -50,8 +50,8 @@ class Config:
             return config
 
         config = {}
-        config["host"] = parser.get(
-            "Application Options", "rpclisten", fallback=DEFAULTS["host"]
+        config["rpchost"] = parser.get(
+            "Application Options", "rpclisten", fallback=DEFAULTS["rpchost"]
         )
         config["tlscertpath"] = parser.get(
             "Application Options", "tlscertpath", fallback=DEFAULTS["tlscertpath"]

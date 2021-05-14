@@ -9,14 +9,14 @@ from p2oc.address import create_dummy_p2wpkh_address
 from p2oc.btc_rpc import Proxy, Config
 
 taker = LndRpc(
-    host="ali-lnd:10009",
+    rpchost="ali-lnd:10009",
     tlscertpath="/ali-lnd/tls.cert",
     adminmacaroonpath="/ali-lnd/data/chain/bitcoin/regtest/admin.macaroon",
 )
 
 
 maker = LndRpc(
-    host="bob-lnd:10009",
+    rpchost="bob-lnd:10009",
     tlscertpath="/bob-lnd/tls.cert",
     adminmacaroonpath="/bob-lnd/data/chain/bitcoin/regtest/admin.macaroon",
 )

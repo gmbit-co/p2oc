@@ -228,7 +228,7 @@ docker exec -it p2oc python scripts/mine_and_fund.py --network="regtest"
 # For convenience you can use --configfile to avoid having to pass these params manually.
 docker exec -it p2oc p2oc \
     --network="regtest" \
-    --host="ali-lnd:10009" \
+    --rpchost="ali-lnd:10009" \
     --tlscertpath="/ali-lnd/tls.cert" \
     --adminmacaroonpath="/ali-lnd/data/chain/bitcoin/regtest/admin.macaroon" \
     createoffer \
@@ -237,7 +237,7 @@ docker exec -it p2oc p2oc \
 
 docker exec -it p2oc p2oc \
     --network="regtest" \
-    --host="bob-lnd:10009" \
+    --rpchost="bob-lnd:10009" \
     --tlscertpath="/bob-lnd/tls.cert" \
     --adminmacaroonpath="/bob-lnd/data/chain/bitcoin/regtest/admin.macaroon" \
     acceptoffer \
@@ -245,7 +245,7 @@ docker exec -it p2oc p2oc \
 
 docker exec -it p2oc p2oc \
     --network="regtest" \
-    --host="ali-lnd:10009" \
+    --rpchost="ali-lnd:10009" \
     --tlscertpath="/ali-lnd/tls.cert" \
     --adminmacaroonpath="/ali-lnd/data/chain/bitcoin/regtest/admin.macaroon" \
     openchannel \
@@ -253,7 +253,7 @@ docker exec -it p2oc p2oc \
 
 docker exec -it p2oc p2oc \
     --network="regtest" \
-    --host="bob-lnd:10009" \
+    --rpchost="bob-lnd:10009" \
     --tlscertpath="/bob-lnd/tls.cert" \
     --adminmacaroonpath="/bob-lnd/data/chain/bitcoin/regtest/admin.macaroon" \
     finalizeoffer \

@@ -29,7 +29,7 @@ def btc_rpc():
 @pytest.fixture
 def taker():
     return LndRpc(
-        host="ali-lnd:10009",
+        rpchost="ali-lnd:10009",
         tlscertpath="/ali-lnd/tls.cert",
         adminmacaroonpath="/ali-lnd/data/chain/bitcoin/regtest/admin.macaroon",
     )
@@ -38,7 +38,7 @@ def taker():
 @pytest.fixture
 def maker():
     return LndRpc(
-        host="bob-lnd:10009",
+        rpchost="bob-lnd:10009",
         tlscertpath="/bob-lnd/tls.cert",
         adminmacaroonpath="/bob-lnd/data/chain/bitcoin/regtest/admin.macaroon",
     )

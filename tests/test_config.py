@@ -5,8 +5,8 @@ from p2oc.config import Config
 
 
 def test_config():
-    host = "lnd:10009"
-    override_host = "lnd2:10009"
+    rpchost = "lnd:10009"
+    override_rpchost = "lnd2:10009"
     tlscertpath = "/root/src/umbrel/lnd/tls.cert"
     adminmacaroonpath = "/root/src/umbrel/lnd/data/chain/bitcoin/testnet/admin.macaroon"
 
@@ -17,7 +17,7 @@ def test_config():
                 f"""
 [Application Options]
 # LND host
-rpclisten={host}
+rpclisten={rpchost}
 tlscertpath={tlscertpath}
 adminmacaroonpath={adminmacaroonpath}
 
@@ -26,10 +26,10 @@ bitcoin.testnet=1
 """
             )
         config = Config(config_path)
-        assert config.host == host
+        assert config.rpchost == rpchost
         assert config.tlscertpath == tlscertpath
         assert config.adminmacaroonpath == adminmacaroonpath
 
         # Test override
-        config = Config(config_path, config_overrides={"host": override_host})
-        assert config.host == override_host
+        config = Config(config_path, config_overrides={"rpchost": override_rpchost})
+        assert config.rpchost == override_rpchost
