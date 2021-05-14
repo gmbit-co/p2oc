@@ -35,21 +35,21 @@ The pay to open channel protocol consists of 4 steps performed between a **Taker
 +---------------------------------------------------+
 |         INPUTS                   OUTPUTS          |
 |  +------------------+    +---------------------+  |
-|  |   Taker's UTXO   |    |                     |  |
+|  |   Taker's UTXO:  |    |                     |  |
 |  | premium + tx fee |    |   Taker's change    |  |
 |  |                  |    |                     |  |
 |  +------------------+    +---------------------+  |
 |                                                   |
 |  +-------------------+   +---------------------+  |
-|  |   Maker's UTXO    |   |                     |  |
+|  |   Maker's UTXO:   |   |                     |  |
 |  |      funding      |   |   Maker's change    |  |
 |  |                   |   |                     |  |
 |  +-------------------+   +---------------------+  |
 |                                                   |
 |                          +---------------------+  |
-|                          |   Channel funding   |  |
-|                          |   2-2 multisig      |  |
-|                          |   output            |  |
+|                          |  Channel funding    |  |
+|                          |  2-2 multisig:      |  |
+|                          |  funding + premium  |  |
 |                          +---------------------+  |
 +---------------------------------------------------+
 ```
