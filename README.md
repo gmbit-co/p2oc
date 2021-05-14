@@ -78,6 +78,14 @@ Step 4 (run by Maker)
 $ p2oc finalizeoffer <half_signed_psbt>
 ```
 
+PSBT packet can be inspected using one of the following options:
+
+```
+p2oc inspect <psbt_base64>
+
+bitcoin-cli decodepsbt <psbt_base64>
+```
+
 ### `p2oc --help`
 
 ```
