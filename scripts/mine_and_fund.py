@@ -9,20 +9,16 @@ from p2oc.address import create_dummy_p2wpkh_address
 from p2oc.btc_rpc import Proxy, Config
 
 taker = LndRpc(
-    config_overrides={
-        "host": "ali-lnd:10009",
-        "tlscertpath": "/ali-lnd/tls.cert",
-        "adminmacaroonpath": "/ali-lnd/data/chain/bitcoin/regtest/admin.macaroon",
-    }
+    host="ali-lnd:10009",
+    tlscertpath="/ali-lnd/tls.cert",
+    adminmacaroonpath="/ali-lnd/data/chain/bitcoin/regtest/admin.macaroon",
 )
 
 
 maker = LndRpc(
-    config_overrides={
-        "host": "bob-lnd:10009",
-        "tlscertpath": "/bob-lnd/tls.cert",
-        "adminmacaroonpath": "/bob-lnd/data/chain/bitcoin/regtest/admin.macaroon",
-    }
+    host="bob-lnd:10009",
+    tlscertpath="/bob-lnd/tls.cert",
+    adminmacaroonpath="/bob-lnd/data/chain/bitcoin/regtest/admin.macaroon",
 )
 
 parser = argparse.ArgumentParser()

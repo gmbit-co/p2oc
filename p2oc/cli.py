@@ -1,3 +1,4 @@
+from p2oc.config import Config
 import textwrap
 import collections
 
@@ -59,6 +60,7 @@ $ p2oc finalizeoffer <half_signed_psbt>""",
 @click.option(
     "-c",
     "--configfile",
+    default=None,
     type=str,
     help="""The path to the LND config file (by default under ~/.lnd/lnd.conf). The
 host, network, tlscertpath, and adminmacaroonpath will be looked for in this config
@@ -69,27 +71,41 @@ config file.""",
 @click.option(
     "-n",
     "--network",
-    default="regtest",
+    default=None,
     type=click.Choice(["mainnet", "testnet", "simnet", "regtest"]),
     help="The network your lightning node is running on.",
 )
 @click.option(
     "--tlscertpath",
+    default=None,
     type=str,
     help="The path to the LND's tls certificate (by default under ~/.lnd/tls.cert).",
 )
 @click.option(
     "--adminmacaroonpath",
+    default=None,
     type=str,
     help="""The path to the LND's admin macaroon path (by default under
-    ~/.lnd/data/chain/bitcoin/testnet/admin.macaroon).""",
+~/.lnd/data/chain/bitcoin/testnet/admin.macaroon).""",
 )
+# Config order of precedence
+# 1. CLI overrides (don't put defaults in )
+# 2. Specified config file path
+# 3. Config file default path
+# 4. Defaults
 @click.pass_context
 def cli(ctx, **group_options):
     # Ensure that ctx.obj exists and is a dict (in case `cli()` is called by means
     # other than the `if` block below).
     ctx.ensure_object(dict)
-    ctx.obj["group_options"] = group_options
+
+    def _without_nones(dict_):
+        return {k: v for k, v in dict_.items() if v is not None}
+
+    config_path = group_options.pop("configfile", None)
+    config = Config(config_path, _without_nones(group_options))
+
+    ctx.obj["group_options"] = config
 
 
 @cli.command(
@@ -112,10 +128,10 @@ can send this offer to another node operator for them to accept and provide liqu
 )
 @click.pass_context
 def createoffer(ctx, premium, fund):
-    bitcoin.SelectParams(ctx.obj["group_options"]["network"])
+    network = ctx.obj["group_options"].network
+    pretty_echo_header("Create Offer", network)
 
-    pretty_echo_header("Create Offer")
-
+    bitcoin.SelectParams(network)
     lnd = _lnd_from_options(ctx.obj["group_options"])
     offer_psbt = p2oc.create_offer(premium_amount=premium, fund_amount=fund, lnd=lnd)
 
@@ -141,10 +157,10 @@ receive an upfront fee (of premium amount)."""
 @click.argument("offer_psbt", required=True)
 @click.pass_context
 def acceptoffer(ctx, offer_psbt):
-    bitcoin.SelectParams(ctx.obj["group_options"]["network"])
+    network = ctx.obj["group_options"].network
+    pretty_echo_header("Accept Offer", network)
 
-    pretty_echo_header("Accept Offer")
-
+    bitcoin.SelectParams(network)
     lnd = _lnd_from_options(ctx.obj["group_options"])
     offer_psbt = deserialize_psbt(offer_psbt)
 
@@ -174,10 +190,10 @@ create and open the channel. It will be in pending state after this command."""
 @click.argument("unsigned_psbt", required=True)
 @click.pass_context
 def openchannel(ctx, unsigned_psbt):
-    bitcoin.SelectParams(ctx.obj["group_options"]["network"])
+    network = ctx.obj["group_options"].network
+    pretty_echo_header("Open Channel", network)
 
-    pretty_echo_header("Open Channel")
-
+    bitcoin.SelectParams(network)
     lnd = _lnd_from_options(ctx.obj["group_options"])
     unsigned_psbt = deserialize_psbt(unsigned_psbt)
 
@@ -209,10 +225,10 @@ confirmations."""
 @click.argument("half_signed_psbt", required=True)
 @click.pass_context
 def finalizeoffer(ctx, half_signed_psbt):
-    bitcoin.SelectParams(ctx.obj["group_options"]["network"])
+    network = ctx.obj["group_options"].network
+    pretty_echo_header("Finalize Offer", network)
 
-    pretty_echo_header("Finalize Offer")
-
+    bitcoin.SelectParams(network)
     lnd = _lnd_from_options(ctx.obj["group_options"])
     half_signed_psbt = deserialize_psbt(half_signed_psbt)
 
@@ -239,7 +255,10 @@ being passed back and forth."""
 @click.argument("psbt", required=True)
 @click.pass_context
 def inspect(ctx, psbt):
-    bitcoin.SelectParams(ctx.obj["group_options"]["network"])
+    network = ctx.obj["group_options"].network
+    pretty_echo_header("Inspect", network)
+
+    bitcoin.SelectParams(network)
 
     psbt = deserialize_psbt(psbt)
     offer = p2oc.offer.get_offer_from_psbt(psbt, raise_if_missing=False)
@@ -267,13 +286,12 @@ def inspect(ctx, psbt):
         click.echo("N/A")
 
 
-def _lnd_from_options(options):
-    def _without_nones(dict_):
-        return {k: v for k, v in dict_.items() if v is not None}
-
-    config_path = options.pop("configfile")
-    options = _without_nones(options)
-    lnd = LndRpc(config_path=config_path, config_overrides=options)
+def _lnd_from_options(config):
+    lnd = LndRpc(
+        host=config.host,
+        tlscertpath=config.tlscertpath,
+        adminmacaroonpath=config.adminmacaroonpath,
+    )
     return lnd
 
 
@@ -290,7 +308,7 @@ def pretty_echo_psbt(psbt, side):
 """
 
     if side == "taker" and reply is not None:
-        message += f"- From {click.style(f'{reply.node_pubkey}@{reply.node_host}', bold=True)} (their node)"
+        message += f"- From {click.style(f'{reply.node_pubkey}@{reply.node_host}', bold=True)} (their node)\n"
 
     if side == "maker" and offer is not None:
         message = f"""
@@ -300,13 +318,14 @@ def pretty_echo_psbt(psbt, side):
 """
 
     if side == "maker" and reply is not None:
-        message += f"- From {click.style(f'{reply.node_pubkey}@{reply.node_host}', bold=True)} (your node)"
+        message += f"- From {click.style(f'{reply.node_pubkey}@{reply.node_host}', bold=True)} (your node)\n"
 
     click.echo(message)
 
 
-def pretty_echo_header(step):
+def pretty_echo_header(step, network):
     click.echo()  # newline
+    click.echo(f"({network})")
     click.secho("┌────────────────────────────┐", bold=True)
     click.secho("│ p2oc (Pay to Open Channel) │", bold=True)
     click.secho("└────────────────────────────┘", bold=True)
