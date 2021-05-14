@@ -29,7 +29,10 @@ def create_offer(premium_amount, fund_amount, lnd):
     node_info = lnd.lnd.GetInfo(lnmsg.GetInfoRequest())
 
     if len(node_info.uris) == 0:
-        raise RuntimeError("This Lightning node does not have public endpoints")
+        raise RuntimeError(
+            "This Lightning node does not have any public endpoints."
+            + " Check node documentation on 'externalhosts' and 'tor'."
+        )
 
     node_host = node_info.uris[0].split("@")[1]  # pubkey@host
     offer = p2oc_offer.Offer(
@@ -130,7 +133,10 @@ def accept_offer(offer_psbt, lnd):
     node_info = lnd.lnd.GetInfo(lnmsg.GetInfoRequest())
 
     if len(node_info.uris) == 0:
-        raise RuntimeError("This Lightning node does not have public endpoints")
+        raise RuntimeError(
+            "This Lightning node does not have any public endpoints."
+            + " Check node documentation on 'externalhosts' and 'tor'."
+        )
 
     node_host = node_info.uris[0].split("@")[1]  # pubkey@host
     reply = p2oc_offer.OfferReply(
