@@ -60,20 +60,21 @@ The pay to open channel protocol consists of 4 steps performed between a **Taker
 
 The procedure described above is carried out by the following commands (note the order and which party runs each command):
 
-```
-Step 1 (run by Taker, requesting inbound channel)
-$ p2oc p2oc createoffer --premium=100000 --fund=1500000
+```bash
+# Step 1 (run by Taker, requesting inbound channel)
+#     E.g. Pay ~10USD (@50kUSD/BTC) premium in exchange for ~$2,000
+$ p2oc createoffer --premium=20000 --fund=4000000
 <offer_psbt>
 
-Step 2 (run by Maker, providing channel)
+# Step 2 (run by Maker, providing channel)
 $ p2oc acceptoffer <offer_psbt>
 <unsigned_psbt>
 
-Step 3 (run by Taker)
+# Step 3 (run by Taker)
 $ p2oc openchannel <unsigned_psbt>
 <half_signed_psbt>
 
-Step 4 (run by Maker)
+# Step 4 (run by Maker)
 $ p2oc finalizeoffer <half_signed_psbt>
 ```
 
@@ -111,6 +112,111 @@ p2oc --help
 ```
 
 ## Run
+
+### Example 1: Running with [Umbrel](https://github.com/getumbrel/umbrel)
+
+Here's an example of running `p2oc` within a more common environment like [Umbrel](...).
+
+**Step 1: Setup Umbrel**
+
+Download Umbrel according to the instructions for your system. Go through the setup process to create a wallet. Once you're able to get to the dashboard, stop Umbrel.
+
+**Step 2: Update Umbrel Middleware**
+
+Umbrel Middleware doesn't presently support newer versions of LND due to changes in wallet unlock handling. Use [this branch](https://github.com/JVillella/umbrel-middleware/tree/support-lnd-0.13-locked-wallet-error) to support updated LND versions.
+
+```bash
+# Assuming you're in the umbrel directory, cd ../ up a level
+git clone git@github.com:JVillella/umbrel-middleware.git
+git checkout
+```
+
+Then update Umbrel to point to this image.
+
+```diff
+middleware:
+    container_name: middleware
+-   image: getumbrel/middleware:v0.1.10@sha256:ff3d5929a506739286f296c803105cca9d83e73e9eb1b7c6833533e345d77736
++   image: getumbrel/manager
++   build:
++       context: ../umbrel-middleware
+```
+
+**Step 3: Update LND**
+
+Because we require BIP 32 derivation maps which is in master of LND (see requirements above) but a few weeks away from release, we need to use `master`. Here's the easiest way to do that w/ Umbrel.
+
+```bash
+# Assuming you're in the umbrel directory, cd ../ up a level
+git clone git@github.com:flywheelstudio/docker-lnd.git
+# This repo is a clone of Umbrel's LND Dockerfile but with the ability to point to master
+```
+
+Now update Umbrel's docker-compose.yml to point to master LND,
+
+```diff
+lnd:
+    container_name: lnd
+-   image: lncm/lnd:v0.12.1@sha256:bdc442c00bc4dd4d5bfa42efd7d977bfe4d21a08d466c933b9cff7cfc83e0c0e
++   image: lncm/lnd
++       build:
++       context: ../docker-lnd/0.12
++       args:
++           VERSION: 6d66133
+```
+
+Then run `docker-compose build lnd`. Now you can start Umbrel back up again.
+
+**Step 4: Get `p2oc`**
+
+```bash
+# Go to wherever you like to clone source on your machine
+# `git clone <this_repo>` and `cd` into it
+```
+
+**Step 5: (Optional) Configure `p2oc` through a file**
+
+For convenience, create the following file called `lnd.conf` (in this example we put it under `~/src/p2oc`) with the appropriate params for your system. If you don't do this, you'll have to pass these parameters manually each time you invoke `p2oc`.
+
+```ini
+[Application Options]
+# LND host
+rpclisten=lnd:10009
+tlscertpath=/root/src/umbrel/lnd/tls.cert
+adminmacaroonpath=/root/src/umbrel/lnd/data/chain/bitcoin/testnet/admin.macaroon
+
+[Bitcoin]
+bitcoin.testnet=1
+```
+
+**Step 6: Profit! (literally)**
+
+At this point you can use `p2oc` either via docker or pip (here we'll demo with docker). In this example we'll pretend you're requesting an inbound channel (from a "maker"), so you're (aka the "taker") creating the offer.
+
+```bash
+docker build -t p2oc .
+
+# Step 1 - Taker (you): Create offer, and send to maker
+# E.g. Pay ~10USD (@50kUSD/BTC) premium in exchange for ~$2,000
+docker run --rm -it -v /root/src/p2oc/lnd.conf:/lnd.conf -v /root/src/umbrel:/root/src/umbrel:ro --network=umbrel_main_network \
+  p2oc -c lnd.conf createoffer --premium=20000 --fund=4000000
+
+# Step 2 - Maker (them): Accepts offer
+docker run --rm -it -v /root/src/p2oc/lnd.conf:/lnd.conf -v /root/src/umbrel:/root/src/umbrel:ro --network=umbrel_main_network \
+  acceptoffer <offer>
+
+# Step 3 - Taker: Open pending channel
+docker run --rm -it -v /root/src/p2oc/lnd.conf:/lnd.conf -v /root/src/umbrel:/root/src/umbrel:ro --network=umbrel_main_network \
+  openchannel <unsigned_psbt>
+
+# Step 4 - Maker: Finalize and publish funding tx, opening channel
+docker run --rm -it -v /root/src/p2oc/lnd.conf:/lnd.conf -v /root/src/umbrel:/root/src/umbrel:ro --network=umbrel_main_network \
+  finalizeoffer <half_signed_psbt>
+
+# Profit!
+```
+
+### Example 2: Running in provided docker test environment
 
 Here's an example of running p2oc using the provided [docker-compose.yml](./docker-compose.yml) _testing environment_ among 2 peers to perform a double funded channel opening. Note: Instead of passing the network, host, etc. manually you can point to the `lnd.conf` file via `--configfile` (default location is `~/.lnd/lnd.conf`).
 
