@@ -76,6 +76,9 @@ class LndRpc:
             "Application Options", "rpclisten", fallback="localhost:10009"
         )
 
+        if config["host"].split(":")[0] == "0.0.0.0":
+            config["host"] = config["host"].replace("0.0.0.0", "localhost")
+
         config["tlscertpath"] = parser.get(
             "Application Options", "tlscertpath", fallback="~/.lnd/tls.cert"
         )
@@ -89,13 +92,13 @@ class LndRpc:
         config["adminmacaroonpath"] = _resolve_path(config["adminmacaroonpath"])
 
         network = "testnet"
-        if parser.get("Bitcoin", "bitcoin.mainnet", fallback="false") == "true":
+        if parser.get("Bitcoin", "bitcoin.mainnet", fallback="0") == "1":
             network = "mainnet"
-        elif parser.get("Bitcoin", "bitcoin.testnet", fallback="false") == "true":
+        elif parser.get("Bitcoin", "bitcoin.testnet", fallback="0") == "1":
             network = "testnet"
-        elif parser.get("Bitcoin", "bitcoin.simnet", fallback="false") == "true":
+        elif parser.get("Bitcoin", "bitcoin.simnet", fallback="0") == "1":
             network = "simnet"
-        elif parser.get("Bitcoin", "bitcoin.regtest", fallback="false") == "true":
+        elif parser.get("Bitcoin", "bitcoin.regtest", fallback="0") == "1":
             network = "regtest"
 
         config["network"] = network

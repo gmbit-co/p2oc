@@ -12,8 +12,7 @@ def connect_peer(node_pubkey, node_host, lnd):
     connect_peer_req = lnmsg.ConnectPeerRequest(
         addr=lnmsg.LightningAddress(
             pubkey=node_pubkey,
-            # TODO: Why can't we include the port?
-            host=node_host.split(":")[0],
+            host=node_host,
         )
     )
 

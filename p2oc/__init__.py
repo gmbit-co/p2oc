@@ -26,11 +26,19 @@ def create_offer(premium_amount, fund_amount, lnd):
     psbt = p2oc_wallet.allocate_funds(premium_amount, lnd, include_tx_fee=True)
 
     key_desc = p2oc_address.derive_next_multisig_key_desc(lnd)
-    node_pubkey = lnd.lnd.GetInfo(lnmsg.GetInfoRequest()).identity_pubkey
+    node_info = lnd.lnd.GetInfo(lnmsg.GetInfoRequest())
+
+    if len(node_info.uris) == 0:
+        raise RuntimeError(
+            "This Lightning node does not have any public endpoints."
+            + " Check node documentation on 'externalhosts' and 'tor'."
+        )
+
+    node_host = node_info.uris[0].split("@")[1]  # pubkey@host
     offer = p2oc_offer.Offer(
         state=p2oc_offer.Offer.CREATED_STATE,
-        node_host=lnd.host,
-        node_pubkey=node_pubkey,
+        node_host=node_host,
+        node_pubkey=node_info.identity_pubkey,
         premium_amount=premium_amount,
         fund_amount=fund_amount,
         channel_pubkey_key_desc=key_desc,
@@ -122,11 +130,19 @@ def accept_offer(offer_psbt, lnd):
         if i not in offer.output_indices:
             output_indices.append(i)
 
-    node_pubkey = lnd.lnd.GetInfo(lnmsg.GetInfoRequest()).identity_pubkey
+    node_info = lnd.lnd.GetInfo(lnmsg.GetInfoRequest())
+
+    if len(node_info.uris) == 0:
+        raise RuntimeError(
+            "This Lightning node does not have any public endpoints."
+            + " Check node documentation on 'externalhosts' and 'tor'."
+        )
+
+    node_host = node_info.uris[0].split("@")[1]  # pubkey@host
     reply = p2oc_offer.OfferReply(
         state=p2oc_offer.OfferReply.ACCEPTED_STATE,
-        node_host=lnd.host,
-        node_pubkey=node_pubkey,
+        node_host=node_host,
+        node_pubkey=node_info.identity_pubkey,
         premium_amount=offer.premium_amount,
         fund_amount=offer.fund_amount,
         channel_id=channel_id,

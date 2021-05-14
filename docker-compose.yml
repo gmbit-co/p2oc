@@ -28,7 +28,7 @@ services:
         "-zmqpubrawtx=tcp://0.0.0.0:28333"
     ]
 
-  ali-lnd: &lnd
+  ali-lnd:
     container_name: ali-lnd
     hostname: ali-lnd
     build:
@@ -51,15 +51,38 @@ services:
       "--bitcoind.zmqpubrawblock=tcp://bitcoind:28332",
       "--bitcoind.zmqpubrawtx=tcp://bitcoind:28333",
       "--rpclisten=0.0.0.0:10009",
+      "--listen=0.0.0.0:19735",
+      "--externalhosts=ali-lnd:19735",
       "--debuglevel=info"
     ]
 
   bob-lnd:
-    <<: *lnd
     container_name: bob-lnd
     hostname: bob-lnd
+    build:
+      context: .
+      dockerfile: docker/lnd/Dockerfile
+    image: lnd
+    depends_on:
+      - bitcoind
+    env_file: .env
     volumes:
       - bob-lnd-data:/root/.lnd
+    command: [
+      "--noseedbackup",
+      "--bitcoin.active",
+      "--bitcoin.node=bitcoind",
+      "--bitcoin.${BTCD_NETWORK}",
+      "--bitcoind.rpchost=bitcoind",
+      "--bitcoind.rpcuser=${BTCD_RPCUSER}",
+      "--bitcoind.rpcpass=${BTCD_RPCPASS}",
+      "--bitcoind.zmqpubrawblock=tcp://bitcoind:28332",
+      "--bitcoind.zmqpubrawtx=tcp://bitcoind:28333",
+      "--rpclisten=0.0.0.0:10009",
+      "--listen=0.0.0.0:19735",
+      "--externalhosts=bob-lnd:19735",
+      "--debuglevel=info"
+    ]
 
   jupyter:
     container_name: jupyter
