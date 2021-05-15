@@ -66,7 +66,7 @@ def allocate_funds(amount, lnd, include_tx_fee=True, min_confirmations=6):
 
 
 def estimate_fee(lnd, conf_target=6):
-    fee_req = walletmsg.EstimateFeeRequest(conf_target=6)
+    fee_req = walletmsg.EstimateFeeRequest(conf_target=conf_target)
     resp = lnd.wallet.EstimateFee(fee_req)
     sat_per_vbyte = resp.sat_per_kw * 4 / 1000  # 1 vbyte = 4 weight units
     return int(sat_per_vbyte)
