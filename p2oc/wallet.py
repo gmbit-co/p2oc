@@ -6,10 +6,16 @@ from .address import create_dummy_p2wpkh_address
 
 
 def allocate_funds(amount, lnd, include_tx_fee=True, min_confirmations=6):
-    """Create a PSBT via the provided LND's wallet. The PSBT will be unsigned and have
-    a single output to the change address. The PSBT fee (difference between input and
-    output amount) will be of the given amount + the tx fee to publish this PSBT.
-    Including tx fee is configurable so as to have this or the other party pay fees.
+    """Create a PSBT via the provided LND's wallet. The PSBT will be unsigned
+    and have a single output to the change address. This PSBT secures enough
+    funds at its inputs such that later when an additional output with the given
+    `amount` is attached and the final tx will have sufficient fees.
+
+    Setting `include_tx_fee=True` will include regular tx fee calculated by
+    the wallet based on the current on-chain fees, the size of all inputs and 2
+    outputs (dummy + change)
+
+    `min_confirmations` is passed to the wallet and used for fee calculation.
     """
     # TODO: In the future refactor to explicitly create a placeholder output w/ a null
     #       output but correct value. We will change the output address later.
