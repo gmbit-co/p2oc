@@ -21,24 +21,11 @@ from p2oc import offer as p2oc_offer
 from p2oc import psbt as p2oc_psbt
 from bitcoin.rpc import unhexlify
 
-CHANNEL_FUNDING_OUTPUT_SIZE = 43  # vout size in vbytes of the 2-2 multisig output
-
 
 def create_offer(premium_amount, fund_amount, lnd):
-    # estimate how much offer creator should allocate in additional tx fees the channel funding output
-    sat_per_vbyte = p2oc_wallet.estimate_fee(lnd)
-    funding_output_fee = sat_per_vbyte * CHANNEL_FUNDING_OUTPUT_SIZE
-
-    # allocate funds for the premium and "funding output fee"
-    psbt = p2oc_wallet.allocate_funds(
-        premium_amount + funding_output_fee, lnd, include_tx_fee=True
-    )
-
-    # "move" funding_output_fee from change output into actual tx fee
-    tx = bc.CMutableTransaction.from_instance(psbt.unsigned_tx)
-    assert len(tx.vout) == 1
-    tx.vout[0].nValue -= funding_output_fee
-    psbt.unsigned_tx = tx
+    # allocate funds for the premium and the portion of the funding tx fees to
+    # "pay" for inputs and outputs that belong to the Taker
+    psbt = p2oc_wallet.allocate_funds(premium_amount, lnd, include_tx_fee=True)
 
     key_desc = p2oc_address.derive_next_multisig_key_desc(lnd)
     node_info = lnd.lnd.GetInfo(lnmsg.GetInfoRequest())
@@ -97,7 +84,8 @@ def accept_offer(offer_psbt, lnd):
         node_pubkey=offer.node_pubkey, node_host=offer.node_host, lnd=lnd
     )
 
-    # This is to obtain our UTXOs
+    # allocate funds for the funding amount and the portion of the funding tx
+    # fees to "pay" for inputs and outputs that belong to the Maker
     allocated_psbt = p2oc_wallet.allocate_funds(
         offer.fund_amount, lnd, include_tx_fee=True
     )
