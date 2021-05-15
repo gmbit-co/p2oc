@@ -25,7 +25,7 @@ The pay to open channel protocol consists of 4 steps performed between a **Taker
 4. Maker verifies that PSBT and the included funding transaction are correct. They also check that there is a pending channel with the Taker that points to the funding transaction and has the right balances between Maker and Taker<sup>3</sup>. They sign their inputs, finalize PSBT and publish the funding transaction. After the funding transaction is confirmed, the channel is fully open and active.
 
 
-<sup>1</sup> Currently this fee is paid by the Taker, however the protocol can support splitting the fee between 2 participants
+<sup>1</sup> Currently this tx fee is split between Taker and Maker where each side pays for their own inputs and outputs. Additionally, Taker pays the portion of fees to cover the funding output (2-2 multisig) of the transaction.
 
 <sup>2</sup> In the most basic case the funding transaction will look the following:
 
