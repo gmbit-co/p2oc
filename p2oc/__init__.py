@@ -84,7 +84,7 @@ def accept_offer(offer_psbt, lnd):
 
     # This is to obtain our UTXOs
     allocated_psbt = p2oc_wallet.allocate_funds(
-        offer.fund_amount, lnd, include_tx_fee=False
+        offer.fund_amount, lnd, include_tx_fee=True
     )
     p2oc_psbt.merge_psbts(from_psbt=allocated_psbt, to_psbt=offer_psbt)
 
