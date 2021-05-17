@@ -23,6 +23,8 @@ from bitcoin.rpc import unhexlify
 
 
 def create_offer(premium_amount, fund_amount, lnd):
+    # allocate funds for the premium and the portion of the funding tx fees to
+    # "pay" for inputs and outputs that belong to the Taker
     psbt = p2oc_wallet.allocate_funds(premium_amount, lnd, include_tx_fee=True)
 
     key_desc = p2oc_address.derive_next_multisig_key_desc(lnd)
@@ -82,9 +84,10 @@ def accept_offer(offer_psbt, lnd):
         node_pubkey=offer.node_pubkey, node_host=offer.node_host, lnd=lnd
     )
 
-    # This is to obtain our UTXOs
+    # allocate funds for the funding amount and the portion of the funding tx
+    # fees to "pay" for inputs and outputs that belong to the Maker
     allocated_psbt = p2oc_wallet.allocate_funds(
-        offer.fund_amount, lnd, include_tx_fee=False
+        offer.fund_amount, lnd, include_tx_fee=True
     )
     p2oc_psbt.merge_psbts(from_psbt=allocated_psbt, to_psbt=offer_psbt)
 
