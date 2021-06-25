@@ -171,9 +171,6 @@ def acceptoffer(ctx, offer_psbt):
 
     reply_psbt = p2oc.accept_offer(offer_psbt, lnd)
 
-    pretty_echo_psbt(reply_psbt, "maker")
-    click.confirm("Please confirm your reply", default=True, abort=True)
-
     click.secho(
         "\nSend the following reply back to peer requesting liquidity to indicate "
         + "you have approved the offer:\n",
@@ -210,7 +207,7 @@ def openchannel(ctx, unsigned_psbt):
     click.secho(
         "\nYou've successfully signed the funding tx and opened a pending channel. "
         + "Send the final reply back to the funder for them to finalize and publish. "
-        + "The channel can be used after 6 confirmation.:\n",
+        + "The channel can be used after 6 confirmation.\n",
         bold=True,
     )
 
@@ -239,11 +236,11 @@ def finalizeoffer(ctx, half_signed_psbt):
         abort=True,
     )
 
-    p2oc.finalize_offer(half_signed_psbt, lnd)
+    funding_txid = p2oc.finalize_offer(half_signed_psbt, lnd)
 
     click.secho(
-        "\nCongratulations! The channel has been opened and funded. It can be used "
-        + "after 6 confirmations.\n",
+        "\nCongratulations! The channel has been opened and funded. See "
+        + f"https://mempool.space/{network}/tx/{funding_txid}.\n",
         bold=True,
     )
 

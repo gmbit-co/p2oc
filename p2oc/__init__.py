@@ -298,6 +298,8 @@ def finalize_offer(half_signed_psbt, lnd):
     p2oc_sign.sign_inputs(half_signed_psbt, reply.input_indices, lnd)
     p2oc_psbt.finalize_and_publish_psbt(half_signed_psbt, lnd)
 
+    return bc.b2lx(half_signed_psbt.unsigned_tx.GetTxid())
+
 
 def inspect(psbt):
     return p2oc_psbt.deserialize_psbt(psbt)
